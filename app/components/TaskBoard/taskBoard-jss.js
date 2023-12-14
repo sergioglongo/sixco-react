@@ -1,0 +1,230 @@
+import { makeStyles } from 'tss-react/mui';
+import { lighten, darken, alpha } from '@mui/material/styles';
+import {
+  pink as red,
+  lightGreen as green,
+  lightBlue as blue,
+  deepPurple as violet,
+  orange,
+} from '@mui/material/colors';
+
+const useStyles = makeStyles()((theme, _params, classes) => ({
+  boardWrap: {
+    '& > div': {
+      color: theme.palette.text.primary,
+      background: 'none'
+    },
+    '& section': {
+      overflow: 'hidden',
+      padding: 0,
+      boxShadow: theme.shade.light,
+      borderRadius: theme.rounded.medium,
+      backgroundColor: 'transparent',
+      '&:before': {
+        content: '""',
+        background: alpha(theme.palette.background.paper, 0.8),
+        backdropFilter: 'saturate(180%) blur(20px)',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%'
+      },
+      '& > span': {
+        zIndex: 1
+      },
+      '& > div > div[class] + div': {
+        background: 'none !important'
+      },
+      '& > div': {
+        position: 'relative'
+      }
+    }
+  },
+  deco: {
+    position: 'absolute',
+    width: '100%',
+    height: 8,
+    top: 0,
+    left: 0,
+  },
+  headerBoard: {
+    zIndex: 1,
+    '& + div': {
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
+    }
+  },
+  card: {
+    boxShadow: theme.shadows[1],
+    borderBottom: 'none',
+    maxWidth: 250,
+    position: 'relative',
+    borderRadius: theme.rounded.medium,
+    background: theme.palette.background.default,
+    transition: 'background 0.3s ease',
+    marginLeft: '2px !important',
+    marginRight: '2px !important',
+    marginBottom: `${theme.spacing(1)} !important`,
+    '&:hover': {
+      background: theme.palette.mode === 'dark' ? darken(theme.palette.primary.dark, 0.7) : lighten(theme.palette.primary.light, 0.1),
+      '& button': {
+        opacity: 1
+      }
+    },
+    '& [contenteditable]': {
+      padding: `${theme.spacing(1)} ${theme.spacing(0.5)}`,
+      color: theme.palette.text.primary,
+      '&:focus': {
+        boxShadow: `0 0 2px 1px ${theme.palette.secondary.main}`,
+        outline: 'none'
+      }
+    },
+    '& + button, + button + button': {
+      borderRadius: theme.rounded.big,
+      marginLeft: theme.spacing(1),
+      marginRight: 0,
+      zIndex: 1,
+      position: 'relative'
+    },
+    '& + button': {
+      background: theme.palette.secondary.main
+    }
+  },
+  headerCard: {
+    padding: theme.spacing(1),
+    marginBottom: 10,
+    paddingBottom: 0,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    '& button': {
+      color: '#B71C1C',
+      background: 'none',
+      border: 'none',
+      position: 'relative',
+      width: 13,
+      height: 13,
+      top: 6,
+      right: 4,
+      '&:after, &:before': {
+        background: theme.palette.text.secondary
+      },
+    }
+  },
+  title: {
+    color: theme.palette.text.primary,
+    ontSize: 14,
+    fontWeight: theme.typography.fontWeightMedium
+  },
+  label: {
+    fontSize: 11,
+    paddingRight: theme.spacing(2),
+    paddingTop: theme.spacing(1)
+  },
+  content: {
+    padding: theme.spacing(1),
+    fontSize: 12
+  },
+  mainTitle: {
+    color: theme.palette.text.secondary,
+    fontSize: 16,
+    textTransform: 'uppercase',
+    padding: theme.spacing(1),
+    paddingTop: theme.spacing(1.5),
+    fontWeight: theme.typography.fontWeightMedium
+  },
+  labelCaption: {
+    paddingLeft: theme.spacing(1),
+    display: 'block'
+  },
+  tags: {
+    '& > span': {
+      display: 'inline-block',
+      margin: `${theme.spacing(0.5)} 0 ${theme.spacing(1)} ${theme.spacing(1)}`,
+      borderRadius: theme.rounded.medium,
+      padding: '2px 6px'
+    }
+  },
+  leftIcon: {
+    marginRight: theme.spacing(1),
+  },
+  addBtn: {
+    position: 'fixed',
+    bottom: 30,
+    right: 30,
+    zIndex: 100
+  },
+  field: {
+    width: '100%',
+    marginBottom: 20
+  },
+  fieldBasic: {
+    width: '100%',
+    marginBottom: 20,
+    marginTop: 10
+  },
+  inlineWrap: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  redRadio: {
+    color: red[600],
+    '& svg': {
+      borderRadius: '50%',
+      background: red[100],
+    },
+    [`&.${classes.checked}`]: {
+      color: red[500],
+    },
+  },
+  greenRadio: {
+    color: green[600],
+    '& svg': {
+      borderRadius: '50%',
+      background: green[100],
+    },
+    [`&.${classes.checked}`]: {
+      color: green[500],
+    },
+  },
+  blueRadio: {
+    color: blue[600],
+    '& svg': {
+      borderRadius: '50%',
+      background: blue[100],
+    },
+    [`&.${classes.checked}`]: {
+      color: blue[500],
+    },
+  },
+  violetRadio: {
+    color: violet[600],
+    '& svg': {
+      borderRadius: '50%',
+      background: violet[100],
+    },
+    [`&.${classes.checked}`]: {
+      color: violet[500],
+    },
+  },
+  orangeRadio: {
+    color: orange[600],
+    '& svg': {
+      borderRadius: '50%',
+      background: orange[100],
+    },
+    [`&.${classes.checked}`]: {
+      color: orange[500],
+    },
+  },
+  checked: {},
+  headerOpt: {
+    position: 'absolute',
+    right: 0,
+    top: theme.spacing(3)
+  }
+}));
+
+// TODO jss-to-tss-react codemod: usages of this hook outside of this file will not be converted.
+export default useStyles;

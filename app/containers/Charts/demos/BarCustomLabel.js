@@ -1,0 +1,93 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { createTheme } from '@mui/material/styles';
+import ThemePallete from 'dan-api/palette/themePalette';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  CartesianGrid,
+  CartesianAxis,
+  Tooltip,
+  Legend,
+  LabelList
+} from 'recharts';
+import { data1 } from './sampleData';
+import useStyles from './fluidChart-jss';
+
+const theme = createTheme(ThemePallete.purpleTheme);
+const color = ({
+  primary: theme.palette.primary.main,
+  secondary: theme.palette.secondary.main,
+});
+
+const renderCustomizedLabel = props => {
+  const {
+    x,
+    y,
+    width,
+    value,
+  } = props;
+  const radius = 10;
+
+  return (
+    <g>
+      <circle cx={x + (width / 2)} cy={y - radius} r={radius} fillOpacity="0.8" fill="#689F38" />
+      <text x={x + (width / 2)} y={y - radius} fill="#fff" textAnchor="middle" dominantBaseline="middle">
+        {value.split(' ')[1]}
+      </text>
+    </g>
+  );
+};
+
+renderCustomizedLabel.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  width: PropTypes.number,
+  value: PropTypes.string,
+};
+
+renderCustomizedLabel.defaultProps = {
+  x: 0,
+  y: 0,
+  width: 0,
+  value: 0,
+};
+
+function BarCustomLabel() {
+  const { classes } = useStyles();
+  return (
+    <div className={classes.chartFluid}>
+      <ResponsiveContainer width={800} height="100%">
+        <BarChart
+          width={800}
+          height={450}
+          data={data1}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5
+          }}
+        >
+          <XAxis dataKey="name" tickLine={false} />
+          <YAxis axisLine={false} tickSize={3} tickLine={false} tick={{ stroke: 'none' }} />
+          <CartesianGrid vertical={false} strokeDasharray="3 3" />
+          <CartesianAxis vertical={false} />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="pv" fill={color.primary}>
+            <LabelList dataKey="name" content={renderCustomizedLabel} />
+          </Bar>
+          <Bar dataKey="uv" fill={color.secondary}>
+            <LabelList dataKey="name" content={renderCustomizedLabel} />
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+export default BarCustomLabel;
