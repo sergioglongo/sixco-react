@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
+import classNames from "classnames";
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -16,9 +17,11 @@ import Brightness5 from '@mui/icons-material/Brightness5';
 import People from '@mui/icons-material/People';
 import Icon from '@mui/material/Icon';
 import brand from 'dan-api/dummy/brand';
-import logo from 'dan-images/logo.svg';
+import logo from 'dan-images/logo-sixco.svg';
 import { TextFieldRedux, CheckboxRedux } from './ReduxFormMUI';
 import useStyles from './user-jss';
+import { IconButton, InputAdornment } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 // validation functions
 const required = value => (value === null ? 'Required' : undefined);
@@ -27,10 +30,17 @@ const email = value => (
     ? 'Invalid email'
     : undefined
 );
+const numerico = (value) => (isNaN(value) ? "Ingrese solo números" : undefined);
 
 const passwordsMatch = (value, allValues) => {
-  if (value !== allValues.password) {
-    return 'Passwords dont match';
+  if (
+    value &&
+    !/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(value)
+  ) {
+    return "Las contraseñas debe tener mas de 6 caracteres, al menos una minúscula una mayúscula un numero y un caracter especial. Ejemplo: Piquiense!22";
+  }
+  if (value !== allValues.passwordConfirm) {
+    return "Las contraseñas no coinciden";
   }
   return undefined;
 };
@@ -40,10 +50,23 @@ const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disabl
 });
 
 function RegisterFormV2(props) {
-  const [tab, setTab] = useState(0);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleChangeTab = (event, value) => {
-    setTab(value);
+  const handleClickShowPassword = () => {
+    setShowPassword((show) => !show);
+  };
+  const handleClickShowRepeatPassword = () => {
+    setShowRepeatPassword((show) => !show);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const handleMouseDownRepeatPassword = (event) => {
+    event.preventDefault();
   };
 
   const { classes, cx } = useStyles();
@@ -58,118 +81,207 @@ function RegisterFormV2(props) {
       <div className={classes.topBar}>
         <NavLink to="/" className={classes.brand}>
           <img src={logo} alt={brand.name} />
-          {brand.name}
         </NavLink>
-        <Button size="small" className={classes.buttonLink} component={LinkBtn} to="/login-v2">
+        <Button
+          size="small"
+          className={classes.buttonLink}
+          component={LinkBtn}
+          to="/auth/login"
+        >
           <Icon className={classes.icon}>arrow_forward</Icon>
-          Already have account ?
+          ¿Ya tenes cuenta? Iniciá sesión
         </Button>
       </div>
       <Typography variant="h4" className={classes.title} gutterBottom>
-        Register
+        Registrate
       </Typography>
-      <Typography variant="caption" className={classes.subtitle} gutterBottom align="center">
-        Lorem ipsum dolor sit amet
-      </Typography>
-      <Tabs
-        value={tab}
-        onChange={handleChangeTab}
-        indicatorColor="secondary"
-        textColor="secondary"
-        centered
-        className={classes.tab}
+      <Typography
+        variant="caption"
+        className={classes.subtitle}
+        gutterBottom
+        align="center"
       >
-        <Tab label="With Email" />
-        <Tab label="With Social Media" />
-      </Tabs>
-      {tab === 0 && (
-        <section>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <FormControl variant="standard" className={classes.formControl}>
-                <Field
-                  name="name"
-                  component={TextFieldRedux}
-                  placeholder="Username"
-                  label="Username"
-                  required
-                  className={classes.field}
-                />
-              </FormControl>
-            </div>
-            <div>
-              <FormControl variant="standard" className={classes.formControl}>
-                <Field
-                  name="email"
-                  component={TextFieldRedux}
-                  placeholder="Your Email"
-                  label="Your Email"
-                  required
-                  validate={[required, email]}
-                  className={classes.field}
-                />
-              </FormControl>
-            </div>
-            <div>
-              <FormControl variant="standard" className={classes.formControl}>
-                <Field
-                  name="password"
-                  component={TextFieldRedux}
-                  type="password"
-                  label="Your Password"
-                  required
-                  validate={[required, passwordsMatch]}
-                  className={classes.field}
-                />
-              </FormControl>
-            </div>
-            <div>
-              <FormControl variant="standard" className={classes.formControl}>
-                <Field
-                  name="passwordConfirm"
-                  component={TextFieldRedux}
-                  type="password"
-                  label="Re-type Password"
-                  required
-                  validate={[required, passwordsMatch]}
-                  className={classes.field}
-                />
-              </FormControl>
-            </div>
-            <div>
-              <FormControlLabel
-                control={(
-                  <Field name="checkbox" component={CheckboxRedux} required className={classes.agree} />
-                )}
-                label="Agree with"
+        Ingresá tus datos para registrarte
+      </Typography>
+      <section>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <FormControl className={classes.formControl}>
+              <Field
+                name="accountname"
+                component={TextFieldRedux}
+                placeholder="Nombre"
+                label="Nombre Completo"
+                required
+                validate={required}
+                className={classes.field}
               />
-              <a href="#" className={classes.link}>Terms &amp; Condition</a>
-            </div>
-            <div className={classes.btnArea}>
-              <Button variant="contained" fullWidth color="primary" type="submit">
-                Continue
-                <ArrowForward className={cx(classes.rightIcon, classes.iconSmall)} disabled={submitting || pristine} />
-              </Button>
-            </div>
-          </form>
-        </section>
-      )}
-      {tab === 1 && (
-        <section className={classes.socmedFull}>
-          <Button fullWidth variant="outlined" size="large" className={classes.redBtn} type="button">
-            <AllInclusive className={cx(classes.leftIcon, classes.iconSmall)} />
-            Socmed 1
-          </Button>
-          <Button fullWidth variant="outlined" size="large" className={classes.blueBtn} type="button">
-            <Brightness5 className={cx(classes.leftIcon, classes.iconSmall)} />
-            Socmed 2
-          </Button>
-          <Button fullWidth variant="outlined" size="large" className={classes.cyanBtn} type="button">
-            <People className={cx(classes.leftIcon, classes.iconSmall)} />
-            Socmed 3
-          </Button>
-        </section>
-      )}
+            </FormControl>
+          </div>
+
+          <div>
+            <FormControl className={classes.formControl}>
+              <Field
+                name="apellido"
+                component={TextFieldRedux}
+                placeholder="Apellido"
+                label="Apellido Completo"
+                required
+                validate={required}
+                className={classes.field}
+              />
+            </FormControl>
+          </div>
+          <div>
+            <FormControl className={classes.formControl}>
+              <Field
+                name="documento"
+                component={TextFieldRedux}
+                placeholder="Ingresa tu CUIT o DNI"
+                required
+                validate={[required, numerico]}
+                label="CUIT o DNI"
+                className={classes.field}
+              />
+            </FormControl>
+          </div>
+          <div>
+            <FormControl className={classes.formControl}>
+              <Field
+                name="email"
+                component={TextFieldRedux}
+                placeholder="Email"
+                label="Email"
+                required
+                validate={[required, email]}
+                className={classes.field}
+              // error={true}
+              // helperText={"Invalid Social Security Format"}
+              />
+            </FormControl>
+          </div>
+          <div>
+            <FormControl className={classes.formControl}>
+              <Field
+                name="phone"
+                component={TextFieldRedux}
+                label="Celular"
+                placeholder="Ingrese su número de Celular con código de area"
+                validate={[numerico]}
+                className={classes.field}
+              />
+            </FormControl>
+          </div>
+          <div>
+            <FormControl className={classes.formControl}>
+              <Field
+                name="password"
+                component={TextFieldRedux}
+                type={showPassword ? "text" : "password"}
+                label="Contraseña"
+                required
+                validate={[required, passwordsMatch]}
+                className={classes.field}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="Toggle password visibility"
+                        onClick={
+                          handleClickShowPassword
+                        }
+                        onMouseDown={
+                          handleMouseDownPassword
+                        }
+                      >
+                        {showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </FormControl>
+          </div>
+          <div>
+            <FormControl className={classes.formControl}>
+              <Field
+                name="passwordConfirm"
+                component={TextFieldRedux}
+                type={showRepeatPassword ? "text" : "password"}
+                label="Repetir contraseña"
+                required
+                validate={[required, passwordsMatch]}
+                className={classes.field}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="Toggle password visibility"
+                        onClick={
+                          handleClickShowRepeatPassword
+                        }
+                        onMouseDown={
+                          handleMouseDownRepeatPassword
+                        }
+                      >
+                        {showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </FormControl>
+          </div>
+          <div>
+            <FormControlLabel
+              control={
+                <Field
+                  name="terminosycond"
+                  component={CheckboxRedux}
+                  required
+                  validate={required}
+                  className={classes.agree}
+                />
+              }
+              label="Estoy de acuerdo con los"
+            />
+            <a href="#" className={classes.link}>
+              Términos y condiciones
+            </a>
+          </div>
+          <div className={classes.btnArea}>
+            <Button
+              variant="contained"
+              fullWidth
+              color="primary"
+              type="submit"
+              disabled={loading || submitting || pristine}
+            >
+              Continuar
+              <ArrowForward
+                className={classNames(
+                  classes.rightIcon,
+                  classes.iconSmall
+                )}
+              />
+              {loading && (
+                <CircularProgress
+                  size={24}
+                  className={styles2.buttonProgress}
+                />
+              )}
+            </Button>
+          </div>
+        </form>
+      </section>
     </Paper>
   );
 }

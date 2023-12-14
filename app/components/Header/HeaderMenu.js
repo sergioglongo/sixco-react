@@ -154,11 +154,7 @@ function HeaderMenu(props) {
                     <i className="ion-ios-bulb-outline" />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="Show Guide" placement="bottom">
-                  <IconButton className={classes.button} onClick={openGuide} size="large">
-                    <i className="ion-ios-help-circle-outline" />
-                  </IconButton>
-                </Tooltip>
+
               </div>
             </div>
             <NavLink to={logoLink} className={classes.brand}>
@@ -167,14 +163,6 @@ function HeaderMenu(props) {
             </NavLink>
           </Fragment>
         )}
-        <div className={classes.searchHeaderMenu}>
-          <div className={cx(classes.wrapper, classes.dark)}>
-            <div className={classes.search}>
-              <SearchIcon />
-            </div>
-            <SearchUi history={history} />
-          </div>
-        </div>
         <Toolbar>
           <UserMenu dark />
         </Toolbar>

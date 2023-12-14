@@ -150,27 +150,11 @@ function Header(props) {
                   <i className="ion-ios-bulb-outline" />
                 </IconButton>
               </Tooltip>
-              <Tooltip title="Show Guide" placement="bottom">
-                <IconButton className={classes.button} onClick={openGuide} size="large">
-                  <i className="ion-ios-help-circle-outline" />
-                </IconButton>
-              </Tooltip>
             </div>
             <Typography component="h2" className={cx(classes.headerTitle, showTitle && classes.show)}>
               {title}
             </Typography>
           </div>
-        )}
-        <div className={classes.searchWrapper}>
-          <div className={cx(classes.wrapper, classes.light)}>
-            <div className={classes.search}>
-              <SearchIcon />
-            </div>
-            <SearchUi history={history} />
-          </div>
-        </div>
-        {!smDown && (
-          <span className={classes.separatorV} />
         )}
         <UserMenu />
       </Toolbar>

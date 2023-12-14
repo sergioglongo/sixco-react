@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { makeStyles, withStyles } from 'tss-react/mui';
+import classNames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -21,17 +23,24 @@ const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disabl
 // eslint-disable-next-line
 function MainMenu(props) {
   const { classes, cx } = useStyles();
+  const {
+    openSubMenu,
+    open,
+    dataMenu,
+    setClientData,
+    setLogoutData
+  } = props;
+
   const handleClick = () => {
     const { toggleDrawerOpen, loadTransition } = props;
     toggleDrawerOpen();
     loadTransition(false);
   };
 
-  const {
-    openSubMenu,
-    open,
-    dataMenu
-  } = props;
+  const handleLogOut = () => {
+    setClientData({});
+    setLogoutData();
+  };
 
   const getMenus = menuArray => menuArray.map((item, index) => {
     if (item.child || item.linkParent) {
@@ -114,6 +123,22 @@ function MainMenu(props) {
   return (
     <div>
       {getMenus(dataMenu)}
+      <div>
+        <ListItem
+          button
+          onClick={handleLogOut}
+          style={{ paddingLeft: '24px' }}
+        >
+          <ListItemIcon className={classes.icon}>
+            <i className={classNames(classes.icon, 'ion-ios-exit-outline')} />
+          </ListItemIcon>
+          <ListItemText classes={{ primary: classes.primary }} variant="inset" primary="Salir">
+            <span className={classes.text}>
+              Salir
+            </span>
+          </ListItemText>
+        </ListItem>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,9 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { makeStyles, withStyles } from 'tss-react/mui';
+import classNames from 'classnames';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Hidden from '@mui/material/Hidden';
 import Drawer from '@mui/material/Drawer';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import dummy from 'dan-api/dummy/dummyContents';
@@ -59,7 +62,7 @@ function Sidebar(props) {
 
   return (
     <Fragment>
-      { !lgUp && (
+      <Hidden lgUp>
         <SwipeableDrawer
           onClose={toggleDrawerOpen}
           onOpen={toggleDrawerOpen}
@@ -81,14 +84,14 @@ function Sidebar(props) {
             />
           </div>
         </SwipeableDrawer>
-      )}
-      {!lgDown && (
+      </Hidden>
+      <Hidden mdDown>
         <Drawer
           variant="permanent"
           onClose={toggleDrawerOpen}
           className={open ? classes.drawer : ''}
           classes={{
-            paper: cx(classes.drawer, classes.drawerPaper, !open ? classes.drawerPaperClose : ''),
+            paper: classNames(classes.drawer, classes.drawerPaper, !open ? classes.drawerPaperClose : ''),
           }}
           open={open}
           anchor={leftSidebar ? 'left' : 'right'}
@@ -106,7 +109,7 @@ function Sidebar(props) {
             changeStatus={handleChangeStatus}
           />
         </Drawer>
-      )}
+      </Hidden>
     </Fragment>
   );
 }

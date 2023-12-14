@@ -10,6 +10,7 @@ import history from '../utils/history';
 import uiReducer from './modules/ui';
 import initval from './modules/initForm';
 import login from './modules/login';
+import user from './modules/user';
 import treeTable from '../containers/Tables/reducers/treeTbReducer';
 import crudTable from '../containers/Tables/reducers/crudTbReducer';
 import crudTableForm from '../containers/Tables/reducers/crudTbFrmReducer';
@@ -45,6 +46,7 @@ export default function createReducer(injectedReducers = {}) {
     ui: uiReducer,
     initval,
     login,
+    user,
     socmed,
     ecommerce,
     contact,

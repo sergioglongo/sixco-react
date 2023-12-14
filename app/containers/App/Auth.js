@@ -13,17 +13,26 @@ function Auth() {
   return (
     <Outer>
       <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/login-v2" component={LoginV2} />
-        <Route path="/login-v3" component={LoginV3} />
-        <Route path="/register" component={Register} />
-        <Route path="/register-v2" component={RegisterV2} />
-        <Route path="/register-v3" component={RegisterV3} />
-        <Route path="/reset-password" component={ResetPassword} />
-        <Route path="/lock-screen" component={LockScreen} />
-        <Route path="/maintenance" component={Maintenance} />
-        <Route path="/coming-soon" component={ComingSoon} />
-        <Route component={NotFound} />
+      <Route
+            exact
+            path="/auth/login"
+            component={LoginV2}
+          />
+        <Route 
+            exact
+            path="/auth/registrese" 
+            component={RegisterV2} 
+          />
+        {/* <Route 
+            exact
+            path="/auth/gracias-por-registrarte" 
+            component={RegisterFinished}
+          /> */}
+        <Route 
+            path="/auth/reset-password" 
+            component={ResetPassword} 
+          />
+        {/* <Route component={NotFound} /> */}
       </Switch>
     </Outer>
   );

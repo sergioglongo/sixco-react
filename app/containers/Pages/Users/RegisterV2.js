@@ -5,9 +5,17 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import brand from 'dan-api/dummy/brand';
 import { RegisterFormV2 } from 'dan-components';
 import useStyles from 'dan-components/Forms/user-jss';
+import { Hidden } from '@mui/material';
+import logo from 'dan-images/logo-sixco.svg';
 
 function RegisterV2() {
   const [valueForm, setValueForm] = useState(null);
+  const [datanotif, setDatanotif] = useState({
+    open: false,
+    variant: "error",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
 
   const submitForm = values => {
     setTimeout(() => {
@@ -17,7 +25,7 @@ function RegisterV2() {
     }, 500); // simulate server latency
   };
 
-  const title = brand.name + ' - Register Version 2';
+  const title = brand.name + ' - App';
   const description = brand.desc;
   const { classes } = useStyles();
   const mdDown = useMediaQuery(theme => theme.breakpoints.down('md'));
@@ -25,24 +33,32 @@ function RegisterV2() {
   return (
     <div className={classes.rootFull}>
       <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="twitter:title" content={title} />
-        <meta property="twitter:description" content={description} />
-      </Helmet>
-      <div className={classes.containerSide}>
-        {!mdDown && (
-          <div className={classes.opening}>
-            <Typography variant="h3" component="h1" className={classes.opening} gutterBottom>Hi...nice to meet you</Typography>
-            <Typography variant="h6" component="p" className={classes.subpening}>Just register to join with us</Typography>
-          </div>
-        )}
-        <div className={classes.sideFormWrap}>
-          <RegisterFormV2 onSubmit={(values) => submitForm(values)} />
-        </div>
-      </div>
+                <title>{title}</title>
+                <meta name="description" content={description} />
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={description} />
+                <meta property="twitter:title" content={title} />
+                <meta property="twitter:description" content={description} />
+            </Helmet>
+            <div className={classes.containerSide}>
+                <Hidden smDown>
+                    <div className={classes.opening}>
+                    <img style={{ backgroundColor: 'white', width: 300 }} src={logo} alt={brand.name} />
+
+                    </div>
+                </Hidden>
+                <div className={classes.sideFormWrap}>
+                    <RegisterFormV2
+                        onSubmit={(values) => submitForm(values)}
+                        loading={loading}
+                        setLoading={setLoading}
+                    />
+                    {/* <StyledNotif
+                        datanotif={datanotif}
+                        setDatanotif={setDatanotif}
+                    /> */}
+                </div>
+            </div>
     </div>
   );
 }

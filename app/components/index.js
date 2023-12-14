@@ -20,11 +20,13 @@ export Technology from './LandingPage/Technology';
 export Testimonials from './LandingPage/Testimonials';
 export SideNav from './LandingPage/SideNav';
 // Dashboard and Widget
-export CounterWidget from './Counter/CounterWidget';
+export ActionIconsWidget from './Widget/ActionIconsWidget';
+export ActionWidget from './Action/ActionWidget';
 export CounterTrading from './Counter/CounterTrading';
 export SliderWidget from './Widget/SliderWidget';
 export CounterChartWidget from './Widget/CounterChartWidget';
 export CounterIconsWidget from './Widget/CounterIconsWidget';
+export CounterWidget from './Counter/CounterWidget';
 export CounterCryptoWidget from './Widget/CounterCryptoWidget';
 export PerformanceChartWidget from './Widget/PerformanceChartWidget';
 export TableWidget from './Widget/TableWidget';

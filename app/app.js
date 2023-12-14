@@ -79,6 +79,7 @@ if (!window.Intl) {
     .then(() => Promise.all([
       import('intl/locale-data/jsonp/en.js'),
       import('intl/locale-data/jsonp/de.js'),
+      import('intl/locale-data/jsonp/es.js'),
     ])) // eslint-disable-line
     .then(() => render(translationMessages))
     .catch(err => {

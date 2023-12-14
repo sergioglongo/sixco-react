@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
+import classNames from "classnames";
 import Button from '@mui/material/Button';
 import { connect } from 'react-redux';
 import IconButton from '@mui/material/IconButton';
@@ -18,10 +19,11 @@ import ArrowForward from '@mui/icons-material/ArrowForward';
 import Paper from '@mui/material/Paper';
 import Icon from '@mui/material/Icon';
 import brand from 'dan-api/dummy/brand';
-import logo from 'dan-images/logo.svg';
+import logo from 'dan-images/logo-sixco.svg';
 import useStyles from './user-jss';
 import { TextFieldRedux, CheckboxRedux } from './ReduxFormMUI';
 import { ContentDivider } from '../Divider';
+import { CircularProgress } from '@mui/material';
 
 // validation functions
 const required = value => (value === null ? 'Required' : undefined);
@@ -30,13 +32,52 @@ const email = value => (
     ? 'Invalid email'
     : undefined
 );
+const numerico = (value) => (isNaN(value) ? "Ingrese solo números" : undefined);
 
 const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disable-line
   return <NavLink to={props.to} {...props} innerRef={ref} />; // eslint-disable-line
 });
+const styles2 = (theme) => ({
+  root: {
+      display: "flex",
+      alignItems: "center",
+  },
+  wrapper: {
+      margin: theme.spacing(1),
+      position: "relative",
+  },
+  buttonSuccess: {
+      backgroundColor: green[500],
+      "&:hover": {
+          backgroundColor: green[700],
+      },
+  },
+  fabProgress: {
+      color: green[500],
+      position: "absolute",
+      top: -6,
+      left: -6,
+      zIndex: 1,
+  },
+  buttonProgress: {
+      color: green[500],
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      marginTop: -12,
+      marginLeft: -12,
+  },
+});
 
 function LoginFormV2(props) {
   const [showPassword, setShowPassword] = useState(false);
+  const {
+    // classes,
+    // handleSubmit,
+    // pristine,
+    // submitting,
+    // deco,
+  } = props;
 
   const handleClickShowPassword = () => {
     setShowPassword(show => !show);
@@ -45,12 +86,19 @@ function LoginFormV2(props) {
   const handleMouseDownPassword = event => {
     event.preventDefault();
   };
-
+  const buttonClassname = classNames({
+    // [classes.buttonSuccess]: success,
+  });
   const { classes, cx } = useStyles();
   const {
     handleSubmit,
+    onSubmit,
     pristine,
     submitting,
+    dispatch,
+    error,
+    loading,
+    setLoading,
     deco,
   } = props;
   return (
@@ -58,70 +106,58 @@ function LoginFormV2(props) {
       <div className={classes.topBar}>
         <NavLink to="/" className={classes.brand}>
           <img src={logo} alt={brand.name} />
-          {brand.name}
+          
         </NavLink>
-        <Button size="small" className={classes.buttonLink} component={LinkBtn} to="/register-v2">
+        <Button size="small" className={classes.buttonLink} component={LinkBtn} to="/auth/registrese">
           <Icon className={classes.icon}>arrow_forward</Icon>
-          Create new account
+          Registrate
         </Button>
       </div>
       <Typography variant="h4" className={classes.title} gutterBottom>
-        Sign In
+        Ingresar
       </Typography>
-      <Typography variant="caption" className={classes.subtitle} gutterBottom align="center">
-        Lorem ipsum dolor sit amet
-      </Typography>
-      <section className={classes.socmedSideLogin}>
-        <div className={classes.btnArea}>
-          <Button variant="outlined" size="small" className={classes.redBtn} type="button">
-            <AllInclusive className={cx(classes.leftIcon, classes.iconSmall)} />
-            Socmed 1
-          </Button>
-          <Button variant="outlined" size="small" className={classes.blueBtn} type="button">
-            <Brightness5 className={cx(classes.leftIcon, classes.iconSmall)} />
-            Socmed 2
-          </Button>
-          <Button variant="outlined" size="small" className={classes.cyanBtn} type="button">
-            <People className={cx(classes.leftIcon, classes.iconSmall)} />
-            Socmed 3
-          </Button>
-        </div>
-        <ContentDivider content="Or sign in with email" />
-      </section>
       <section className={classes.pageFormSideWrap}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={onSubmit}>
           <div>
-            <FormControl variant="standard" className={classes.formControl}>
+            <FormControl className={classes.formControl}>
               <Field
-                name="email"
+                name="documento"
                 component={TextFieldRedux}
-                placeholder="Your Email"
-                label="Your Email"
+                placeholder="CUIT o DNI"
+                label="CUIT o DNI"
                 required
-                validate={[required, email]}
+                validate={[required, numerico]}
                 className={classes.field}
               />
             </FormControl>
           </div>
           <div>
-            <FormControl variant="standard" className={classes.formControl}>
+            <FormControl className={classes.formControl}>
               <Field
                 name="password"
                 component={TextFieldRedux}
-                type={showPassword ? 'text' : 'password'}
-                label="Your Password"
+                type={showPassword ? "text" : "password"}
+                label="Contraseña"
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="Toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        size="large">
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                        onClick={
+                          handleClickShowPassword
+                        }
+                        onMouseDown={
+                          handleMouseDownPassword
+                        }
+                      >
+                        {showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
                       </IconButton>
                     </InputAdornment>
-                  )
+                  ),
                 }}
                 required
                 validate={required}
@@ -130,13 +166,40 @@ function LoginFormV2(props) {
             </FormControl>
           </div>
           <div className={classes.optArea}>
-            <FormControlLabel className={classes.label} control={<Field name="checkbox" component={CheckboxRedux} />} label="Remember" />
-            <Button size="small" component={LinkBtn} to="/reset-password" className={classes.buttonLink}>Forgot Password</Button>
+            {/* <FormControlLabel className={classes.label} control={<Field name="checkbox" component={CheckboxRedux} />} label="Remember" /> */}
+            <Button
+              size="small"
+              component={LinkBtn}
+              to="/auth/reset-password"
+              className={classes.buttonLink}
+            >
+              ¿Olvidaste la contraseña?
+            </Button>
           </div>
-          <div className={classes.btnArea}>
-            <Button variant="contained" fullWidth color="primary" size="large" type="submit">
-              Continue
-              <ArrowForward className={cx(classes.rightIcon, classes.iconSmall)} disabled={submitting || pristine} />
+          <div className={classes.wrapper}>
+            {/* <Button variant="contained" fullWidth color="primary" size="large" onClick={() => dispatch(submit('remoteSubmit'))}> */}
+            <Button
+              variant="contained"
+              fullWidth
+              color="primary"
+              size="large"
+              type="submit"
+              disabled={loading}
+              className={buttonClassname}
+            >
+              Continuar
+              <ArrowForward
+                className={classNames(
+                  classes.rightIcon,
+                  classes.iconSmall
+                )}
+              />
+              {loading && (
+                <CircularProgress
+                  size={24}
+                  className={styles2.buttonProgress}
+                />
+              )}
             </Button>
           </div>
         </form>
