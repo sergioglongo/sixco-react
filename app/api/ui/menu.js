@@ -8,20 +8,20 @@ module.exports = [
   },
   {
     key: 'turnos',
-    name: 'Mis turnos',
-    linkParent: '/app/turnos',
+    name: 'Sección 1',
+    linkParent: '/app/pages/proximamente',
     icon: 'ion-ios-calendar-outline'
   },
   {
     key: 'consultas',
-    name: 'Consultas',
-    linkParent: '/app/consultas',
+    name: 'Sección 2',
+    linkParent: '/app/pages/proximamente',
     icon: 'ion-ios-chatbubbles-outline'
   },
   {
     key: 'factelectronicas',
-    name: 'Fact. Electrónicas',
-    linkParent: '/app/facturas-electronicas',
+    name: 'Sección 3',
+    linkParent: '/app/pages/proximamente',
     icon: 'ion-ios-paper-outline'
   }
 ]

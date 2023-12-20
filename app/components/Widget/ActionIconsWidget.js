@@ -19,9 +19,9 @@ function ActionIconsWidget() {
         <Grid item xs={6} md={6}>
           <ActionWidget
             color={colorfull[0]}
-            title="Solicite aquí un turno"
-            btntitle="Solicitar Turno"
-            link="/app/turnos/nuevo-turno"
+            title="Sección 1"
+            btntitle="Acceder"
+            link="/app/pages/proximamente"
           >
             <Event className={classes.counterIcon} />
           </ActionWidget>
@@ -29,9 +29,9 @@ function ActionIconsWidget() {
         <Grid item xs={6} md={6}>
           <ActionWidget
             color={colorfull[1]}
-            title="Perfil"
-            btntitle="Mi Perfil"
-            link="/app/pages/perfil"
+            title="Sección 2"
+            btntitle="Acceder"
+            link="/app/pages/proximamente"
           >
             <Event className={classes.counterIcon} />
           </ActionWidget>
@@ -39,9 +39,9 @@ function ActionIconsWidget() {
         <Grid item xs={6} md={6}>
           <ActionWidget
             color={colorfull[2]}
-            title="Historial de Facturas"
-            btntitle="Ver"
-            link="/app/facturas-electronicas"
+            title="Sección 3"
+            btntitle="Acceder"
+            link="/app/pages/proximamente"
           >
             <ReceiptOutlined className={classes.counterIcon} />
           </ActionWidget>
@@ -49,9 +49,9 @@ function ActionIconsWidget() {
         <Grid item xs={6} md={6}>
           <ActionWidget
             color={colorfull[5]}
-            title="Consultas y Seguimientos"
-            btntitle="Ver"
-            link="/app/consultas"
+            title="Sección 4"
+            btntitle="Acceder"
+            link="/app/pages/proximamente"
           >
             <ForumOutlined className={classes.counterIcon} />
           </ActionWidget>

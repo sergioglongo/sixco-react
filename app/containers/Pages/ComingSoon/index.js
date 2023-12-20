@@ -9,7 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import brand from 'dan-api/dummy/brand';
-import logo from 'dan-images/logo.svg';
+import logo from 'dan-images/logo-sixco.svg';
 import useStyles from 'dan-components/Forms/user-jss';
 
 function ComingSoon(props) {
@@ -21,7 +21,7 @@ function ComingSoon(props) {
     setEmail(event.target.value);
   };
 
-  const title = brand.name + ' - Coming Soon';
+  const title = brand.name + ' - Próximamente';
   const description = brand.desc;
   return (
     <div className={classes.rootFull}>
@@ -47,14 +47,14 @@ function ComingSoon(props) {
             <div className={classes.brandCenter}>
               <div className={classes.brand}>
                 <img src={logo} alt={brand.name} />
-                {brand.name}
+                {brand.desc}
               </div>
             </div>
             <Typography variant="h2" className={classes.titleGradient} gutterBottom>
-              Coming Soon
+              Próximamente
             </Typography>
             <Typography variant="h5" gutterBottom align="center">
-              Will come with performance in design
+              Estamos trabajando en esta sección
             </Typography>
             <section className={classes.pageFormWrap}>
               <div className={cx(classes.notifyForm, classes.centerAdornment)}>
@@ -70,14 +70,9 @@ function ComingSoon(props) {
                 </FormControl>
                 <aside>
                   <Button variant="contained" color="secondary" type="submit">
-                    Notify me
+                    Sugerencias
                   </Button>
                 </aside>
-              </div>
-              <div className={cx(classes.lockForm, classes.centerAdornment)}>
-                <IconButton color="primary" className={classes.button} href="#" size="large"><i className="ion-logo-facebook" /></IconButton>
-                <IconButton color="primary" className={classes.button} href="#" size="large"><i className="ion-logo-twitter" /></IconButton>
-                <IconButton color="primary" className={classes.button} href="#" size="large"><i className="ion-logo-github" /></IconButton>
               </div>
             </section>
           </Paper>

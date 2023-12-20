@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { ThemeContext } from './ThemeWrapper';
 import Dashboard from '../Templates/Dashboard';
 import {EditProfile, Profile, ChangePassword,
+  ComingSoon,
   PersonalDashboard, CrmDashboard, CryptoDashboard,
   Infographics, MiniApps, Analytics,
   InfoUpdates, Status,
@@ -135,6 +136,7 @@ function Application(props) {
         <Route path="/app/pages/email" component={Email} />
         { /* Pages */ }
         <Route exact path="/app/pages" component={Parent} />
+        <Route exact path="/app/pages/proximamente" component={ComingSoon} />
 
         <Route path="/app/pages/blank-page" component={BlankPage} />
         <Route path="/app/blank-single" component={BlankPage} />
