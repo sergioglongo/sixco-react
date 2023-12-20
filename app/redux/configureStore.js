@@ -12,9 +12,9 @@ import createReducer from './reducers';
 const sagaMiddleware = createSagaMiddleware();
 
 const persistConfig = {
-  key: 'dandelion',
+  key: 'sixco-persist',
   storage,
-  whitelist: []
+  whitelist:['login', 'user']
 };
 
 const persistedReducer = persistReducer(persistConfig, createReducer());

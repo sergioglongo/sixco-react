@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import { ThemeContext } from './ThemeWrapper';
 import Dashboard from '../Templates/Dashboard';
-import {
+import {EditProfile, Profile, ChangePassword,
   PersonalDashboard, CrmDashboard, CryptoDashboard,
   Infographics, MiniApps, Analytics,
   InfoUpdates, Status,
@@ -29,7 +29,7 @@ import {
   TaskBoard, Calendar, Chat,
   Contact, Ecommerce, Email,
   Timeline,
-  ProductPage, Invoice, Profile, BlankPage,
+  ProductPage, Invoice,  BlankPage,
   Photos, Pricing, CheckoutPage,
   Error, Settings, HelpSupport,
   MapMarker, MapDirection, SearchMap,
@@ -44,6 +44,11 @@ function Application(props) {
       <Switch>
         { /* Home */ }
         <Route exact path="/app" component={PersonalDashboard} />
+        {/* PERFIL */}
+        <Route path="/app/pages/perfil" component={Profile} />
+        <Route path="/app/pages/editar-perfil" component={EditProfile} />
+        <Route path="/app/pages/cambiar-contrasenia" component={ChangePassword} />
+
         <Route path="/app/dashboard/sales-marketing" component={CrmDashboard} />
         <Route path="/app/dashboard/cryptocurrency" component={CryptoDashboard} />
         { /* Widgets */ }
@@ -130,7 +135,7 @@ function Application(props) {
         <Route path="/app/pages/email" component={Email} />
         { /* Pages */ }
         <Route exact path="/app/pages" component={Parent} />
-        <Route path="/app/pages/user-profile" component={Profile} />
+
         <Route path="/app/pages/blank-page" component={BlankPage} />
         <Route path="/app/blank-single" component={BlankPage} />
         <Route path="/app/pages/photo-gallery" component={Photos} />

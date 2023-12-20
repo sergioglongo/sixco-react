@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import classNames from 'classnames';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import ArrowForward from '@mui/icons-material/ArrowForward';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import brand from 'dan-api/dummy/brand';
-import logo from 'dan-images/logo.svg';
+import logo from 'dan-images/logo-sixco.svg';
 import { TextFieldRedux } from './ReduxFormMUI';
 import useStyles from './user-jss';
 
@@ -17,9 +18,13 @@ import useStyles from './user-jss';
 const required = value => (value === null ? 'Required' : undefined);
 const email = value => (
   value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-    ? 'Invalid email'
+    ? 'Email inválido'
     : undefined
 );
+
+const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disable-line
+  return <NavLink to={props.to} {...props} innerRef={ref} />; // eslint-disable-line
+});
 
 function ResetForm(props) {
   const { classes, cx } = useStyles();
@@ -34,14 +39,14 @@ function ResetForm(props) {
       <div className={classes.topBar}>
         <NavLink to="/" className={classes.brand}>
           <img src={logo} alt={brand.name} />
-          {brand.name}
+          {brand.desc}
         </NavLink>
       </div>
       <Typography variant="h4" className={classes.title} gutterBottom>
-        Reset Password
+        Recuperar contraseña
       </Typography>
       <Typography variant="caption" className={classes.subtitle} gutterBottom align="center">
-        Send reset password link to Your email
+        Te mandaremos un link a tu correo electrónico
       </Typography>
       <section className={classes.formWrap}>
         <form onSubmit={handleSubmit}>
@@ -50,8 +55,8 @@ function ResetForm(props) {
               <Field
                 name="email"
                 component={TextFieldRedux}
-                placeholder="Your Email"
-                label="Your Email"
+                placeholder="Ingrese su Email"
+                label="Ingrese su Email"
                 required
                 validate={[required, email]}
                 className={classes.field}
@@ -59,9 +64,29 @@ function ResetForm(props) {
             </FormControl>
           </div>
           <div className={classes.btnArea}>
-            <Button variant="contained" color="primary" type="submit">
-              Send Reset Link
-              <ArrowForward className={cx(classes.rightIcon, classes.iconSmall)} disabled={submitting || pristine} />
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              Enviar
+              <ArrowForward
+                className={classNames(
+                  classes.rightIcon,
+                  classes.iconSmall
+                )}
+                disabled={submitting || pristine}
+              />
+            </Button>
+          </div>
+          <div className={classes.btnArea}>
+            <Button
+              size="small"
+              component={LinkBtn}
+              to="/auth/login"
+              className={classes.buttonLink}
+            >
+              Volver
             </Button>
           </div>
         </form>

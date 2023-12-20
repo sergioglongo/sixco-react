@@ -1,12 +1,12 @@
 module.exports = {
-  saved: 'Data has been saved',
-  updated: 'Data has been updated',
-  removed: 'Item has been removed',
+  saved: 'Datos guardados correctamente',
+  updated: 'Datos actualizados correctamente',
+  removed: 'Dato eliminado correctamente',
   posted: 'Your post has been submitted',
   commented: 'Your comment has been submitted',
-  discard: 'Action canceled',
+  discard: 'Cancelado',
   addCart: 'Item added to cart',
   checkout: 'Thank you for shopping',
-  sent: 'Email sent',
+  sent: 'Email enviado',
   labeled: 'You just changed email label',
 };

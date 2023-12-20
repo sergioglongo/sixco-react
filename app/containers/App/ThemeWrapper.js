@@ -167,7 +167,7 @@ function ThemeWrapper(props) {
               barColorPrimary: classes.bar
             }}
           />
-          <TemplateSettings
+          {/* <TemplateSettings
             palette={paletteState}
             selectedValue={color}
             mode={mode}
@@ -184,7 +184,7 @@ function ThemeWrapper(props) {
             changeBgPosition={handleChangeBgPosition}
             changeLayout={handleChangeLayout}
             changeDirection={handleChangeDirection}
-          />
+          /> */}
           <ThemeContext.Provider value={handleChangeMode}>
             {children}
           </ThemeContext.Provider>

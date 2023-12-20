@@ -12,7 +12,7 @@ import { Alert, Hidden } from '@mui/material';
 import logo from 'dan-images/logo-sixco.svg';
 import {
   changeUserAuthenticatedAction,
-  // setLoginDataAction,
+  setLoginDataAction,
   setClientDataAction,
 } from 'dan-redux/actions/Users';
 
@@ -20,9 +20,9 @@ function LoginV2(props) {
   const [valueForm, setValueForm] = useState(null);
   const [datanotif, setDatanotif] = useState({ open: false, variant: 'error', message: '' });
   const [loading, setLoading] = useState(false);
+  const { changeUserAuthenticated, setClientData, isAuthenticated, setLoginData } = props;
 
   const submitForm = values => {
-    const { changeUserAuthenticated, setClientData, isAuthenticated } = props;
     values.preventDefault();
     setLoading(true);
     setValueForm(values);
@@ -33,14 +33,14 @@ function LoginV2(props) {
         account_no:"ACC3369",
         accountname:'Nombre Usuario',
         apellido:'Apellido Usuario',
-        numero_documento: '29',
+        codigopostal: '4105',
         phone:"3816093581",
-        tipo_documento:"DNI",
-        tipodireccion:"Calle",
-        pass:'pass'
+        domicilio:"Barrio Alto Peru",
+        email:"email@email.com",
       }
       // Alert('success', 'Credenciales correctas');
       setClientData(clientdata);
+      setLoginData(clientdata);
       changeUserAuthenticated(true);
     // }
   };
@@ -83,7 +83,7 @@ function LoginV2(props) {
 LoginV2.propTypes = {
   // classes: PropTypes.object.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  // setLoginData: PropTypes.func.isRequired,
+  setLoginData: PropTypes.func.isRequired,
   changeUserAuthenticated: PropTypes.func.isRequired,
   setClientData: PropTypes.func.isRequired,
 };
@@ -93,7 +93,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // setLoginData: bindActionCreators(setLoginDataAction, dispatch),
+  setLoginData: bindActionCreators(setLoginDataAction, dispatch),
   changeUserAuthenticated: bindActionCreators(changeUserAuthenticatedAction, dispatch),
   setClientData:bindActionCreators(setClientDataAction, dispatch),
 });
