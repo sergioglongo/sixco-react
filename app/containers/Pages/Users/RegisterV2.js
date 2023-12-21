@@ -5,8 +5,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import brand from 'dan-api/dummy/brand';
 import { RegisterFormV2 } from 'dan-components';
 import useStyles from 'dan-components/Forms/user-jss';
-import { Hidden } from '@mui/material';
-import logo from 'dan-images/logo-sixco.svg';
+import intro from 'dan-images/intro-sixco-large.mp4';
 
 function RegisterV2() {
   const [valueForm, setValueForm] = useState(null);
@@ -32,33 +31,34 @@ function RegisterV2() {
 
   return (
     <div className={classes.rootFull}>
-      <Helmet>
-                <title>{title}</title>
-                <meta name="description" content={description} />
-                <meta property="og:title" content={title} />
-                <meta property="og:description" content={description} />
-                <meta property="twitter:title" content={title} />
-                <meta property="twitter:description" content={description} />
-            </Helmet>
-            <div className={classes.containerSide}>
-                <Hidden smDown>
-                    <div className={classes.opening}>
-                    <img style={{ backgroundColor: 'white', width: 300 }} src={logo} alt={brand.name} />
-
-                    </div>
-                </Hidden>
-                <div className={classes.sideFormWrap}>
-                    <RegisterFormV2
-                        onSubmit={(values) => submitForm(values)}
-                        loading={loading}
-                        setLoading={setLoading}
-                    />
-                    {/* <StyledNotif
-                        datanotif={datanotif}
-                        setDatanotif={setDatanotif}
-                    /> */}
-                </div>
+      <div className={classes.containerSide}>
+        <div className={`${classes.opening} ${classes.openingVideo}`} >
+          <video autoPlay loop muted className={classes.video}>
+            <source src={intro} type="video/mp4" />
+            Tu navegador no soporta el elemento de video.
+          </video>
+          <div style={{ position: 'absolute', width: '100%', top: '85%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: '#fff' }}>
+            <div style={{ textAlign: 'start', display: 'inline-block' }}>
+              <Typography style={{ fontSize: '36px', height: '50px' }}>
+                Somos Sixco
+              </Typography>
+              <Typography style={{ fontSize: '36px', fontWeight: 'medium', height: '50px' }}>
+                EMPRESA DE LOGÍSTICA
+              </Typography>
+              <Typography style={{ fontSize: '36px', fontWeight: 'bold', height: '40px' }}>
+                INTEGRAL
+              </Typography>
             </div>
+          </div>
+        </div>
+        <div className={classes.sideFormWrap}>
+          <RegisterFormV2
+            onSubmit={(values) => submitForm(values)}
+            loading={loading}
+            setLoading={setLoading}
+          />
+        </div>
+      </div>
     </div>
   );
 }

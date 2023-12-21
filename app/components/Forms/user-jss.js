@@ -44,8 +44,10 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
     width: '100%',
-    [theme.breakpoints.down('lg')]: {
-      overflow: 'hidden'
+    [theme.breakpoints.down('md')]: {
+      overflow: 'hidden',
+      flexDirection: 'column',
+      alignItems: 'space-between',
     },
   },
   paperWrap: {
@@ -56,7 +58,13 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     height: '100%',
     borderRadius: 0,
     [theme.breakpoints.up('md')]: {
+      width: 320,
+    },
+    [theme.breakpoints.up('lg')]: {
       width: 480,
+    },
+    [theme.breakpoints.down('md')]: {
+      height: '100%',
     },
     [`& .${classes.topBar}`]: {
       marginBottom: theme.spacing(4)
@@ -87,7 +95,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
       justifyContent: 'center',
       marginBottom: theme.spacing(3),
       '& a': {
-        display: 'none'
+        display: 'flex',
       }
     }
   },
@@ -98,6 +106,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     justifyContent: 'center',
     padding: '5px 10px',
     position: 'relative',
+    height: 56,
     fontSize: 16,
     fontWeight: 500,
     color: theme.palette.text.primary,
@@ -109,7 +118,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
       margin: theme.spacing(2)
     },
     '& img': {
-      width: 30,
+      width: 100,
       marginRight: 10,
     },
   },
@@ -406,9 +415,24 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
   optArea: {
     display: 'flex',
     justifyContent: 'space-between',
-    padding: `0 ${theme.spacing(0.5)}`
+    padding: `0 ${theme.spacing(0.5)}`,
   },
+  video: {
+    objectFit: 'cover',
+    maxWidth: '100%',
+    height: '100%',
+  },
+  openingVideo:{
+    position:'relative',
+    textAlign:'center',
+    height:'100%',
+    [theme.breakpoints.down('lg')]: {
+      height:'75%',
+      
+    }  }
 }));
+
+
 
 // TODO jss-to-tss-react codemod: usages of this hook outside of this file will not be converted.
 export default useStyles;

@@ -23,7 +23,7 @@ import logo from 'dan-images/logo-sixco.svg';
 import useStyles from './user-jss';
 import { TextFieldRedux, CheckboxRedux } from './ReduxFormMUI';
 import { ContentDivider } from '../Divider';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Hidden } from '@mui/material';
 
 // validation functions
 const required = value => (value === null ? 'Required' : undefined);
@@ -39,33 +39,33 @@ const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disabl
 });
 const styles2 = (theme) => ({
   root: {
-      display: "flex",
-      alignItems: "center",
+    display: "flex",
+    alignItems: "center",
   },
   wrapper: {
-      margin: theme.spacing(1),
-      position: "relative",
+    margin: theme.spacing(1),
+    position: "relative",
   },
   buttonSuccess: {
-      backgroundColor: green[500],
-      "&:hover": {
-          backgroundColor: green[700],
-      },
+    backgroundColor: green[500],
+    "&:hover": {
+      backgroundColor: green[700],
+    },
   },
   fabProgress: {
-      color: green[500],
-      position: "absolute",
-      top: -6,
-      left: -6,
-      zIndex: 1,
+    color: green[500],
+    position: "absolute",
+    top: -6,
+    left: -6,
+    zIndex: 1,
   },
   buttonProgress: {
-      color: green[500],
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      marginTop: -12,
-      marginLeft: -12,
+    color: green[500],
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -12,
+    marginLeft: -12,
   },
 });
 
@@ -103,16 +103,17 @@ function LoginFormV2(props) {
   } = props;
   return (
     <Paper className={cx(classes.sideWrap, deco && classes.petal)}>
-      <div className={classes.topBar}>
-        <NavLink to="/" className={classes.brand}>
-          <img src={logo} alt={brand.name} />
-          
-        </NavLink>
-        <Button size="small" className={classes.buttonLink} component={LinkBtn} to="/auth/registrese">
-          <Icon className={classes.icon}>arrow_forward</Icon>
-          Registrate
-        </Button>
-      </div>
+      <Hidden mdDown>
+        <div className={classes.topBar}>
+          <NavLink to="/" className={classes.brand}>
+            <img src={logo} alt={brand.name} />
+          </NavLink>
+          <Button size="small" className={classes.buttonLink} component={LinkBtn} to="/auth/registrese">
+            <Icon className={classes.icon}>arrow_forward</Icon>
+            Registrate
+          </Button>
+        </div>
+      </Hidden>
       <Typography variant="h4" className={classes.title} gutterBottom>
         Ingresar
       </Typography>
@@ -165,7 +166,7 @@ function LoginFormV2(props) {
               />
             </FormControl>
           </div>
-          <div className={classes.optArea}>
+          <div className={classes.optArea} style={{ marginTop: 16 }}>
             {/* <FormControlLabel className={classes.label} control={<Field name="checkbox" component={CheckboxRedux} />} label="Remember" /> */}
             <Button
               size="small"
@@ -176,7 +177,7 @@ function LoginFormV2(props) {
               ¿Olvidaste la contraseña?
             </Button>
           </div>
-          <div className={classes.wrapper}>
+          <div className={classes.wrapper} style={{ marginTop: 16 }}>
             {/* <Button variant="contained" fullWidth color="primary" size="large" onClick={() => dispatch(submit('remoteSubmit'))}> */}
             <Button
               variant="contained"
@@ -202,6 +203,21 @@ function LoginFormV2(props) {
               )}
             </Button>
           </div>
+          <Hidden mdUp>
+            <div className={classes.topBar} style={{ marginTop: 16 }}>
+              <Button
+                size="large"
+                variant="outlined"
+                fullWidth
+                className={buttonClassname}
+                component={LinkBtn}
+                to="/auth/registrese"
+              >
+                <Icon className={classes.icon}>arrow_forward</Icon>
+                Registrate
+              </Button>
+            </div>
+          </Hidden>
         </form>
       </section>
     </Paper>

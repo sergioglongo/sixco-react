@@ -9,12 +9,13 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { LoginFormV2 } from 'dan-components';
 import useStyles from 'dan-components/Forms/user-jss';
 import { Alert, Hidden } from '@mui/material';
-import logo from 'dan-images/logo-sixco.svg';
+import intro from 'dan-images/intro-sixco-large.mp4';
 import {
   changeUserAuthenticatedAction,
   setLoginDataAction,
   setClientDataAction,
 } from 'dan-redux/actions/Users';
+import logo from 'dan-images/logo-sixco-only.svg';
 
 function LoginV2(props) {
   const [valueForm, setValueForm] = useState(null);
@@ -29,19 +30,19 @@ function LoginV2(props) {
     // let doc = values.get('documento');
     // let pass = values.target.get('password');
     // if (typeof doc != '' && pass != '') {
-      const clientdata = {
-        account_no:"ACC3369",
-        accountname:'Nombre Usuario',
-        apellido:'Apellido Usuario',
-        codigopostal: '4105',
-        phone:"3816093581",
-        domicilio:"Barrio Alto Peru",
-        email:"email@email.com",
-      }
-      // Alert('success', 'Credenciales correctas');
-      setClientData(clientdata);
-      setLoginData(clientdata);
-      changeUserAuthenticated(true);
+    const clientdata = {
+      account_no: "ACC3369",
+      accountname: 'Nombre Usuario',
+      apellido: 'Apellido Usuario',
+      codigopostal: '4105',
+      phone: "3816093581",
+      domicilio: "Barrio Alto Peru",
+      email: "email@email.com",
+    }
+    // Alert('success', 'Credenciales correctas');
+    setClientData(clientdata);
+    setLoginData(clientdata);
+    changeUserAuthenticated(true);
     // }
   };
 
@@ -52,28 +53,35 @@ function LoginV2(props) {
 
   return (
     <div className={classes.rootFull}>
-      <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="twitter:title" content={title} />
-        <meta property="twitter:description" content={description} />
-      </Helmet>
       <div className={classes.containerSide}>
-        <Hidden smDown>
-          <div className={classes.opening}>
-            <img style={{ backgroundColor: 'white', width: 300 }} src={logo} alt={brand.name} />
-            <Typography variant="h6" component="p" className={classes.subpening}>
-              Debe iniciar sesión para continuar
-            </Typography>
+        <div className={`${classes.opening} ${classes.openingVideo}`} >
+          <video autoPlay loop muted className={classes.video}>
+            <source src={intro} type="video/mp4" />
+            Tu navegador no soporta el elemento de video.
+          </video>
+          <div style={{ position: 'absolute', width: '100%', top: '85%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: '#fff' }}>
+            <div style={{ textAlign: 'start', display: 'inline-block' }}>
+              <div style={{ display: 'flex', height: '50px', flexDirection: 'row', alignItems: 'center', gap: '15px' }}>
+                <div style={{ height: '50px' , display: 'flex', alignItems: 'center' }}>
+                  <Typography style={{ fontSize: '36px' }}>
+                    Somos
+                  </Typography>
+                </div>
+                <div style={{ height: '50px' , display: 'flex', alignItems: 'center' }}>
+                  <img src={logo} alt={brand.name} height={'30px'} />
+                </div>
+              </div>
+              <Typography style={{ fontSize: '36px', fontWeight: 'medium', height: '50px' }}>
+                EMPRESA DE LOGÍSTICA
+              </Typography>
+              <Typography style={{ fontSize: '36px', fontWeight: 'bold', height: '40px' }}>
+                INTEGRAL
+              </Typography>
+            </div>
           </div>
-        </Hidden>
+        </div>
         <div className={classes.sideFormWrap}>
           <LoginFormV2 onSubmit={(values) => submitForm(values)} loading={loading} setLoading={setLoading} />
-          {/* <AlertDialog openmodal={openmodal} setOpenmodal={setOpenmodal} titulo={datamodal.titulo} mensaje={datamodal.mensaje} />
-          <StyledNotif open={openmodal} setOpen={setOpenmodal} variant={'success'} message={datamodal.mensaje} /> */}
-          {/* <StyledNotif datanotif={datanotif} setDatanotif={setDatanotif} /> */}
         </div>
       </div>
     </div>
@@ -95,7 +103,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setLoginData: bindActionCreators(setLoginDataAction, dispatch),
   changeUserAuthenticated: bindActionCreators(changeUserAuthenticatedAction, dispatch),
-  setClientData:bindActionCreators(setClientDataAction, dispatch),
+  setClientData: bindActionCreators(setClientDataAction, dispatch),
 });
 
 const LoginV2Mapped = connect(

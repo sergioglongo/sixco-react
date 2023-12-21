@@ -130,9 +130,9 @@ const lightPalette = {
   skyBlueTheme: {
     palette: {
       primary: {
-        light: '#E3F2FD',
-        main: '#2196F3',
-        dark: '#1565C0',
+        light: '#E0F7FA',
+        main: '#00809D',
+        dark: '#56565A',
         contrastText: '#fff',
       },
       secondary: {

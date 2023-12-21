@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="62" height="511" viewBox="0 0 62 511">
+  <g id="hero-deco-right" transform="translate(530 467) rotate(180)">
+    <line id="Línea_11" data-name="Línea 11" y2="510.5" transform="translate(469.5 -44)" fill="none" stroke="#fff" stroke-width="3"/>
+    <line id="Línea_12" data-name="Línea 12" x2="62" transform="translate(468 465.5)" fill="none" stroke="#00617d" stroke-width="3"/>
+    <line id="Línea_13" data-name="Línea 13" x2="62" transform="translate(469.5 404.5) rotate(90)" fill="none" stroke="#00617d" stroke-width="3"/>
+  </g>
+</svg>
