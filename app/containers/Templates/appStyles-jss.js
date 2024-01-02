@@ -58,7 +58,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     padding: theme.spacing(2),
     minHeight: '100%',
     overflow: 'hidden',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1),
     },
@@ -122,7 +122,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     bottom: -32,
     transform: 'scale(1.1,0.8)',
     transformOrigin: 'bottom',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       display: 'none'
     },
   },
@@ -212,7 +212,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     '& h4': {
       fontWeight: 700,
       textTransform: 'capitalize',
-      [theme.breakpoints.down('lg')]: {
+      [theme.breakpoints.down('md')]: {
         marginBottom: theme.spacing(3)
       }
     },

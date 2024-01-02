@@ -30,7 +30,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
       [`& .${classes.menuButton}`]: {
         marginLeft: 30,
         marginRight: theme.spacing(2),
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('md')]: {
           marginLeft: 13,
         },
       },
@@ -59,7 +59,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
       margin: `0 ${theme.spacing(2)}`
     },
     [`& .${classes.wrapper}`]: {
-      [theme.breakpoints.down('xl')]: {
+      [theme.breakpoints.down('lg')]: {
         border: `1px solid ${theme.palette.divider}`
       },
     }
@@ -73,7 +73,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     flexDirection: 'row',
     background: theme.palette.background.paper,
     boxShadow: theme.shadows[3],
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       padding: `${theme.spacing(0.5)} 0`,
     },
     [theme.breakpoints.up('lg')]: {
@@ -193,7 +193,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     },
   },
   searchWrapper: {
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       flex: 1,
       textAlign: 'right'
     }
@@ -206,7 +206,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       display: 'none'
     },
   },

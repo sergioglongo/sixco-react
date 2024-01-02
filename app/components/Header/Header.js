@@ -12,6 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import UserMenu from './UserMenu';
 import SearchUi from '../Search/SearchUi';
 import useStyles from './header-jss';
+import { Hidden } from '@mui/material';
 
 const elem = document.documentElement;
 
@@ -104,9 +105,6 @@ function Header(props) {
     return classes.left;
   };
 
-  const smDown = useMediaQuery(theme => theme.breakpoints.down('sm'));
-  const mdDown = useMediaQuery(theme => theme.breakpoints.down('md'));
-
   return (
     <AppBar
       className={
@@ -129,23 +127,23 @@ function Header(props) {
         >
           <MenuIcon />
         </Fab>
-        {!mdDown && (
+        <Hidden smDown>
           <div className={classes.headerProperties}>
             <div className={cx(classes.headerAction, showTitle && classes.fadeOut)}>
               {fullScreen ? (
-                <Tooltip title="Exit Full Screen" placement="bottom">
+                <Tooltip title="Salir de Pantalla Completa" placement="bottom">
                   <IconButton className={classes.button} onClick={closeFullScreen} size="large">
                     <i className="ion-ios-qr-scanner-outline" />
                   </IconButton>
                 </Tooltip>
               ) : (
-                <Tooltip title="Full Screen" placement="bottom">
+                <Tooltip title="Pantalla Completa" placement="bottom">
                   <IconButton className={classes.button} onClick={openFullScreen} size="large">
                     <i className="ion-ios-qr-scanner-outline" />
                   </IconButton>
                 </Tooltip>
               )}
-              <Tooltip title="Turn Dark/Light" placement="bottom">
+              <Tooltip title="Claro / Oscuro" placement="bottom">
                 <IconButton className={classes.button} onClick={() => turnMode(mode)} size="large">
                   <i className="ion-ios-bulb-outline" />
                 </IconButton>
@@ -155,7 +153,7 @@ function Header(props) {
               {title}
             </Typography>
           </div>
-        )}
+        </Hidden>
         <UserMenu />
       </Toolbar>
     </AppBar>

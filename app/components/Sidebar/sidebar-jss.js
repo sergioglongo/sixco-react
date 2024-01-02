@@ -43,6 +43,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
   },
   drawerPaperClose: {
     width: theme.spacing(8),
+    position: 'absolute',
     overflowX: 'hidden',
     background: theme.palette.background.paper,
     transition: theme.transitions.create('width', {
@@ -134,7 +135,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     paddingTop: theme.spacing(0.5),
     paddingBottom: theme.spacing(0.5),
     margin: `${theme.spacing(0.5)} 0`,
-    [theme.breakpoints.down('xl')]: {
+    [theme.breakpoints.down('lg')]: {
       paddingLeft: theme.spacing(3)
     }
   },
@@ -327,7 +328,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
       [theme.breakpoints.up('lg')]: {
         paddingTop: theme.spacing(5)
       },
-      [theme.breakpoints.down('xl')]: {
+      [theme.breakpoints.down('lg')]: {
         height: 'calc(100% - 164px)',
         paddingTop: theme.spacing(5)
       }

@@ -55,7 +55,7 @@ function MainMenu(props) {
               cx(
                 classes.head,
                 item.icon ? classes.iconed : '',
-                open.indexOf(item.key) > -1 ? classes.opened : '',
+                open.indexOf(item.key) > -1 ? classes.opened : classes.closed,
               )
             }
             onClick={() => openSubMenu(item.key, item.keyParent)}
