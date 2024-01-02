@@ -3,6 +3,7 @@ import { alpha } from '@mui/material/styles';
 import {
   lightGreen, red, amber, grey
 } from '@mui/material/colors';
+import themePalette from 'dan-api/palette/themePaletteMode';
 
 const drawerWidth = 240;
 const useStyles = makeStyles()((theme, _params, classes) => ({
@@ -113,7 +114,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
   bigAvatar: {
     width: 80,
     height: 80,
-    boxShadow: theme.glow.light
+    boxShadow: `0 2px 10px -5px ${theme.palette.primary.dark}`
   },
   brandBar: {
     transition: theme.transitions.create(['width', 'margin', 'background'], {
@@ -234,7 +235,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     fontWeight: 500,
     color: theme.palette.text.primary,
     '& img': {
-      width: 150,
+      width: 180,
       marginRight: 10,
     },
   },

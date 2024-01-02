@@ -83,7 +83,11 @@ function SidebarContent(props) {
             turnDarker && classes.darker
           )}
         >
-          <img src={logo} alt={brand.name} width={'150px'} height={'50px'}/>
+          <img src={logo} alt={brand.name} width={'180px'} height={'60px'}
+          style={{
+            filter: 'drop-shadow(2px 5px 5px rgba(0, 0, 0, 0.2))' // Aplica una sombra que sigue la forma de las imágenes internas separadas
+          }}
+          />
         </NavLink>
         {isLogin && (
           <div
