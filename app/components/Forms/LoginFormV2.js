@@ -22,7 +22,6 @@ import brand from 'dan-api/dummy/brand';
 import logo from 'dan-images/logo-sixco.svg';
 import useStyles from './user-jss';
 import { TextFieldRedux, CheckboxRedux } from './ReduxFormMUI';
-import { ContentDivider } from '../Divider';
 import { CircularProgress, Hidden } from '@mui/material';
 
 // validation functions
@@ -103,17 +102,15 @@ function LoginFormV2(props) {
   } = props;
   return (
     <Paper className={cx(classes.sideWrap, deco && classes.petal)}>
-      <Hidden mdDown>
         <div className={classes.topBar}>
           <NavLink to="/" className={classes.brand}>
-            <img src={logo} alt={brand.name} />
+            <img src={logo} alt={brand.name} style={{ width: 200, height: 80 }} />
           </NavLink>
           <Button size="small" className={classes.buttonLink} component={LinkBtn} to="/auth/registrese">
             <Icon className={classes.icon}>arrow_forward</Icon>
             Registrate
           </Button>
         </div>
-      </Hidden>
       <Typography variant="h4" className={classes.title} gutterBottom>
         Ingresar
       </Typography>
@@ -124,8 +121,8 @@ function LoginFormV2(props) {
               <Field
                 name="documento"
                 component={TextFieldRedux}
-                placeholder="CUIT o DNI"
-                label="CUIT o DNI"
+                placeholder="CUIT"
+                label="CUIT"
                 required
                 validate={[required, numerico]}
                 className={classes.field}
@@ -203,21 +200,6 @@ function LoginFormV2(props) {
               )}
             </Button>
           </div>
-          <Hidden mdUp>
-            <div className={classes.topBar} style={{ marginTop: 16 }}>
-              <Button
-                size="large"
-                variant="outlined"
-                fullWidth
-                className={buttonClassname}
-                component={LinkBtn}
-                to="/auth/registrese"
-              >
-                <Icon className={classes.icon}>arrow_forward</Icon>
-                Registrate
-              </Button>
-            </div>
-          </Hidden>
         </form>
       </section>
     </Paper>

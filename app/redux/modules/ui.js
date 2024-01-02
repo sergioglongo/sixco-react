@@ -18,7 +18,7 @@ import {
 
 const initialState = {
   /* Settings for Themes and layout */
-  theme: 'skyBlueTheme',
+  theme: 'sixcoTheme',
   direction: 'ltr',
   type: 'light', // light or dark
   gradient: true, // true or false
@@ -44,6 +44,7 @@ const initialState = {
     { name: 'Ruby', value: 'redTheme' },
     { name: 'Sultan', value: 'goldTheme' },
     { name: 'Monochrome', value: 'greyTheme' },
+    { name: 'Sixco', value: 'sixcoTheme' },
   ],
   sidebarOpen: true,
   pageLoaded: false,

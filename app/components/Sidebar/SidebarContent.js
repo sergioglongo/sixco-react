@@ -9,6 +9,8 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import brand from 'dan-api/dummy/brand';
 import dummy from 'dan-api/dummy/dummyContents';
+import company from 'dan-images/company-logo-example.jpg';
+
 import logo from 'dan-images/logo-sixco.svg';
 import MainMenu from './MainMenu';
 import useStyles from './sidebar-jss';
@@ -81,8 +83,7 @@ function SidebarContent(props) {
             turnDarker && classes.darker
           )}
         >
-          <img src={logo} alt={brand.name} />
-          {brand.name}
+          <img src={logo} alt={brand.name} width={'150px'} height={'50px'}/>
         </NavLink>
         {isLogin && (
           <div
@@ -94,7 +95,7 @@ function SidebarContent(props) {
           >
             <Avatar
               alt={dummy.user.name}
-              src={dummy.user.avatar}
+              src={company}
               className={classNames(
                 classes.avatar,
                 classes.bigAvatar

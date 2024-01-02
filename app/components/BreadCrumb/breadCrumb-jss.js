@@ -6,7 +6,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     position: 'relative',
     display: 'block',
     fontSize: 12,
-    color: 'rgba(255, 255, 255, 0.5)',
+    color: 'rgba(255, 255, 255, 0.9)',
     '& p': {
       display: 'block',
       margin: 0,

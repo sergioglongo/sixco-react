@@ -36,10 +36,9 @@ function ResetForm(props) {
   } = props;
   return (
     <Paper className={cx(classes.paperWrap, deco && classes.petal)}>
-      <div className={classes.topBar}>
+      <div >
         <NavLink to="/" className={classes.brand}>
-          <img src={logo} alt={brand.name} />
-          {brand.desc}
+          <img src={logo} alt={brand.name}  style={{ width: 200, height: 80 }}/>
         </NavLink>
       </div>
       <Typography variant="h4" className={classes.title} gutterBottom>

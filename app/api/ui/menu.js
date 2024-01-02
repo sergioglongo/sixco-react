@@ -3,25 +3,43 @@ module.exports = [
   {
     key: 'inicio',
     name: 'Inicio',
-    icon: 'ion-ios-home-outline',
+    icon: 'Home',
     linkParent: '/app',
   },
   {
-    key: 'turnos',
-    name: 'Sección 1',
+    key: 'choferes',
+    name: 'Choferes',
     linkParent: '/app/pages/proximamente',
-    icon: 'ion-ios-calendar-outline'
+    icon: 'AirlineSeatReclineNormal'
   },
   {
-    key: 'consultas',
-    name: 'Sección 2',
+    key: 'unidades',
+    name: 'Unidades',
     linkParent: '/app/pages/proximamente',
-    icon: 'ion-ios-chatbubbles-outline'
+    icon: 'LocalShipping'
   },
   {
-    key: 'factelectronicas',
-    name: 'Sección 3',
+    key: 'cupos',
+    name: 'Solicitud cupos',
     linkParent: '/app/pages/proximamente',
-    icon: 'ion-ios-paper-outline'
+    icon: 'AssignmentTurnedIn'
+  },
+  {
+    key: 'usuarios',
+    name: 'Lista de usuarios',
+    linkParent: '/app/pages/proximamente',
+    icon: 'People'
+  },
+  {
+    key: 'bonificacion',
+    name: 'Bonificacion',
+    linkParent: '/app/pages/proximamente',
+    icon: 'CurrencyExchange'
+  },
+  {
+    key: 'dominios',
+    name: 'Dominios',
+    linkParent: '/app/pages/proximamente',
+    icon: 'Garage'
   }
 ]

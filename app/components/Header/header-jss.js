@@ -439,7 +439,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     [`& .${classes.button}`]: {
       margin: `0 ${theme.spacing(1)} / 2`,
       '& i': {
-        color: alpha(theme.palette.common.white, 0.87),
+        color: alpha(theme.palette.primary.main, 0.99),
         width: 28,
         height: 28,
         fontSize: 28,

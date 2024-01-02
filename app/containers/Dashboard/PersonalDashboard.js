@@ -3,17 +3,8 @@ import brand from 'dan-api/dummy/brand';
 import { Helmet } from 'react-helmet';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Grid from '@mui/material/Grid';
-import Divider from '@mui/material/Divider';
 import {
   ActionIconsWidget,
-  CounterIconsWidget,
-  PerformanceChartWidget,
-  DateWidget,
-  TaskWidget,
-  WeatherWidget,
-  ContactWidget,
-  TimelineWidget,
-  FilesWidget,
 } from 'dan-components';
 import useStyles from './dashboard-jss';
 
@@ -26,14 +17,14 @@ function PersonalDashboard() {
 
   return (
     <div>
-      <Helmet>
+      {/* <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="twitter:title" content={title} />
         <meta property="twitter:description" content={description} />
-      </Helmet>
+      </Helmet> */}
       {/* 1st Section */}
 
       <Grid container spacing={3} className={classes.root}>

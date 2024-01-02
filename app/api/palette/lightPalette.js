@@ -270,7 +270,22 @@ const lightPalette = {
         contrastText: '#fff',
       },
     },
-  }
-};
+  },
+  sixcoTheme: {
+    palette: {
+      primary: {
+        light: '#E0F7FA',
+        main: '#00809D',
+        dark: '#56565A',
+        contrastText: '#fff',
+      },
+      secondary: {
+        light: '#E0F2F1',
+        main: '#00BFA5',
+        dark: '#00796B',
+        contrastText: '#fff',
+      },
+    },
+  },};
 
 export default lightPalette;

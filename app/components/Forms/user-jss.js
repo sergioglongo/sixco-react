@@ -14,7 +14,7 @@ const rootWraper = {
 const wrapper = (theme, opacity) => ({
   padding: theme.spacing(3),
   textAlign: 'center',
-  backgroundColor: alpha(theme.palette.background.paper, opacity),
+  backgroundColor: 'white',
   backgroundRepeat: 'no-repeat',
   color: theme.palette.text.primary,
   backgroundSize: 'cover',
@@ -29,6 +29,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
   rootFull: {
     ...rootWraper,
     height: '100%',
+    backgroundColor: '#042630'
   },
   container: {
     display: 'flex',
@@ -91,8 +92,9 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     [`& .${classes.icon}`]: {
       marginRight: theme.spacing(1)
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       justifyContent: 'center',
+      flexDirection: 'column',
       marginBottom: theme.spacing(3),
       '& a': {
         display: 'flex',
@@ -106,7 +108,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     justifyContent: 'center',
     padding: '5px 10px',
     position: 'relative',
-    height: 56,
+    height: 80,
     fontSize: 16,
     fontWeight: 500,
     color: theme.palette.text.primary,
@@ -115,7 +117,8 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
       color: theme.palette.common.white,
     },
     [theme.breakpoints.down('lg')]: {
-      margin: theme.spacing(2)
+      margin: theme.spacing(2),
+      padding: 0
     },
     '& img': {
       width: 100,
@@ -427,7 +430,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     textAlign:'center',
     height:'100%',
     [theme.breakpoints.down('lg')]: {
-      height:'75%',
+      // height:'75%',
       
     }  }
 }));

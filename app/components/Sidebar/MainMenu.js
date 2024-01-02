@@ -15,6 +15,7 @@ import Chip from '@mui/material/Chip';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import useStyles from './sidebar-jss';
+import SixcoIcon from '../../api/icons/sixco-icons';
 
 const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disable-line
   return <NavLink to={props.to} {...props} innerRef={ref} />; // eslint-disable-line
@@ -59,11 +60,9 @@ function MainMenu(props) {
             }
             onClick={() => openSubMenu(item.key, item.keyParent)}
           >
-            {item.icon && (
-              <ListItemIcon className={classes.icon}>
-                <i className={item.icon} />
-              </ListItemIcon>
-            )}
+            <ListItemIcon key={index} className={classes.icon}>
+              <SixcoIcon iconName={item.icon} />
+            </ListItemIcon>
             <ListItemText classes={{ primary: classes.primary }} variant="inset" primary={item.name} />
             {!item.linkParent && (
               <span>
@@ -127,16 +126,13 @@ function MainMenu(props) {
         <ListItem
           button
           onClick={handleLogOut}
-          style={{ paddingLeft: '24px' }}
+          // style={{ paddingLeft: '24px' }}
+          className={classes.head}
         >
           <ListItemIcon className={classes.icon}>
-            <i className={classNames(classes.icon, 'ion-ios-exit-outline')} />
+            <SixcoIcon iconName={'ExitToApp'} />
           </ListItemIcon>
-          <ListItemText classes={{ primary: classes.primary }} variant="inset" primary="Salir">
-            <span className={classes.text}>
-              Salir
-            </span>
-          </ListItemText>
+          <ListItemText classes={{ primary: classes.primary }} variant="inset" primary={'Salir'} />
         </ListItem>
       </div>
     </div>

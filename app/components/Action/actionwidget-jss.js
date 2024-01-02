@@ -14,9 +14,10 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
         marginBottom: -1,
         alignItems: 'flex-end',
       },
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         flexDirection: 'column',
-        height: 'fit-content'
+        height: 'fit-content',
+        alignItems: 'center',
       },
       '& > *': {
         padding: '0 5px'

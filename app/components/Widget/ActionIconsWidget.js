@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from 'tss-react/mui';
 import Grid from '@mui/material/Grid';
-import colorfull from 'dan-api/palette/colorfull';
+import colorfull from 'dan-api/palette/colorSixco';
 
 // import CounterWidget from '../Counter/CounterWidget';
-import { Event, ForumOutlined, ReceiptOutlined } from '@mui/icons-material';
 import useStyles from './widget-jss';
 import ActionWidget from '../Action/ActionWidget';
-
+import SixcoIcon from '../../api/icons/sixco-icons';
 
 function ActionIconsWidget() {
   const { classes } = useStyles();
@@ -19,41 +18,62 @@ function ActionIconsWidget() {
         <Grid item xs={6} md={6}>
           <ActionWidget
             color={colorfull[0]}
-            title="Sección 1"
+            title="Choferes"
             btntitle="Acceder"
             link="/app/pages/proximamente"
           >
-            <Event className={classes.counterIcon} />
+            <SixcoIcon iconName={'AirlineSeatReclineNormal'} className={classes.counterIcon} />
+            {/* <AirlineSeatReclineNormalIcon  /> */}
           </ActionWidget>
         </Grid>
         <Grid item xs={6} md={6}>
           <ActionWidget
             color={colorfull[1]}
-            title="Sección 2"
+            title="Unidades"
             btntitle="Acceder"
             link="/app/pages/proximamente"
           >
-            <Event className={classes.counterIcon} />
+            <SixcoIcon iconName={'LocalShipping'} className={classes.counterIcon} />
           </ActionWidget>
         </Grid>
         <Grid item xs={6} md={6}>
           <ActionWidget
             color={colorfull[2]}
-            title="Sección 3"
+            title="Solicitud cupos"
             btntitle="Acceder"
             link="/app/pages/proximamente"
           >
-            <ReceiptOutlined className={classes.counterIcon} />
+            <SixcoIcon iconName={'AssignmentTurnedIn'} className={classes.counterIcon} />
+          </ActionWidget>
+        </Grid>
+        <Grid item xs={6} md={6}>
+          <ActionWidget
+            color={colorfull[3]}
+            title="Lista de usuarios"
+            btntitle="Acceder"
+            link="/app/pages/proximamente"
+          >
+            <SixcoIcon iconName={'People'} className={classes.counterIcon} />
+          </ActionWidget>
+        </Grid>
+        <Grid item xs={6} md={6}>
+          <ActionWidget
+            color={colorfull[4]}
+            title="Bonificaciones"
+            btntitle="Acceder"
+            link="/app/pages/proximamente"
+          >
+            <SixcoIcon iconName={'CurrencyExchange'} className={classes.counterIcon} />
           </ActionWidget>
         </Grid>
         <Grid item xs={6} md={6}>
           <ActionWidget
             color={colorfull[5]}
-            title="Sección 4"
+            title="Dominios"
             btntitle="Acceder"
             link="/app/pages/proximamente"
           >
-            <ForumOutlined className={classes.counterIcon} />
+            <SixcoIcon iconName={'Garage'} className={classes.counterIcon} />
           </ActionWidget>
         </Grid>
       </Grid>

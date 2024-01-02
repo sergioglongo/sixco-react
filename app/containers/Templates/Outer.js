@@ -11,7 +11,8 @@ function Outer(props) {
     decoration
   } = props;
   return (
-    <div className={cx(classes.appFrameOuter, gradient ? classes.gradientBg : classes.solidBg)}>
+    // <div className={cx(classes.appFrameOuter, gradient ? classes.gradientBg : classes.solidBg)}>
+    <div className={classes.appFrameOuter}>
       <main className={classes.outerContent} id="mainContent">
         { decoration && <div className={classes.petal} /> }
         {children}

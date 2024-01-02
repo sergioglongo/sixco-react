@@ -116,7 +116,7 @@ function Header(props) {
           margin && classes.appBarShift,
           setMargin(position),
           turnDarker && classes.darker,
-          gradient ? classes.gradientBg : classes.solidBg
+          // gradient ? classes.gradientBg : classes.solidBg
         )
       }
     >

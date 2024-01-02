@@ -10,6 +10,7 @@ import {
 import dataMenu from 'dan-api/ui/menu';
 import Decoration from '../Decoration';
 import useStyles from '../appStyles-jss';
+import intro from 'dan-images/bg-red.jpg';
 
 function LeftSidebarLayout(props) {
   const { classes, cx } = useStyles();
@@ -50,13 +51,16 @@ function LeftSidebarLayout(props) {
         leftSidebar
       />
       <main className={cx(classes.content, !sidebarOpen ? classes.contentPaddingLeft : '')} id="mainContent">
-        <Decoration
+        {/* <Decoration
           mode={mode}
           gradient={gradient}
           decoration={deco}
           bgPosition={bgPosition}
           horizontalMenu={false}
-        />
+        /> */}
+
+        <img src={intro} alt={'background'} width={'100%'} height={'100%'} style={{ objectFit: 'cover', position: 'absolute', left: 0, top: 0 }} />
+
         <section className={cx(classes.mainWrap, classes.sidebarLayout)}>
           {titleException.indexOf(history.location.pathname) < 0 && (
             <div className={classes.pageTitle}>
@@ -71,7 +75,7 @@ function LeftSidebarLayout(props) {
           >
             <div className={!pageLoaded ? classes.hideApp : ''}>
               {/* Application content will load here */}
-              { children }
+              {children}
             </div>
           </Fade>
         </section>

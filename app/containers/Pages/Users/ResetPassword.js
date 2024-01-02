@@ -1,8 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet';
 import brand from 'dan-api/dummy/brand';
-import { ResetForm } from 'dan-components';
+import { ResetForm, ResetFormFull } from 'dan-components';
 import useStyles from '../../../components/Forms/user-jss';
+// import intro from 'dan-images/footer-deco.svg';
+import { Hidden } from '@mui/material';
+import intro from 'dan-images/bg-red.jpg';
 
 function ResetPassword() {
   const [valueForm, setValueForm] = useState(null);
@@ -18,20 +21,21 @@ function ResetPassword() {
   const description = brand.desc;
   const { classes } = useStyles();
   return (
-    <div className={classes.root}>
-      <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="twitter:title" content={title} />
-        <meta property="twitter:description" content={description} />
-      </Helmet>
-      <div className={classes.container}>
-        <div className={classes.userFormWrap}>
-          <ResetForm onSubmit={(values) => submitForm(values)} />
+    <div className={classes.rootFull}>
+      <Hidden mdDown>
+        <div className={classes.container}>
+          <div className={classes.userFormWrap}>
+            <img src={intro} alt={'background'} width={'100%'} height={'100%'} style={{ objectFit: 'cover', position: 'absolute', left: 0, top: 0, zIndex: -1 }} />
+            {/* <img src={intro} alt={brand.name} width={'100%'} height={'100%'} style={{ objectFit: 'cover' }} /> */}
+            <ResetForm onSubmit={(values) => submitForm(values)} />
+          </div>
         </div>
-      </div>
+      </Hidden>
+      <Hidden mdUp>
+        <div className={classes.fullFormWrap}>
+          <ResetFormFull onSubmit={(values) => submitForm(values)} />
+        </div>
+      </Hidden>
     </div>
   );
 }

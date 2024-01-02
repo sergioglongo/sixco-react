@@ -80,16 +80,19 @@ function RegisterFormV2(props) {
     <Paper className={cx(classes.sideWrap, deco && classes.petal)}>
       <div className={classes.topBar}>
         <NavLink to="/" className={classes.brand}>
-          <img src={logo} alt={brand.name} />
+          <img src={logo} alt={brand.name}  style={{ width: 200, height: 80 }}/>
         </NavLink>
         <Button
           size="small"
           className={classes.buttonLink}
           component={LinkBtn}
           to="/auth/login"
+
         >
           <Icon className={classes.icon}>arrow_forward</Icon>
-          ¿Ya tenes cuenta? Iniciá sesión
+          <div style={{maxWidth: 120, lineHeight: '1.3'}}>
+            ¿Ya tenes cuenta? Iniciá sesión
+          </div>
         </Button>
       </div>
       <Typography variant="h4" className={classes.title} gutterBottom>
@@ -137,10 +140,10 @@ function RegisterFormV2(props) {
               <Field
                 name="documento"
                 component={TextFieldRedux}
-                placeholder="Ingresa tu CUIT o DNI"
+                placeholder="Ingresa tu CUIT"
                 required
                 validate={[required, numerico]}
-                label="CUIT o DNI"
+                label="CUIT"
                 className={classes.field}
               />
             </FormControl>
@@ -165,9 +168,9 @@ function RegisterFormV2(props) {
               <Field
                 name="phone"
                 component={TextFieldRedux}
-                label="Celular"
+                label="Celular *"
                 placeholder="Ingrese su número de Celular con código de area"
-                validate={[numerico]}
+                validate={[required, numerico]}
                 className={classes.field}
               />
             </FormControl>
