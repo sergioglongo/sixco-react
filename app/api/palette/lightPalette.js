@@ -281,7 +281,7 @@ const lightPalette = {
       },
       secondary: {
         light: '#E0F2F1',
-        main: '#00BFA5',
+        main: '#56565a',
         dark: '#00796B',
         contrastText: '#fff',
       },

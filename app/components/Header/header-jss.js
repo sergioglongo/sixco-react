@@ -73,10 +73,10 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     flexDirection: 'row',
     background: theme.palette.background.paper,
     boxShadow: theme.shadows[3],
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       padding: `${theme.spacing(0.5)} 0`,
     },
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up('md')]: {
       background: alpha(theme.palette.background.paper, 0.8),
     },
     color: theme.palette.text.primary
@@ -99,11 +99,11 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     }),
     [`&.${classes.left}`]: {
       [`& .${classes.menuButton}`]: {
-        [theme.breakpoints.up('lg')]: {
+        [theme.breakpoints.up('md')]: {
           marginLeft: -20
         }
       },
-      [theme.breakpoints.up('lg')]: {
+      [theme.breakpoints.up('md')]: {
         marginLeft: drawerWidth,
         width: `calc(100% - ${drawerWidth}px)`,
       },

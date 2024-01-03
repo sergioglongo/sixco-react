@@ -45,15 +45,15 @@ function ComingSoon(props) {
             }
           >
             <div className={classes.brandCenter}>
-              <div className={classes.brand}>
-                <img src={logo} alt={brand.name} />
-                {brand.desc}
-              </div>
+              {/* <div className={classes.brand}> */}
+                <img src={logo} alt={brand.name} width={'180px'} height={'60px'}/>
+                {/* {brand.desc} */}
+              {/* </div> */}
             </div>
             <Typography variant="h2" className={classes.titleGradient} gutterBottom>
               Próximamente
             </Typography>
-            <Typography variant="h5" gutterBottom align="center">
+            <Typography variant="h5" gutterBottom align="center" className={classes.text}>
               Estamos trabajando en esta sección
             </Typography>
             <section className={classes.pageFormWrap}>
@@ -69,7 +69,7 @@ function ComingSoon(props) {
                     margin="normal" />
                 </FormControl>
                 <aside>
-                  <Button variant="contained" color="secondary" type="submit">
+                  <Button variant="contained" color="primary" type="submit">
                     Sugerencias
                   </Button>
                 </aside>

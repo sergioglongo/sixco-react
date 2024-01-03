@@ -217,11 +217,8 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
       }
     },
   },
-  darkTitle: {
-    color: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.primary.dark,
-  },
   lightTitle: {
-    color: theme.palette.common.white,
+    color: theme.palette.mode === 'dark' ? theme.palette.secondary.main : theme.palette.primary.main,
   }
 }));
 

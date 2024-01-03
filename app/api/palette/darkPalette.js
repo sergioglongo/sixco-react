@@ -274,14 +274,14 @@ const darkPalette = {
   sixcoTheme: {
     palette: {
       primary: {
-        light: '#E3F2FD',
-        main: '#42A5F5',
-        dark: '#1565C0',
+        light: '#E0F7FA',
+        main: '#00809D',
+        dark: '#56565A',
         contrastText: '#fff',
       },
       secondary: {
         light: '#E0F2F1',
-        main: '#00BFA5',
+        main: '#56565a',
         dark: '#00796B',
         contrastText: '#fff',
       },

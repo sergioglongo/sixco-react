@@ -12,7 +12,7 @@ const Breadcrumbs = (props) => {
   } = props;
   const { classes } = useStyles();
   return (
-    <section className={classNames(theme === 'dark' ? classes.dark : classes.light, classes.breadcrumbs)}>
+    <section className={classes.breadcrumbs}>
       <Route
         path="*"
         render={() => {

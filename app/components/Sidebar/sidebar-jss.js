@@ -271,14 +271,14 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
       textOverflow: 'ellipsis',
       overflow: 'hidden',
       whiteSpace: 'nowrap',
-      width: 110
+      width: 150,
     },
     '& button': {
       color: theme.palette.text.primary,
       fontSize: 12,
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap',
-      width: 110,
+      width: 150,
       display: 'block',
       overflow: 'hidden',
       textTransform: 'capitalize',
@@ -363,6 +363,9 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
   },
   badge: {
     height: 'auto'
+  },
+  textColor: {
+    color: theme.palette.text.primary,
   }
 }));
 

@@ -205,6 +205,9 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
       fontSize: '2.55em'
     }
   },
+  text: {
+    color: theme.palette.primary.dark,
+  },
   opening: {
     color: theme.palette.common.white,
     width: '100%',

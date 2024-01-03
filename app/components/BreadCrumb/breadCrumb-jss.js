@@ -10,20 +10,21 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     '& p': {
       display: 'block',
       margin: 0,
+      color: theme.palette.mode === 'dark' ? theme.palette.secondary.main : theme.palette.primary.main,
       '& span': {
         textTransform: 'capitalize',
         marginLeft: 5,
       },
       '& a': {
-        color: theme.palette.common.white,
         textDecoration: 'none',
+        color: theme.palette.mode === 'dark' ? theme.palette.secondary.main : theme.palette.primary.main,
         margin: '0 5px'
       }
     },
     [`&.${classes.dark}`]: {
-      color: theme.palette.text.secondary,
+      color: theme.palette.mode === 'dark' ? theme.palette.secondary.main : theme.palette.primary.main,
       '& a': {
-        color: theme.palette.text.primary
+        color: theme.palette.mode === 'dark' ? theme.palette.secondary.main : theme.palette.primary.main
       }
     }
   }

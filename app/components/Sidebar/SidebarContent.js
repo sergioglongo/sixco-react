@@ -12,6 +12,7 @@ import dummy from 'dan-api/dummy/dummyContents';
 import company from 'dan-images/company-logo-example.jpg';
 
 import logo from 'dan-images/logo-sixco.svg';
+import logoWhite from 'dan-images/logo-sixco-white.svg';
 import MainMenu from './MainMenu';
 import useStyles from './sidebar-jss';
 import {
@@ -49,6 +50,7 @@ function SidebarContent(props) {
     closeMenuStatus,
     changeStatus,
     clientData,
+    themeType,
     isLogin,
     setClientData,
     setLogoutData,
@@ -83,10 +85,10 @@ function SidebarContent(props) {
             turnDarker && classes.darker
           )}
         >
-          <img src={logo} alt={brand.name} width={'180px'} height={'60px'}
-          style={{
-            filter: 'drop-shadow(2px 5px 5px rgba(0, 0, 0, 0.2))' // Aplica una sombra que sigue la forma de las imágenes internas separadas
-          }}
+          <img src={themeType === 'dark' ? logoWhite : logo} alt={brand.name} width={'180px'} height={'60px'}
+            style={{
+              filter: themeType === 'dark' ? 'drop-shadow(2px 5px 5px rgba(224, 247, 250, 0.2))' : 'drop-shadow(2px 5px 5px rgba(0, 0, 0, 0.2))'
+            }}
           />
         </NavLink>
         {isLogin && (
@@ -111,7 +113,9 @@ function SidebarContent(props) {
                   " " +
                   clientData.apellido}
               </h4>
-              <Button size="small">
+              <Button size="small"
+                className={classes.textColor}
+              >
                 <i
                   className={classNames(
                     classes.dotStatus,
@@ -132,6 +136,7 @@ function SidebarContent(props) {
           isLogin && classes.withProfile
         )}
       >
+        <div style={{ height: '16px' }}></div>
         <MainMenu
           setClientData={setClientData}
           setLogoutData={setLogoutData}
@@ -159,7 +164,7 @@ SidebarContent.propTypes = {
   changeStatus: PropTypes.func.isRequired,
   isLogin: PropTypes.bool,
   clientData: PropTypes.object.isRequired,
-
+  themeType: PropTypes.string.isRequired
 };
 
 SidebarContent.defaultProps = {
@@ -172,6 +177,7 @@ SidebarContent.defaultProps = {
 
 const mapUserStateToProps = (state) => ({
   clientData: state.user.clientData,
+  themeType: state.ui.type
 });
 
 const dispatchUserToProps = (dispatch) => ({
