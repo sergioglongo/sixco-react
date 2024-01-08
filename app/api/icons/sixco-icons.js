@@ -7,7 +7,8 @@ import {
   People as PeopleIcon,
   CurrencyExchange as CurrencyExchangeIcon,
   Garage as GarageIcon,
-  ExitToApp as ExitToAppIcon
+  ExitToApp as ExitToAppIcon,
+  Person as PersonIcon,
 } from '@mui/icons-material';
 
 const SixcoIcon = ({ iconName, className }) => {
@@ -34,6 +35,9 @@ const SixcoIcon = ({ iconName, className }) => {
       break;
     case 'Garage':
       IconComponent = GarageIcon;
+      break;
+    case 'Person':
+      IconComponent = PersonIcon;
       break;
     case 'ExitToApp':
       IconComponent = ExitToAppIcon;

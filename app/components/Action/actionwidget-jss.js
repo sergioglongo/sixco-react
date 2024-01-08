@@ -6,7 +6,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
       justifyContent: 'space-between',
       alignItems: 'flex-start',
       padding: 10,
-      height: 190,
+      height: 200,
       marginBottom: 6,
       display: 'flex',
       [theme.breakpoints.up('sm')]: {
@@ -23,11 +23,27 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
         padding: '0 5px'
       }
     },
+    info: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      height: '100%',
+      [theme.breakpoints.down('sm')]: {
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      },
+    },
     title: {
       color: theme.palette.common.white,
       fontSize: 16,
-      [theme.breakpoints.up('md')]: {
+      lineHeight: '1.1',
+      [theme.breakpoints.up('sm')]: {
         fontSize: 28,
+      },
+      [theme.breakpoints.down('sm')]: {
+        marginRight: '10px'
       },
       fontWeight: 400
     },
@@ -39,7 +55,6 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     },
     btn: {
       position: 'relative',
-      marginRight: '10px',
       [theme.breakpoints.down('xs')]: {
         padding: 0.2
       },
@@ -47,10 +62,11 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     counter: {
       color: theme.palette.common.white,
       fontSize: 28,
-      fontWeight: 500
+      fontWeight: 500,
     },
     customContent: {
-      textAlign: 'right'
+      textAlign: 'right',
+      alignSelf:'center',
     }
   }));
 

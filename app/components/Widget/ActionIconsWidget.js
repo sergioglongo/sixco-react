@@ -1,13 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles, withStyles } from 'tss-react/mui';
 import Grid from '@mui/material/Grid';
 import colorfull from 'dan-api/palette/colorSixco';
 
 // import CounterWidget from '../Counter/CounterWidget';
-import useStyles from './widget-jss';
+// import useStyles from './sixcocard-jss';
+import useStyles from './sixcocard-jss';
 import ActionWidget from '../Action/ActionWidget';
 import SixcoIcon from '../../api/icons/sixco-icons';
+import { Badge } from '@mui/material';
 
 function ActionIconsWidget() {
   const { classes } = useStyles();
@@ -20,7 +20,7 @@ function ActionIconsWidget() {
             color={colorfull[0]}
             title="Choferes"
             btntitle="Acceder"
-            link="/app/pages/proximamente"
+            link="/app/choferes"
           >
             <SixcoIcon iconName={'AirlineSeatReclineNormal'} className={classes.counterIcon} />
             {/* <AirlineSeatReclineNormalIcon  /> */}
@@ -29,7 +29,7 @@ function ActionIconsWidget() {
         <Grid item xs={6} md={6}>
           <ActionWidget
             color={colorfull[1]}
-            title="Unidades"
+            title="Dominios"
             btntitle="Acceder"
             link="/app/pages/proximamente"
           >
@@ -39,11 +39,26 @@ function ActionIconsWidget() {
         <Grid item xs={6} md={6}>
           <ActionWidget
             color={colorfull[2]}
-            title="Solicitud cupos"
+            title="Unidades"
             btntitle="Acceder"
             link="/app/pages/proximamente"
           >
-            <SixcoIcon iconName={'AssignmentTurnedIn'} className={classes.counterIcon} />
+            <Badge
+              className={classes.margin}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              badgeContent={
+                <SixcoIcon
+                  iconName={'Person'}
+                  className={classes.badgeIcon}
+                />
+              }
+            // color="secondary"
+            >
+              <SixcoIcon iconName={'LocalShipping'} className={classes.counterIcon} />
+            </Badge>
           </ActionWidget>
         </Grid>
         <Grid item xs={6} md={6}>
@@ -51,7 +66,7 @@ function ActionIconsWidget() {
             color={colorfull[3]}
             title="Lista de usuarios"
             btntitle="Acceder"
-            link="/app/pages/proximamente"
+            link="/app/usuarios"
           >
             <SixcoIcon iconName={'People'} className={classes.counterIcon} />
           </ActionWidget>
@@ -69,21 +84,15 @@ function ActionIconsWidget() {
         <Grid item xs={6} md={6}>
           <ActionWidget
             color={colorfull[5]}
-            title="Dominios"
+            title="Solicitud de Cupos"
             btntitle="Acceder"
             link="/app/pages/proximamente"
           >
-            <SixcoIcon iconName={'Garage'} className={classes.counterIcon} />
+            <SixcoIcon iconName={'AssignmentTurnedIn'} className={classes.counterIcon} />
           </ActionWidget>
         </Grid>
       </Grid>
     </div>
   );
 }
-
-// ActionIconsWidget.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
-
-// export default withStyles(styles)(ActionIconsWidget);
 export default ActionIconsWidget;

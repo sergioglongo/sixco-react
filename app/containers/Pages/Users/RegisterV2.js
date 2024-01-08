@@ -22,8 +22,8 @@ function RegisterV2() {
   const submitForm = values => {
     setTimeout(() => {
       setValueForm(values);
-      console.log(`You submitted:\n\n${valueForm}`);
-      window.location.href = '/app';
+      console.log(`You submitted:`, values);
+      // window.location.href = '/app';
     }, 500); // simulate server latency
   };
 
@@ -37,13 +37,13 @@ function RegisterV2() {
       <div className={classes.containerSide}>
         <Hidden mdDown>
           <div className={`${classes.opening} ${classes.openingVideo}`} >
-            {/* <video autoPlay loop muted className={classes.video}>
+            <video autoPlay loop muted className={classes.video}>
               <source src={intro} type="video/mp4" />
               Tu navegador no soporta el elemento de video.
-            </video> */}
-            <img src={introroute} alt={brand.name} width={'100%'} height={'100%'} style={{ objectFit: 'cover' }} />
-            <div style={{ position: 'absolute', width: '100%', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: '#fff' }}>
-            {/* <div style={{ position: 'absolute', width: '100%', top: '85%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: '#fff' }}> */}
+            </video>
+            {/* <img src={introroute} alt={brand.name} width={'100%'} height={'100%'} style={{ objectFit: 'cover' }} /> */}
+            {/* <div style={{ position: 'absolute', width: '100%', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: '#fff' }}> */}
+            <div style={{ position: 'absolute', width: '100%', top: '85%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: '#fff' }}>
               <div style={{ textAlign: 'start', display: 'inline-block' }}>
                 <div style={{ display: 'flex', height: '60px', flexDirection: 'row', alignItems: 'center', gap: '15px' }}>
                   <div style={{ height: '60px', display: 'flex', alignItems: 'center' }}>

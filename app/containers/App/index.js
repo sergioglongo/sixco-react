@@ -8,7 +8,6 @@ import LandingCorporate from './Landing';
 import LandingCreative from './LandingCreative';
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
-import ArticleNews from './ArticleNews';
 import ThemeWrapper from './ThemeWrapper';
 import { useSelector } from 'react-redux';
 

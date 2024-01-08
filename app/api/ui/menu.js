@@ -9,8 +9,14 @@ module.exports = [
   {
     key: 'choferes',
     name: 'Choferes',
-    linkParent: '/app/pages/proximamente',
+    linkParent: '/app/choferes',
     icon: 'AirlineSeatReclineNormal'
+  },
+  {
+    key: 'dominios',
+    name: 'Dominios',
+    linkParent: '/app/pages/proximamente',
+    icon: 'Garage'
   },
   {
     key: 'unidades',
@@ -19,27 +25,21 @@ module.exports = [
     icon: 'LocalShipping'
   },
   {
+    key: 'usuarios',
+    name: 'Lista de usuarios',
+    linkParent: '/app/usuarios',
+    icon: 'People'
+  },
+  {
+    key: 'bonificacion',
+    name: 'Bonificaciones',
+    linkParent: '/app/pages/proximamente',
+    icon: 'CurrencyExchange'
+  },
+  {
     key: 'cupos',
     name: 'Solicitud cupos',
     linkParent: '/app/pages/proximamente',
     icon: 'AssignmentTurnedIn'
   },
-  {
-    key: 'usuarios',
-    name: 'Lista de usuarios',
-    linkParent: '/app/pages/proximamente',
-    icon: 'People'
-  },
-  {
-    key: 'bonificacion',
-    name: 'Bonificacion',
-    linkParent: '/app/pages/proximamente',
-    icon: 'CurrencyExchange'
-  },
-  {
-    key: 'dominios',
-    name: 'Dominios',
-    linkParent: '/app/pages/proximamente',
-    icon: 'Garage'
-  }
 ]

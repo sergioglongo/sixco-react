@@ -20,7 +20,7 @@ import brand from 'dan-api/dummy/brand';
 import logo from 'dan-images/logo-sixco.svg';
 import { TextFieldRedux, CheckboxRedux } from './ReduxFormMUI';
 import useStyles from './user-jss';
-import { IconButton, InputAdornment } from '@mui/material';
+import { Autocomplete, IconButton, InputAdornment, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 // validation functions
@@ -48,6 +48,21 @@ const passwordsMatch = (value, allValues) => {
 const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disable-line
   return <NavLink to={props.to} {...props} innerRef={ref} />; // eslint-disable-line
 });
+
+const suggestions = [
+  { title: 'San Miguel de Tucuman', id: 1 },
+  { title: 'CABA', id: 2 },
+  { title: 'Trelew', id: 3 },
+  { title: 'Rio Cuarto', id: 4 },
+  { title: 'Yerba Buena', id: 5 },
+  { title: "Rosario", id: 6 },
+  { title: 'Santa Rosa', id: 7 },
+  { title: 'Santiago del Estero', id: 8 },
+  { title: 'Posadas', id: 9 },
+  { title: 'Las Grutas', id: 10 },
+  { title: 'Mendoza', id: 11 },
+  { title: 'San Fernando del Valle de Catamarca', id: 12 }
+]
 
 function RegisterFormV2(props) {
   const [showPassword, setShowPassword] = useState(false);
@@ -80,7 +95,12 @@ function RegisterFormV2(props) {
     <Paper className={cx(classes.sideWrap, deco && classes.petal)}>
       <div className={classes.topBar}>
         <NavLink to="/" className={classes.brand}>
-          <img src={logo} alt={brand.name}  style={{ width: 200, height: 80 }}/>
+          <img src={logo} alt={brand.name}
+            style={{
+              filter: 'drop-shadow(2px 5px 5px rgba(0, 0, 0, 0.2))',
+              width: 200, height: 80
+            }}
+          />
         </NavLink>
         <Button
           size="small"
@@ -90,7 +110,7 @@ function RegisterFormV2(props) {
 
         >
           <Icon className={classes.icon}>arrow_forward</Icon>
-          <div style={{maxWidth: 120, lineHeight: '1.3'}}>
+          <div style={{ maxWidth: 120, lineHeight: '1.3' }}>
             ¿Ya tenes cuenta? Iniciá sesión
           </div>
         </Button>
@@ -138,7 +158,7 @@ function RegisterFormV2(props) {
           <div>
             <FormControl className={classes.formControl}>
               <Field
-                name="documento"
+                name="cuit"
                 component={TextFieldRedux}
                 placeholder="Ingresa tu CUIT"
                 required
@@ -178,68 +198,28 @@ function RegisterFormV2(props) {
           <div>
             <FormControl className={classes.formControl}>
               <Field
-                name="password"
+                name="direccion"
                 component={TextFieldRedux}
-                type={showPassword ? "text" : "password"}
-                label="Contraseña"
-                required
-                validate={[required, passwordsMatch]}
+                label="Dirección *"
+                placeholder="Ingrese su dirección"
+                validate={[required]}
                 className={classes.field}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="Toggle password visibility"
-                        onClick={
-                          handleClickShowPassword
-                        }
-                        onMouseDown={
-                          handleMouseDownPassword
-                        }
-                      >
-                        {showPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
               />
             </FormControl>
           </div>
-          <div>
+          <div style={{ width: '100%' }}>
             <FormControl className={classes.formControl}>
-              <Field
-                name="passwordConfirm"
-                component={TextFieldRedux}
-                type={showRepeatPassword ? "text" : "password"}
-                label="Repetir contraseña"
-                required
-                validate={[required, passwordsMatch]}
-                className={classes.field}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="Toggle password visibility"
-                        onClick={
-                          handleClickShowRepeatPassword
-                        }
-                        onMouseDown={
-                          handleMouseDownRepeatPassword
-                        }
-                      >
-                        {showPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
+              <Autocomplete
+                id="ciudad"
+                name="ciudad"
+                options={suggestions.map((option) => option.title)}
+                renderInput={(params) => (
+                  <TextField
+                    variant="standard"
+                    {...params}
+                    label="elije una ciudad"
+                    margin="normal" />
+                )}
               />
             </FormControl>
           </div>

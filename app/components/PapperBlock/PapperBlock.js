@@ -13,6 +13,7 @@ function PapperBlock(props) {
     whiteBg,
     noMargin,
     colorMode,
+    button,
     overflowX,
     icon
   } = props;
@@ -31,6 +32,13 @@ function PapperBlock(props) {
               {desc}
             </Typography>
           </div>
+          {button ? 
+            button.map(m => ([
+                <span style={{marginRight:'10px'}}>
+                  {m}
+                </span>
+            ]))
+          : (<></>)}
         </div>
         <section className={cx(classes.content, whiteBg && classes.whiteBg, overflowX && classes.overflowX)}>
           {children}

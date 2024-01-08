@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { ThemeContext } from './ThemeWrapper';
 import Dashboard from '../Templates/Dashboard';
 import {EditProfile, Profile, ChangePassword,
-  ComingSoon,
+  ComingSoon, Choferes, Usuarios, DetalleUsuario,
   PersonalDashboard, CrmDashboard, CryptoDashboard,
   Infographics, MiniApps, Analytics,
   InfoUpdates, Status,
@@ -34,7 +34,7 @@ import {EditProfile, Profile, ChangePassword,
   Photos, Pricing, CheckoutPage,
   Error, Settings, HelpSupport,
   MapMarker, MapDirection, SearchMap,
-  TrafficIndicator, StreetViewMap, NotFound
+  TrafficIndicator, StreetViewMap, NotFound,
 } from '../pageListAsync';
 
 function Application(props) {
@@ -49,6 +49,10 @@ function Application(props) {
         <Route path="/app/pages/perfil" component={Profile} />
         <Route path="/app/pages/editar-perfil" component={EditProfile} />
         <Route path="/app/pages/cambiar-contrasenia" component={ChangePassword} />
+        {/* Portal */}
+        <Route exact path="/app/usuarios" component={Usuarios} />
+        <Route exact path="/app/usuarios/:recordid/detalle" component={DetalleUsuario} />
+        <Route exact path="/app/choferes" component={Choferes} />
 
         <Route path="/app/dashboard/sales-marketing" component={CrmDashboard} />
         <Route path="/app/dashboard/cryptocurrency" component={CryptoDashboard} />

@@ -283,7 +283,28 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
   counterIcon: {
     color: theme.palette.common.white,
     opacity: 0.7,
-    fontSize: 84
+    fontSize: 84,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 50,
+    },
+  },
+  badgeIcon:{
+    color: theme.palette.common.white,
+    opacity: 0.9,
+    fontSize: 50,
+    backgroundColor: 'transparent',
+    height: 50,
+    width: 50,
+    position: 'relative',
+    bottom: 50,
+    left: 30,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 27,
+      height: 27,
+      width: 27,
+      bottom: 30,
+      left: 18,
+    },  
   },
   progressCircle: {
     borderRadius: '50%',

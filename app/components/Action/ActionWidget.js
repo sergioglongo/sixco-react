@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import useStyles from './actionwidget-jss';
+import { Hidden } from '@mui/material';
 
 function ActionWidget(props) {
   const {
@@ -19,8 +20,16 @@ function ActionWidget(props) {
   const { classes } = useStyles();
   return (
     <Paper className={classes.root} style={{ backgroundColor: color }}>
-      <div>
-        <Typography className={classes.title}>{title}</Typography>
+      <Hidden smUp>
+        <div className={classes.customContent}>
+          {children}
+        </div>
+      </Hidden>
+      <div className={classes.info}>
+        <div >
+          <Typography className={classes.title}>{title}</Typography>
+
+        </div>
         <div className={classes.btnlist}>
           {btns ? btns.map(btn => (
             <div className={classes.btn}>
@@ -33,7 +42,12 @@ function ActionWidget(props) {
           )) : (
             <Typography className={classes.counter}>
               <Button variant="contained" color="primary" type="butyon" to={link} component={Link}>
-                {btntitle}
+                <Hidden smDown>
+                  {btntitle}
+                </Hidden>
+                <Hidden smUp>
+                  +
+                </Hidden>
               </Button>
             </Typography>
           )
@@ -41,9 +55,11 @@ function ActionWidget(props) {
         </div>
 
       </div>
-      <div className={classes.customContent}>
-        {children}
-      </div>
+      <Hidden smDown>
+        <div className={classes.customContent}>
+          {children}
+        </div>
+      </Hidden>
     </Paper>
   );
 }

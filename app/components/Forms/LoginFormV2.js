@@ -96,21 +96,28 @@ function LoginFormV2(props) {
     submitting,
     dispatch,
     error,
+    themeType,
     loading,
     setLoading,
     deco,
   } = props;
   return (
     <Paper className={cx(classes.sideWrap, deco && classes.petal)}>
-        <div className={classes.topBar}>
-          <NavLink to="/" className={classes.brand}>
-            <img src={logo} alt={brand.name} style={{ width: 200, height: 80 }} />
-          </NavLink>
-          <Button size="small" className={classes.buttonLink} component={LinkBtn} to="/auth/registrese">
-            <Icon className={classes.icon}>arrow_forward</Icon>
-            Registrate
-          </Button>
-        </div>
+      <div className={classes.topBar}>
+        <NavLink to="/" className={classes.brand}>
+          {/* <img src={logo} alt={brand.name} style={{ width: 200, height: 80 }} /> */}
+          <img src={logo} alt={brand.name}
+            style={{
+              filter: 'drop-shadow(2px 5px 5px rgba(0, 0, 0, 0.2))',
+              width: 200, height: 80
+            }}
+          />
+        </NavLink>
+        <Button size="small" className={classes.buttonLink} component={LinkBtn} to="/auth/registrese">
+          <Icon className={classes.icon}>arrow_forward</Icon>
+          Registrate
+        </Button>
+      </div>
       <Typography variant="h4" className={classes.title} gutterBottom>
         Ingresar
       </Typography>
@@ -211,6 +218,7 @@ LoginFormV2.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   deco: PropTypes.bool.isRequired,
+  themeType: PropTypes.string.isRequired
 };
 
 const LoginFormReduxed = reduxForm({
@@ -222,7 +230,8 @@ const FormInit = connect(
   state => ({
     force: state,
     initialValues: state.login.usersLogin,
-    deco: state.ui.decoration
+    deco: state.ui.decoration,
+    themetype: state.ui.type
   }),
 )(LoginFormReduxed);
 

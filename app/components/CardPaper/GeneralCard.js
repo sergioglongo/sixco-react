@@ -23,7 +23,7 @@ function GeneralCard(props) {
       <CardContent>
         {children}
       </CardContent>
-      <CardActions className={classes.actions}>
+      {/* <CardActions className={classes.actions}>
         <IconButton aria-label="Add to favorites" className={classes.button} size="large">
           <FavoriteIcon className={liked > 0 && classes.liked} />
           <span className={classes.num}>{liked}</span>
@@ -36,7 +36,7 @@ function GeneralCard(props) {
           <Comment />
           <span className={classes.num}>{commented}</span>
         </IconButton>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }
