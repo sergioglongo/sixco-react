@@ -37,17 +37,31 @@ export const CryptoDashboard = loadable(() =>
 });
 
 //Portal
+//Usuarios
 export const Usuarios = loadable(() =>
   import('./Portal/Usuarios'), {
   fallback: <Loading />,
 });
+export const DetalleUsuario = loadable(() =>
+  import ('./Portal/Usuarios/DetalleUsuario'), {
+    fallback: <Loading />,
+  });
+
+//Choferes
+export const DetalleChofer = loadable(() =>
+  import ('./Portal/Choferes/DetalleChofer'), {
+    fallback: <Loading />,
+  });
 export const Choferes = loadable(() =>
   import('./Portal/Choferes'), {
   fallback: <Loading />,
 });
-//Usuarios
-export const DetalleUsuario = loadable(() =>
-  import ('./Portal/Usuarios/DetalleUsuario'), {
+export const NuevoChofer = loadable(() =>
+  import ('./Portal/Choferes/NuevoEditarChofer'), {
+    fallback: <Loading />,
+  });
+export const EditarChofer = loadable(() =>
+  import ('./Portal/Choferes/NuevoEditarChofer'), {
     fallback: <Loading />,
   });
 

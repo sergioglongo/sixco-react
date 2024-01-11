@@ -5,6 +5,7 @@ import { ThemeContext } from './ThemeWrapper';
 import Dashboard from '../Templates/Dashboard';
 import {EditProfile, Profile, ChangePassword,
   ComingSoon, Choferes, Usuarios, DetalleUsuario,
+  DetalleChofer,
   PersonalDashboard, CrmDashboard, CryptoDashboard,
   Infographics, MiniApps, Analytics,
   InfoUpdates, Status,
@@ -34,7 +35,7 @@ import {EditProfile, Profile, ChangePassword,
   Photos, Pricing, CheckoutPage,
   Error, Settings, HelpSupport,
   MapMarker, MapDirection, SearchMap,
-  TrafficIndicator, StreetViewMap, NotFound,
+  TrafficIndicator, StreetViewMap, NotFound, NuevoChofer, EditarChofer,
 } from '../pageListAsync';
 
 function Application(props) {
@@ -53,6 +54,9 @@ function Application(props) {
         <Route exact path="/app/usuarios" component={Usuarios} />
         <Route exact path="/app/usuarios/:recordid/detalle" component={DetalleUsuario} />
         <Route exact path="/app/choferes" component={Choferes} />
+        <Route exact path="/app/choferes/:recordid/detalle" component={DetalleChofer} />
+        <Route exact path="/app/choferes/nuevo-chofer" component={NuevoChofer} />
+        <Route exact path="/app/choferes/:recordid/editar" component={EditarChofer} />
 
         <Route path="/app/dashboard/sales-marketing" component={CrmDashboard} />
         <Route path="/app/dashboard/cryptocurrency" component={CryptoDashboard} />

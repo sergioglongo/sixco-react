@@ -2,6 +2,18 @@ import { makeStyles } from 'tss-react/mui';
 import { alpha } from '@mui/material/styles';
 
 const styles = makeStyles()((theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    justifyContent: 'space-between',
+    // margin: '10px',
+    gap: 10,
+  },
+  rootForm: {
+    flexGrow: 1,
+    padding: 30
+  },
   statusWrap: {
     position: 'relative',
     marginBottom: theme.spacing(3),
@@ -84,7 +96,31 @@ const styles = makeStyles()((theme) => ({
   },
   removeBtn: {
     opacity: 1
-  }
+  },
+  rightIcon: {
+    marginLeft: theme.spacing(1),
+  },
+  rootForm: {
+    flexGrow: 1,
+    padding: 30
+  },
+  field: {
+    width: '100%',
+    marginBottom: 20
+  },
+  fieldBasic: {
+    width: '100%',
+    marginBottom: 20,
+    marginTop: 10
+  },
+  inlineWrap: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  buttonInit: {
+    margin: theme.spacing(4),
+    textAlign: 'center'
+  },
 }));
 
 export default styles;

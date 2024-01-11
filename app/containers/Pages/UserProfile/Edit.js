@@ -6,90 +6,43 @@ import { useHistory } from 'react-router-dom';
 import brand from 'dan-api/dummy/brand';
 import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
-
-import { SourceReader, PapperBlock } from 'dan-components';
-// import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import {
   setClientDataAction,
+  setLoginDataAction
 } from 'dan-redux/actions/Users';
-// import { getPickListValues, editarPerfilCiudadano, consultaCiudadano } from '../../../utils/ApiClient';
-// import { StyledNotif } from '../../../containers/UiElements/demos';
-// import styles from 'dan-components/SocialMedia/jss/cover-jss';
+import {
+  setClientDataAction as setClientDataRegister
+} from 'dan-redux/actions/Register';
 import EditProfileForm from './EditProfileForm.js';
 import useStyles from './userprofile-jss';
-
-function TabContainer(props) {
-  const { children } = props;
-  return (
-    <div style={{ paddingTop: 8 * 3 }}>
-      {children}
-    </div>
-  );
-}
-
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 function EditUserProfile(props) {
   const title = brand.name + ' - Perfil';
   const description = brand.desc;
   const {
-    clientData, loginData, setClientData
+    userData, loginData, setUserData, setLoginData, setLoginUserData
   } = props;
-  const [value, setValue] = useState(0);
-  const [datanotif, setDatanotif] = useState({ open: false, variant: 'error', message: '' });
-  const [loading, setLoading] = useState(false);
-  const [listabarrio, setListabarrio] = useState([]);
-
-  const date = new Date();
   const history = useHistory();
+
   const { classes } = useStyles();
 
-  const [valueForm, setValueForm] = useState();
-  // console.log(clientData)
-  const showResult = (values) => {
-    const ciudadano = {
-      assigned_user_id: '19x1',
-      record: clientData.account_no,
-      accountname: values['accountname'],
-      apellido: values.apellido,
-      phone: values.phone,
-      email1: values.email1,
-      domicilio: values.domicilio,
-      bill_code: values.bill_code,
-    //   listabarrio: values.listabarrio,
-    };
-
-    console.log("Objeto a guardar", ciudadano);
-    setValueForm(values);
-    // return
-    // editarPerfilCiudadano(loginData.session, clientData.id, ciudadano).then(response => {
-    //   // debugger
-    //   if (typeof response !== 'undefined' && response.success == true) {
-    //     // setClientData(ciudadano);
-    //     const record = clientData.id.replace('11x', '');
-    //     consultaCiudadano(loginData.session, record).then(response => {
-    //       const clientdata = response;
-    //       setClientData(clientdata);
-    //       history.push('/app/pages/perfil');
-    //     });
-    //   } else if (typeof response !== 'undefined' && response.success == false && typeof response.error !== 'undefined') {
-    //     setDatanotif({
-    //       ...datanotif,
-    //       open: true,
-    //       message: response.error.message
-    //     });
-    //   } else {
-    //     setDatanotif({
-    //       ...datanotif,
-    //       open: true,
-    //       message: 'Error al procesar la solicitud'
-    //     });
-    //   }
-    //   setLoading(false);
-    // });
-  };
+  const [formData, setFormData] = useState();
+  useEffect(() => {
+    if (userData) {
+        setFormData(userData);
+    }
+  },[])
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Chofer", formData)
+    
+    setTimeout(() => {
+      setUserData(formData);
+      setLoginData(formData);
+      setLoginUserData(formData);
+      history.goBack();
+    }, 2000);
+  }
 
 //   useEffect(() => {
 //     getPickListValues('Accounts', 'listabarrio').then(response => {
@@ -117,25 +70,18 @@ function EditUserProfile(props) {
 
   return (
     <div>
-      {/* <Helmet>
+      <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="twitter:title" content={title} />
         <meta property="twitter:description" content={description} />
-      </Helmet> */}
-
+      </Helmet>
       <div className={classes.root}>
-
         <Grid container spacing={3}>
           <Grid item md={12} xs={12}>
-            {/* <EditUserForms
-              onSubmit={(values) => showResult(values)}
-              clientData={clientData}
-              listabarrio={listabarrio}
-            /> */}
-            <EditProfileForm clientData={clientData} handleSubmit={(values) => showResult(values)}/>
+            <EditProfileForm formData={formData} setFormData={setFormData} handleSubmit={handleSubmit}/>
           </Grid>
         </Grid>
       </div>
@@ -144,20 +90,24 @@ function EditUserProfile(props) {
 }
 
 EditUserProfile.propTypes = {
-  clientData: PropTypes.object.isRequired,
+  userData: PropTypes.object.isRequired,
   loginData: PropTypes.object.isRequired,
-  setClientData: PropTypes.func.isRequired,
+  setUserData: PropTypes.func.isRequired,
+  setLoginData: PropTypes.func.isRequired,
+  setLoginUserData: PropTypes.func.isRequired,
 };
 
 // const reducer = 'socmed';
 const mapStateToProps = state => ({
   force: state, // force state from reducer
-  clientData: state.user.clientData,
+  userData: state.user.clientData,
   loginData: state.login.loginData,
 });
 
 const constDispatchToProps = dispatch => ({
-  setClientData: bindActionCreators(setClientDataAction, dispatch),
+  setUserData: bindActionCreators(setClientDataAction, dispatch),
+  setLoginUserData: bindActionCreators(setClientDataRegister, dispatch),
+  setLoginData: bindActionCreators(setLoginDataAction, dispatch),
 });
 
 

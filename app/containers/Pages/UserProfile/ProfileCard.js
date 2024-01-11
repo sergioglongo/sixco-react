@@ -91,44 +91,40 @@ function ProfileCard(props) {
         <div className={classes.content}>
           <Avatar alt={name} src={avatar} className={classes.avatar} />
           <Typography variant="h4" className={classes.name} gutterBottom>
-            {clientData.tipo_documento == 'CUIT' ? clientData.accountname : clientData.accountname + ' ' + clientData.apellido}
+            {clientData.tipo_documento == 'CUIT' ? clientData.nombre : clientData.nombre + ' ' + clientData.apellido}
             <VerifiedUser className={classes.verified} />
           </Typography>
           {clientData.siccode ? (
             <Typography className={classes.subheading} gutterBottom>
               {clientData.tipo_documento ? clientData.tipo_documento : 'DOC'}
               :
-              {clientData.siccode}
+              {clientData.nro}
             </Typography>
           ) : (<></>)}
-          {clientData.email1 ? (
+          {clientData.email ? (
             <Typography className={classes.subheading} gutterBottom>
               EMAIL:
               {' '}
-              {clientData.email1}
+              {clientData.email}
             </Typography>
           ) : (<></>)}
-          {clientData.phone ? (
+          {clientData.telefono ? (
             <Typography className={classes.subheading} gutterBottom>
               TELÉFONO:
               {' '}
-              {clientData.phone}
+              {clientData.telefono}
             </Typography>
           ) : (<></>)}
-          {clientData.bill_street ? (
+          {clientData.domicilio ? (
             <Typography className={classes.subheading} gutterBottom>
               DIRECCIÓN:
               {' '}
-              {clientData.bill_street}
+              {clientData.domicilio}
               <br />
-              BARRIO:
-              {' '}
-              {clientData.listabarrio}
-              <br />
-              {clientData.bill_code ? (
+              {clientData.codigopostal ? (
                 <>
                   CP:
-                  {clientData.bill_code}
+                  {clientData.codigopostal}
                   <br />
                 </>
               ) : <></>}

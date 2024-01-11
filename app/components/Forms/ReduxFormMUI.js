@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import Switch from '@mui/material/Switch';
+import { Box, FormHelperText } from '@mui/material';
 
 /* Textfield */
 export const TextFieldRedux = ({ meta: { touched, error }, input, ...rest }) => (
@@ -20,6 +21,30 @@ TextFieldRedux.propTypes = {
 };
 
 TextFieldRedux.defaultProps = {
+  meta: null,
+};
+/* End */
+
+/* TextfieldError */
+export const TextFieldErrorRedux = ({ meta: { touched, error }, input, ...rest }) => (
+  <Box fullwidth>
+    <TextField
+      variant="standard"
+      fullWidth
+      {...rest}
+      {...input}
+      error={touched && error}
+    />
+    {touched && error && error != 'Required' && <FormHelperText style={{ position: 'absolute', bottom: '-22px', color: '#d32f2f' }}>{error}</FormHelperText>}
+  </Box>
+);
+
+TextFieldErrorRedux.propTypes = {
+  input: PropTypes.object.isRequired,
+  meta: PropTypes.object,
+};
+
+TextFieldErrorRedux.defaultProps = {
   meta: null,
 };
 /* End */

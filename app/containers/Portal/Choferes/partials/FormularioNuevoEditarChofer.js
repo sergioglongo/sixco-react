@@ -2,26 +2,16 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { useHistory } from 'react-router-dom';
-import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import { PapperBlock } from 'dan-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Button from '@mui/material/Button';
-import { TextFieldRedux } from 'dan-components/Forms/ReduxFormMUI';
 import { initAction, clearAction } from 'dan-redux/actions/reduxFormActions';
-import useStyles from './userprofile-jss';
 import { InputLabel, Select } from '@mui/material';
-import { toNumber } from 'lodash';
-
-const renderRadioGroup = ({ input, ...rest }) => (
-    <RadioGroup
-        {...input}
-        {...rest}
-        valueselected={input.value}
-        onChange={(event, value) => input.onChange(value)}
-    />
-);
+import { toInteger } from 'lodash';
+import { TextFieldErrorRedux } from '../../../../components/Forms/ReduxFormMUI';
+import useStyles from '../choferes-jss';
 
 // validation functions
 const required = value => (value == null ? 'Required' : undefined);
@@ -32,26 +22,15 @@ const email = value => (
 );
 
 const string = value => (
-    !numerico(value) ? 'Ingrese solo caracteres' : undefined
+    value && !numerico(value) ? 'Ingrese solo caracteres' : undefined
 );
 
 const numerico = value => (
-    isNaN(value) ? 'Ingrese solo números' : undefined
+    value && isNaN(value) ? 'Ingrese solo números' : undefined
 );
+const maxLengthValue = max => value => (value && value.length > max ? `Máximo de ${max} caracteres superados` : undefined);
 
-const maxLength = max => value => (value && value.length > max ? `Tiene que tener ${max} caracteres o menos` : undefined);
-
-const maxLength30 = maxLength(30);
-
-const initData = {
-    text: 'Sample Text',
-    email: 'sample@mail.com',
-    radio: 'option1',
-    selection: 'option1',
-    onof: true,
-    checkbox: true,
-    textarea: 'This is default text'
-};
+const maxLength = maxLengthValue(50);
 
 const estados = [
     { id: 1, label: 'Habilitado' },
@@ -60,7 +39,8 @@ const estados = [
     { id: 4, label: 'Suspendido' },
 ]
 
-function EditProfileForm(props) {
+function FormularioNuevoChofer(props) {
+    const trueBool = true;
     const {
         classes
     } = useStyles();
@@ -72,30 +52,37 @@ function EditProfileForm(props) {
         init,
         clear,
         formData,
-        setFormData
+        edit,
+        setFormData,
     } = props;
     const history = useHistory();
     useEffect(() => {
-        init(formData);
+        console.log("formData", formData)
+        if (formData)
+            init(formData)
+        else
+            clear()
         return () => {
             clear();
         }
     }, [init, formData]);
+
     const handleInputChange = (fieldName, value) => {
         setFormData({ ...formData, [fieldName]: value });
     };
+
     return (
-        <PapperBlock title="Editar perfil" whiteBg icon="ion-ios-contact" desc="">
+        <PapperBlock title={edit ? "Editar Chofer" : "Nuevo Chofer"} whiteBg icon="ion-ios-person" desc="">
             <form onSubmit={handleSubmit}>
                 <div>
                     <FormControl className={classes.field}>
                         <Field
                             name="nombre"
-                            component={TextFieldRedux}
+                            component={TextFieldErrorRedux}
                             placeholder="Nombre"
                             label="Nombre"
                             required
-                            validate={required}
+                            validate={[required, string, maxLength]}
                             onChange={(event) => handleInputChange('nombre', event.target.value)}
                             value={formData?.nombre || ''}
                         />
@@ -105,51 +92,13 @@ function EditProfileForm(props) {
                     <FormControl className={classes.field}>
                         <Field
                             name="apellido"
-                            component={TextFieldRedux}
+                            component={TextFieldErrorRedux}
                             placeholder="Apellido"
                             label="Apellido"
                             required
-                            validate={required}
+                            validate={[required, string, maxLength]}
                             onChange={(event) => handleInputChange('apellido', event.target.value)}
-                            value={formData?.apellido || ''}                        />
-                    </FormControl>
-                </div>
-                <div>
-                    <FormControl className={classes.field}>
-                        <Field
-                            name="telefono"
-                            component={TextFieldRedux}
-                            placeholder="Teléfono Principal"
-                            label="Teléfono Principal"
-                            validate={[numerico]}
-                            onChange={(event) => handleInputChange('telefono', event.target.value)}
-                            value={formData?.telefono || ''}
-                            />
-                    </FormControl>
-                </div>
-                <div>
-                    <FormControl className={classes.field}>
-                        <Field
-                            name="domicilio"
-                            component={TextFieldRedux}
-                            validate={[required, string, maxLength30]}
-                            label="Domicilio"
-                            onChange={(event) => handleInputChange('domicilio', event.target.value)}
-                            value={formData?.domicilio || ''}
-                            />
-                    </FormControl>
-                </div>
-                <div>
-                    <FormControl className={classes.field}>
-                        <Field
-                            name="codigopostal"
-                            component={TextFieldRedux}
-                            placeholder="Código Postal"
-                            label="Código Postal"
-                            required
-                            validate={[required]}
-                            onChange={(event) => handleInputChange('codigopostal', event.target.value)}
-                            value={formData?.codigopostal || ''}
+                            value={formData?.apellido || ''}
                         />
                     </FormControl>
                 </div>
@@ -157,7 +106,7 @@ function EditProfileForm(props) {
                     <FormControl className={classes.field}>
                         <Field
                             name="email"
-                            component={TextFieldRedux}
+                            component={TextFieldErrorRedux}
                             placeholder="Email"
                             label="Email"
                             required
@@ -173,9 +122,8 @@ function EditProfileForm(props) {
                         <Select
                             variant="standard"
                             native
-                            name='estado'
                             value={formData?.estado || 1}
-                            onChange={(event) => handleInputChange('estado', toNumber(event.target.value))}
+                            onChange={(event) => handleInputChange('estado', toInteger(event.target.value))}
                             inputProps={{
                                 id: 'age-native-simple',
                             }}>
@@ -185,14 +133,24 @@ function EditProfileForm(props) {
                         </Select>
                     </FormControl>
                 </div>
-                <div className={classes.buttonGroup}>
+                <div>
                     <Button
                         type="button"
                         onClick={() => history.goBack()}
                     >
                         Cancelar
                     </Button>
-                    <Button variant="contained" color="primary" type="submit" disabled={submitting}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        disabled={
+                            submitting ||
+                            !(formData &&
+                                (formData.nombre || formData.apellido || formData.email)
+                            )
+                        }
+                    >
                         Guardar
                     </Button>
                 </div>
@@ -201,19 +159,15 @@ function EditProfileForm(props) {
     );
 }
 
-renderRadioGroup.propTypes = {
-    input: PropTypes.object.isRequired,
-};
-
-EditProfileForm.propTypes = {
+FormularioNuevoChofer.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
     pristine: PropTypes.bool.isRequired,
     submitting: PropTypes.bool.isRequired,
     init: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired,
-    formData: PropTypes.object.isRequired,
-    setFormData: PropTypes.func.isRequired,
+    clientData: PropTypes.object.isRequired,
+    edit: PropTypes.bool,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -222,15 +176,15 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const ReduxFormMapped = reduxForm({
-    form: 'editProfile',
+    form: 'nuevoChofer',
     enableReinitialize: true,
-})(EditProfileForm);
+})(FormularioNuevoChofer);
 
-const EditProfileFormInit = connect(
+const FormularioNuevoChoferInit = connect(
     state => ({
         initialValues: state.initval.formValues
     }),
     mapDispatchToProps,
 )(ReduxFormMapped);
 
-export default EditProfileFormInit;
+export default FormularioNuevoChoferInit;

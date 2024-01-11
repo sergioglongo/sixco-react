@@ -91,9 +91,10 @@ function DetalleUsuario(props) {
           <Grid item md={12} xs={12}>
             <PapperBlock
               title="Detalle usuario"
+              desc="Informacion del usuario"
               noMargin
               whiteBg
-              icon="ion-ios-chatbubbles"
+              icon="ion-ios-list-box"
             />
           </Grid>
         </Grid>

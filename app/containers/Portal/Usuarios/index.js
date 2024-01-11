@@ -78,9 +78,6 @@ function Usuarios(props) {
           <Grid item md={12} xs={12}>
             <PapperBlock title="Listado Usuarios" noMargin whiteBg icon="ion-ios-people"
               desc="Usuarios registrados."
-              button={[<Button variant="contained" component={LinkBtn} to="/app/choferes/nuevo-chofer" className={classes.button} color="primary">
-                Nuevo usuario  <Icon className={classes.rightIcon}>add</Icon>
-              </Button>]}
             >
               <div>
                 {listusuarios.length == 0 ? (

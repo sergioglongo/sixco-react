@@ -11,6 +11,7 @@ import dataMenu from 'dan-api/ui/menu';
 import Decoration from '../Decoration';
 import useStyles from '../appStyles-jss';
 import intro from 'dan-images/bg-red.jpg';
+import { connect } from 'react-redux';
 
 function LeftSidebarLayout(props) {
   const { classes, cx } = useStyles();
@@ -28,7 +29,8 @@ function LeftSidebarLayout(props) {
     changeMode,
     place,
     titleException,
-    handleOpenGuide
+    handleOpenGuide,
+    loginData
   } = props;
   return (
     <Fragment>
@@ -47,7 +49,7 @@ function LeftSidebarLayout(props) {
         open={sidebarOpen}
         toggleDrawerOpen={toggleDrawer}
         loadTransition={loadTransition}
-        dataMenu={dataMenu}
+        dataMenu={loginData.estado != 3 ? dataMenu : []}
         leftSidebar
       />
       <main className={cx(classes.content, !sidebarOpen ? classes.contentPaddingLeft : '')} id="mainContent">
@@ -101,5 +103,17 @@ LeftSidebarLayout.propTypes = {
   titleException: PropTypes.array.isRequired,
   handleOpenGuide: PropTypes.func.isRequired
 };
+LeftSidebarLayout.propTypes = {
+  loginData: PropTypes.object.isRequired,
+};
 
-export default LeftSidebarLayout;
+const mapStateToProps = state => ({
+  force: state, // force state from reducer
+  loginData: state.login.loginData,
+});
+
+const LeftSidebarLayoutMapped = connect(
+  mapStateToProps,
+)(LeftSidebarLayout);
+
+export default LeftSidebarLayoutMapped;

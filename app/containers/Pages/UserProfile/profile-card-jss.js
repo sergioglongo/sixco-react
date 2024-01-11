@@ -1,5 +1,6 @@
 import { makeStyles } from 'tss-react/mui';
 import { alpha, darken } from '@mui/material/styles';
+import colorfull from 'dan-api/palette/colorSixco';
 
 const useStyles = makeStyles()((theme, _params, classes) => ({
   root: {
@@ -13,7 +14,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     width: '100%',
     overflow: 'hidden',
     height: 480,
-    backgroundColor: theme.palette.mode === 'dark' ? darken(theme.palette.primary.dark, 0.8) : theme.palette.primary.dark,
+    backgroundColor: colorfull[1],
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-end',

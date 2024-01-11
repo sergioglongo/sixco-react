@@ -32,13 +32,14 @@ function LoginV2(props) {
     // let pass = values.target.get('password');
     // if (typeof doc != '' && pass != '') {
     const clientdata = {
-      account_no: "ACC3369",
-      accountname: 'Nombre Usuario',
+      nro: "ACC3369",
+      nombre: 'Nombre Usuario',
       apellido: 'Apellido Usuario',
       codigopostal: '4105',
-      phone: "3816093581",
+      telefono: "3816093581",
       domicilio: "Barrio Alto Peru",
       email: "email@email.com",
+      estado: 3
     }
     // Alert('success', 'Credenciales correctas');
     setClientData(clientdata);
