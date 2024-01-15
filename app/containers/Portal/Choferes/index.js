@@ -75,7 +75,7 @@ function Choferes(props) {
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item md={12} xs={12}>
-            <PapperBlock title="Listado Choferes" noMargin whiteBg icon="ion-ios-people"
+            <PapperBlock title="Listado de Choferes" noMargin whiteBg icon="ion-ios-people"
               desc="Choferes registrados."
               button={[<Button variant="contained" component={LinkBtn} to="/app/choferes/nuevo-chofer" className={classes.button} color="primary">
                 Nuevo Chofer  <Icon className={classes.rightIcon}>add</Icon>

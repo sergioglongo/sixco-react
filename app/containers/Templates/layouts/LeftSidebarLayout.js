@@ -8,7 +8,6 @@ import {
   BreadCrumb,
 } from 'dan-components';
 import dataMenu from 'dan-api/ui/menu';
-import Decoration from '../Decoration';
 import useStyles from '../appStyles-jss';
 import intro from 'dan-images/bg-red.jpg';
 import { connect } from 'react-redux';
@@ -41,7 +40,7 @@ function LeftSidebarLayout(props) {
         position="left-sidebar"
         changeMode={changeMode}
         mode={mode}
-        title={place}
+        title={place == 'app' ? '' : place}
         history={history}
         openGuide={handleOpenGuide}
       />

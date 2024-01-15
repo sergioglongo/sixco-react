@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { PropTypes } from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeContext } from './ThemeWrapper';
 import Dashboard from '../Templates/Dashboard';
-import {EditProfile, Profile, ChangePassword,
+import {
+  EditProfile, Profile, ChangePassword,
   ComingSoon, Choferes, Usuarios, DetalleUsuario,
   DetalleChofer,
   PersonalDashboard, CrmDashboard, CryptoDashboard,
@@ -31,21 +32,28 @@ import {EditProfile, Profile, ChangePassword,
   TaskBoard, Calendar, Chat,
   Contact, Ecommerce, Email,
   Timeline,
-  ProductPage, Invoice,  BlankPage,
+  ProductPage, Invoice, BlankPage,
   Photos, Pricing, CheckoutPage,
   Error, Settings, HelpSupport,
   MapMarker, MapDirection, SearchMap,
   TrafficIndicator, StreetViewMap, NotFound, NuevoChofer, EditarChofer,
 } from '../pageListAsync';
+import { connect } from 'react-redux';
 
 function Application(props) {
-  const { history } = props;
+  const { history, loginData } = props;
   const changeMode = useContext(ThemeContext);
   return (
     <Dashboard history={history} changeMode={changeMode}>
       <Switch>
-        { /* Home */ }
-        <Route exact path="/app" component={PersonalDashboard} />
+        { /* Home */}
+        <Route exact path="/app" render={() => (
+          loginData.estado != 3 ? (
+            <PersonalDashboard />
+          ) : (
+            <Redirect to="/app/pages/editar-perfil" />
+          )
+        )} />
         {/* PERFIL */}
         <Route path="/app/pages/perfil" component={Profile} />
         <Route path="/app/pages/editar-perfil" component={EditProfile} />
@@ -60,25 +68,25 @@ function Application(props) {
 
         <Route path="/app/dashboard/sales-marketing" component={CrmDashboard} />
         <Route path="/app/dashboard/cryptocurrency" component={CryptoDashboard} />
-        { /* Widgets */ }
+        { /* Widgets */}
         <Route path="/app/widgets/infographics" component={Infographics} />
         <Route path="/app/widgets/status" component={Status} />
         <Route path="/app/widgets/mini-apps" component={MiniApps} />
         <Route path="/app/widgets/analytics" component={Analytics} />
         <Route path="/app/widgets/info-updates" component={InfoUpdates} />
-        { /* Layout */ }
+        { /* Layout */}
         <Route exact path="/app/layouts" component={Parent} />
         <Route path="/app/layouts/grid" component={Grid} />
         <Route path="/app/layouts/app-layout" component={AppLayout} />
         <Route path="/app/layouts/responsive" component={Responsive} />
-        { /* Table */ }
+        { /* Table */}
         <Route exact path="/app/tables" component={Parent} />
         <Route path="/app/tables/basic-table" component={SimpleTable} />
         <Route path="/app/tables/data-table" component={AdvancedTable} />
         <Route path="/app/tables/table-playground" component={TablePlayground} />
         <Route path="/app/tables/tree-table" component={TreeTable} />
         <Route path="/app/tables/editable-cell" component={EditableCell} />
-        { /* Form & Button */ }
+        { /* Form & Button */}
         <Route exact path="/app/forms" component={Parent} />
         <Route path="/app/forms/reduxform" component={ReduxForm} />
         <Route path="/app/forms/date-time-picker" component={DateTimePicker} />
@@ -117,7 +125,7 @@ function Application(props) {
         <Route path="/app/ui/slider-carousel" component={SliderCarousel} />
         <Route path="/app/ui/tags" component={Tags} />
         <Route path="/app/ui/dividers" component={Dividers} />
-        { /* Chart */ }
+        { /* Chart */}
         <Route exact path="/app/charts" component={Parent} />
         <Route path="/app/charts/line-charts" component={LineCharts} />
         <Route path="/app/charts/bar-charts" component={BarCharts} />
@@ -131,7 +139,7 @@ function Application(props) {
         <Route path="/app/charts/line-scatter-charts" component={LineScatterChart} />
         <Route path="/app/charts/area-filled-charts" component={AreaFilledChart} />
         <Route path="/app/charts/radar-polar-chart" component={RadarPolarCharts} />
-        { /* Sample Apps */ }
+        { /* Sample Apps */}
         <Route path="/app/pages/checkout" component={CheckoutPage} />
         <Route path="/app/pages/product-detail" component={ProductPage} />
         <Route path="/app/pages/invoice" component={Invoice} />
@@ -142,7 +150,7 @@ function Application(props) {
         <Route path="/app/pages/ecommerce" component={Ecommerce} />
         <Route path="/app/pages/timeline" component={Timeline} />
         <Route path="/app/pages/email" component={Email} />
-        { /* Pages */ }
+        { /* Pages */}
         <Route exact path="/app/pages" component={Parent} />
         <Route exact path="/app/pages/proximamente" component={ComingSoon} />
 
@@ -154,14 +162,14 @@ function Application(props) {
         <Route path="/app/pages/error" component={Error} />
         <Route path="/app/pages/settings" component={Settings} />
         <Route path="/app/pages/help-support" component={HelpSupport} />
-        { /* Map */ }
+        { /* Map */}
         <Route exact path="/app/maps" component={Parent} />
         <Route path="/app/maps/map-marker" component={MapMarker} />
         <Route path="/app/maps/map-direction" component={MapDirection} />
         <Route path="/app/maps/map-searchbox" component={SearchMap} />
         <Route path="/app/maps/map-traffic" component={TrafficIndicator} />
         <Route path="/app/maps/street-view" component={StreetViewMap} />
-        { /* Default */ }
+        { /* Default */}
         <Route component={NotFound} />
       </Switch>
     </Dashboard>
@@ -170,6 +178,16 @@ function Application(props) {
 
 Application.propTypes = {
   history: PropTypes.object.isRequired,
+  loginData: PropTypes.object.isRequired,
 };
 
-export default Application;
+const mapStateToProps = state => ({
+  force: state, // force state from reducer
+  loginData: state.login.loginData,
+});
+
+const ApplicationdMapped = connect(
+  mapStateToProps,
+)(Application);
+
+export default ApplicationdMapped;

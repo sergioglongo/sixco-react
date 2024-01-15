@@ -427,9 +427,10 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     overflow: 'hidden',
     position: 'relative',
     display: 'flex',
+    // justifyContent: 'space-between',
     flex: 1,
     alignItems: 'center',
-    zIndex: 1
+    zIndex: 1,
   },
   fadeOut: {},
   invert: {},
@@ -446,7 +447,9 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
       }
     },
     [`&.${classes.fadeOut}`]: {
-      opacity: 0,
+      '& i': {
+        color: theme.palette.mode === 'dark' ? theme.palette.secondary.main : theme.palette.primary.main,
+      }
     },
     [`&.${classes.invert}`]: {
       [`& .${classes.button}`]: {
@@ -464,11 +467,13 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     textTransform: 'capitalize',
     fontWeight: 700,
     top: 60,
-    color: theme.palette.common.white,
+    color: theme.palette.mode === 'dark' ? theme.palette.secondary.main : theme.palette.primary.main,
     opacity: 0,
     [`&.${classes.show}`]: {
-      top: theme.spacing(1),
-      opacity: 0.87
+      top: 0,
+      marginRight: '10px',
+      opacity: 0.99,
+      position: 'relative'
     }
   },
   swipeDrawerPaper: {

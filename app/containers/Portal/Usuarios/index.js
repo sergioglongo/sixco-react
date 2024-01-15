@@ -76,7 +76,7 @@ function Usuarios(props) {
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item md={12} xs={12}>
-            <PapperBlock title="Listado Usuarios" noMargin whiteBg icon="ion-ios-people"
+            <PapperBlock title="Listado de Usuarios" noMargin whiteBg icon="ion-ios-people"
               desc="Usuarios registrados."
             >
               <div>

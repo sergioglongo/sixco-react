@@ -18,18 +18,39 @@ import MegaMenu from './MegaMenu';
 import UserMenu from './UserMenu';
 import useStyles from './header-jss';
 import SearchUi from '../Search/SearchUi';
+import { connect } from 'react-redux';
 
 const elem = document.documentElement;
+const estados = [
+  { id: 1, label: 'Habilitado' },
+  { id: 2, label: 'Deshabilitado' },
+  { id: 3, label: 'Incompleto' },
+  { id: 4, label: 'Suspendido' },
+]
 
 function HeaderMenu(props) {
   const { classes, cx } = useStyles();
   const [fullScreen, setFullScreen] = useState(false);
-  const [status, setStatus] = useState(dummy.user.status);
+  const [status, setStatus] = useState(loginData.estado);
   const [anchorEl, setAnchorEl] = useState(null);
   const [fixed, setFixed] = useState(false);
 
   // Initial menu ui
   let flagFixedMenu = false;
+ 
+  const {
+    type,
+    dataMenu,
+    history,
+    openGuide,
+    mode,
+    toggleDrawerOpen,
+    openMobileNav,
+    loadTransition,
+    isLogin,
+    logoLink,
+    loginData
+  } = props;
 
   const handleScroll = () => {
     const doc = document.documentElement;
@@ -47,6 +68,20 @@ function HeaderMenu(props) {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    switch(loginData.estado){
+      case 1: setStatus('Habilitado');
+      break;
+      case 2: setStatus('Deshabilitado');
+      break;
+      case 3: setStatus('Incompleto');
+      break;
+      case 4: setStatus('Suspendido');
+      break;
+      default: setStatus('Habilitado');
+    }
+  }, loginData);
 
   const openFullScreen = () => {
     setFullScreen(true);
@@ -95,18 +130,6 @@ function HeaderMenu(props) {
     handleClose();
   };
 
-  const {
-    type,
-    dataMenu,
-    history,
-    openGuide,
-    mode,
-    toggleDrawerOpen,
-    openMobileNav,
-    loadTransition,
-    isLogin,
-    logoLink
-  } = props;
 
   const mdDown = useMediaQuery(theme => theme.breakpoints.down('md'));
   const lgUp = useMediaQuery(theme => theme.breakpoints.up('lg'));
@@ -208,7 +231,8 @@ HeaderMenu.propTypes = {
   loadTransition: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   logoLink: PropTypes.string,
-  isLogin: PropTypes.bool
+  isLogin: PropTypes.bool,
+  loginData: PropTypes.object.isRequired,
 };
 
 HeaderMenu.defaultProps = {
@@ -216,4 +240,14 @@ HeaderMenu.defaultProps = {
   logoLink: '/',
 };
 
-export default HeaderMenu;
+const mapStateToProps = state => ({
+  force: state, // force state from reducer
+  loginData: state.login.loginData,
+});
+
+const HeaderMenudMapped = connect(
+  mapStateToProps,
+)(HeaderMenu);
+
+
+export default HeaderMenudMapped;

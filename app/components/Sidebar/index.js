@@ -9,12 +9,21 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import dummy from 'dan-api/dummy/dummyContents';
 import useStyles from './sidebar-jss';
 import SidebarContent from './SidebarContent';
+import { connect } from 'react-redux';
 
 function Sidebar(props) {
   const { classes, cx } = useStyles();
   const [status, setStatus] = useState(dummy.user.status);
   const [anchorEl, setAnchorEl] = useState(null);
   const [turnDarker, setTurnDarker] = useState(false);
+  const {
+    open,
+    toggleDrawerOpen,
+    loadTransition,
+    leftSidebar,
+    dataMenu,
+    loginData
+  } = props;
 
   // Initial header style
   let flagDarker = false;
@@ -49,16 +58,23 @@ function Sidebar(props) {
     handleClose();
   };
 
-  const {
-    open,
-    toggleDrawerOpen,
-    loadTransition,
-    leftSidebar,
-    dataMenu
-  } = props;
 
   const lgDown = useMediaQuery(theme => theme.breakpoints.down('lg'));
   const lgUp = useMediaQuery(theme => theme.breakpoints.up('lg'));
+  
+  useEffect(() => {
+    switch(loginData?.estado || 5){
+      case 1: setStatus('Habilitado');
+      break;
+      case 2: setStatus('Deshabilitado');
+      break;
+      case 3: setStatus('Incompleto');
+      break;
+      case 4: setStatus('Suspendido');
+      break;
+      default: setStatus('Habilitado');
+    }
+  }, [loginData]);
 
   return (
     <Fragment>
@@ -121,10 +137,20 @@ Sidebar.propTypes = {
   open: PropTypes.bool.isRequired,
   leftSidebar: PropTypes.bool,
   dataMenu: PropTypes.array.isRequired,
+  loginData: PropTypes.object.isRequired
 };
 
 Sidebar.defaultProps = {
   leftSidebar: true
 };
 
-export default Sidebar;
+const mapStateToProps = state => ({
+  force: state, // force state from reducer
+  loginData: state.login.loginData,
+});
+
+const SidebarMapped = connect(
+  mapStateToProps,
+)(Sidebar);
+
+export default SidebarMapped;

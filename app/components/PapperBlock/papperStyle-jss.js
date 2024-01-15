@@ -31,10 +31,10 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
   },
   title: {
     position: 'relative',
-    textTransform: 'capitalize',
+    // textTransform: 'capitalize',
     fontSize: 24,
     fontWeight: 400,
-    color: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.primary.dark,
+    color: theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.dark,
     [theme.breakpoints.down('sm')]: {
       textAlign: 'center',
       fontWeight: 600,

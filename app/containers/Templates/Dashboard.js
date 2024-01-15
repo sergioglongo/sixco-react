@@ -93,7 +93,7 @@ function Dashboard(props) {
             gradient={gradient}
             deco={deco}
             bgPosition={bgPosition}
-            place={place}
+            place={place == 'app' ? '' : place}
             titleException={titleException}
             handleOpenGuide={handleOpenGuide}
           >

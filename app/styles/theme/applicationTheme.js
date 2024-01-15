@@ -102,7 +102,7 @@ const applicationTheme = (color, mode, direction) => ({
         root: {
           backgroundColor:
             mode === 'dark'
-              ? '#292929'
+              ? 'rgba(66, 66, 66, 0.75)'
               : '#FFFFFF'
         },
         rounded: {

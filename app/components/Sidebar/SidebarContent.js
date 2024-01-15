@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { makeStyles, withStyles } from 'tss-react/mui';
 import classNames from "classnames";
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import brand from 'dan-api/dummy/brand';
 import dummy from 'dan-api/dummy/dummyContents';
 import company from 'dan-images/company-logo-example.jpg';
-
 import logo from 'dan-images/logo-sixco.svg';
 import logoWhite from 'dan-images/logo-sixco-white.svg';
 import MainMenu from './MainMenu';
@@ -58,11 +56,11 @@ function SidebarContent(props) {
 
   const setStatus = st => {
     switch (st) {
-      case 'online':
+      case 'Habilitado':
         return classes.online;
-      case 'idle':
+      case 'Suspendido':
         return classes.idle;
-      case 'bussy':
+      case 'Incompleto':
         return classes.bussy;
       default:
         return classes.offline;
@@ -123,7 +121,7 @@ function SidebarContent(props) {
                     setStatus(status)
                   )}
                 />
-                {"En línea"}
+                {status}
               </Button>
             </div>
           </div>

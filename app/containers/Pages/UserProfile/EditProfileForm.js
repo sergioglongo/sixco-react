@@ -56,7 +56,7 @@ const initData = {
 const estados = [
     { id: 1, label: 'Habilitado' },
     { id: 2, label: 'Deshabilitado' },
-    { id: 3, label: 'Portal' },
+    { id: 3, label: 'Incompleto' },
     { id: 4, label: 'Suspendido' },
 ]
 
@@ -212,7 +212,7 @@ EditProfileForm.propTypes = {
     submitting: PropTypes.bool.isRequired,
     init: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired,
-    formData: PropTypes.object.isRequired,
+    formData: PropTypes.object,
     setFormData: PropTypes.func.isRequired,
 };
 

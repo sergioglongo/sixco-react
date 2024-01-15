@@ -131,6 +131,9 @@ function Header(props) {
         </Fab>
         {!mdDown && (
           <div className={classes.headerProperties}>
+            <Typography component="h2" className={cx(classes.headerTitle, showTitle && classes.show)}>
+              {title}
+            </Typography>
             <div className={cx(classes.headerAction, showTitle && classes.fadeOut)}>
               {fullScreen ? (
                 <Tooltip title="Exit Full Screen" placement="bottom">
@@ -151,9 +154,7 @@ function Header(props) {
                 </IconButton>
               </Tooltip>
             </div>
-            <Typography component="h2" className={cx(classes.headerTitle, showTitle && classes.show)}>
-              {title}
-            </Typography>
+
           </div>
         )}
         <UserMenu />
