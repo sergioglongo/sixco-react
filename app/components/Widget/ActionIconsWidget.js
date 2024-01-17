@@ -4,10 +4,10 @@ import colorfull from 'dan-api/palette/colorSixco';
 
 // import CounterWidget from '../Counter/CounterWidget';
 // import useStyles from './sixcocard-jss';
-import useStyles from './sixcocard-jss';
 import ActionWidget from '../Action/ActionWidget';
 import SixcoIcon from '../../api/icons/sixco-icons';
 import { Badge } from '@mui/material';
+import useStyles from './sixcocard-jss';
 
 function ActionIconsWidget() {
   const { classes } = useStyles();
@@ -22,7 +22,9 @@ function ActionIconsWidget() {
             btntitle="Acceder"
             link="/app/choferes"
           >
-            <SixcoIcon iconName={'AirlineSeatReclineNormal'} className={classes.counterIcon} />
+            <SixcoIcon iconName={'AirlineSeatReclineNormal'}
+              className={classes.counterIcon}
+            />
             {/* <AirlineSeatReclineNormalIcon  /> */}
           </ActionWidget>
         </Grid>
@@ -44,7 +46,7 @@ function ActionIconsWidget() {
             link="/app/pages/proximamente"
           >
             <Badge
-              className={classes.margin}
+              // className={classes.margin}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'left',

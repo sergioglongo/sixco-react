@@ -27,13 +27,13 @@ TextFieldRedux.defaultProps = {
 
 /* TextfieldError */
 export const TextFieldErrorRedux = ({ meta: { touched, error }, input, ...rest }) => (
-  <Box fullwidth>
+  <Box >
     <TextField
       variant="standard"
       fullWidth
       {...rest}
       {...input}
-      error={touched && error}
+      error={touched && Boolean(error)}
     />
     {touched && error && error != 'Required' && <FormHelperText style={{ position: 'absolute', bottom: '-22px', color: '#d32f2f' }}>{error}</FormHelperText>}
   </Box>

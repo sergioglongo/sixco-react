@@ -338,6 +338,10 @@ export const RegisterV2 = loadable(() =>
   import('./Pages/Users/RegisterV2'), {
   fallback: <Loading />,
 });
+export const RegisterFinish = loadable(() =>
+  import('./Pages/Users/RegisterFinish'), {
+  fallback: <Loading />,
+});
 export const RegisterV3 = loadable(() =>
   import('./Pages/Users/RegisterV3'), {
   fallback: <Loading />,
@@ -390,6 +394,10 @@ export const Contact = loadable(() =>
 });
 export const ResetPassword = loadable(() =>
   import('./Pages/Users/ResetPassword'), {
+  fallback: <Loading />,
+});
+export const ResetPasswordCode = loadable(() =>
+  import('./Pages/Users/ResetPasswordCode'), {
   fallback: <Loading />,
 });
 export const LockScreen = loadable(() =>

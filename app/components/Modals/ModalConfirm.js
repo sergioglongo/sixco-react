@@ -11,16 +11,16 @@ import Button from '@mui/material/Button';
 function ModalConfirm(props) {
     const { classes, cx } = useStyles();
     const {
-        openmodal, setOpenmodal, titulo, mensaje, confirm, cancel, loading
+        openmodal, setOpenmodal, titulo, mensaje, buttonPrimaryAction, buttonSecondaryAction, loading,
+        buttonPrimaryText, buttonSecondaryText, buttonPrimaryShow, buttonSecondaryShow
     } = props;
 
     const handleClose = (event, reason) => {
-        cancel();
-        setOpenmodal(false);
+        buttonSecondaryAction();
     };
 
     const handleConfirm = (event, reason) => {
-        confirm();
+        buttonPrimaryAction();
     };
 
     return (
@@ -40,12 +40,16 @@ function ModalConfirm(props) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Cancelar
-                    </Button>
-                    <Button onClick={handleConfirm} color="primary" variant="contained" autoFocus loading={loading} disabled={loading}>
-                        Aceptar
-                    </Button>
+                    {buttonSecondaryShow &&
+                        <Button onClick={handleClose} color="primary">
+                            {buttonSecondaryText}
+                        </Button>
+                    }
+                    {buttonPrimaryShow &&
+                        <Button onClick={handleConfirm} color="primary" variant="contained" autoFocus loading={loading} disabled={loading}>
+                            {buttonPrimaryText}
+                        </Button>
+                    }
                 </DialogActions>
             </Dialog>
         </div>
@@ -57,7 +61,7 @@ ModalConfirm.propTypes = {
     setOpenmodal: PropTypes.func.isRequired,
     titulo: PropTypes.string.isRequired,
     mensaje: PropTypes.string.isRequired,
-    confirm: PropTypes.func.isRequired,
+    buttonPrimaryAction: PropTypes.func.isRequired,
     loading: PropTypes.bool,
 };
 

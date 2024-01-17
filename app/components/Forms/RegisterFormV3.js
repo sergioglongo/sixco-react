@@ -30,7 +30,7 @@ const email = value => (
 
 const passwordsMatch = (value, allValues) => {
   if (value !== allValues.password) {
-    return 'Passwords dont match';
+    return 'Contraseñas no coinciden';
   }
   return undefined;
 };

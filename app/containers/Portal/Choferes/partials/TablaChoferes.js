@@ -37,15 +37,13 @@ function TablaChoferes(props) {
   const handleEliminar = (e, chofer) => {
     e.preventDefault();
     setOpenmodal(true);
-    setDatos(chofer);
-    console.log(chofer)
   };
 
   const handleConfirm = () => {
     console.log("Confirmado", datos);
     const record = datos.id;
     const values = {
-      estadoturno: 'Cancelado'
+      estado: 'eliminado'
     };
     setOpenmodal(false);
   };
@@ -113,9 +111,13 @@ function TablaChoferes(props) {
             ?
           </p>
         )}
-        confirm={handleConfirm}
-        cancel={() => setOpenmodal(false)}
+        buttonPrimaryAction={handleConfirm}
+        buttonSecondaryAction={() => setOpenmodal(false)}
         loading={false}
+        buttonSecondaryText="Cancelar"
+        buttonPrimaryText="Aceptar"
+        buttonSecondaryShow={true}
+        buttonPrimaryShow={true}
       />
     </div>
   );

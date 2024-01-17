@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import brand from 'dan-api/dummy/brand';
-import { ResetForm } from 'dan-components';
+import { ResetCodeForm } from 'dan-components';
 import useStyles from '../../../components/Forms/reset-jss';
 // import intro from 'dan-images/footer-deco.svg';
 import { Hidden } from '@mui/material';
@@ -8,7 +8,7 @@ import intro from 'dan-images/bg-red.jpg';
 import ModalConfirm from '../../../components/Modals/ModalConfirm';
 import { useHistory } from 'react-router-dom';
 
-function ResetPassword() {
+function ResetPasswordCode() {
   const [valueForm, setValueForm] = useState(null);
   const [openmodal, setOpenmodal] = useState(false);
   const history = useHistory();
@@ -21,7 +21,7 @@ function ResetPassword() {
   const handleConfirm = () => {
     console.log("Confirmado");
     setOpenmodal(false);
-    history.push('/auth/reset-password-code');
+    history.push('/auth/login');
   };
 
   const title = brand.name + ' - Reset Password';
@@ -33,21 +33,21 @@ function ResetPassword() {
         <div className={classes.container}>
           <div className={classes.userFormWrap}>
             <img src={intro} alt={'background'} width={'100%'} height={'100%'} style={{ objectFit: 'cover', position: 'absolute', left: 0, top: 0, zIndex: -1 }} />
-            <ResetForm onSubmit={(values) => submitForm(values)} />
+            <ResetCodeForm onSubmit={(values) => submitForm(values)} />
           </div>
         </div>
       </Hidden>
       <Hidden mdUp>
         <div className={classes.fullFormWrap}>
-          <ResetForm onSubmit={(values) => submitForm(values)} />
+          <ResetCodeForm onSubmit={(values) => submitForm(values)} />
         </div>
       </Hidden>
 
       <ModalConfirm
         openmodal={openmodal}
         setOpenmodal={setOpenmodal}
-        titulo="Email Enviado"
-        mensaje={"Se ha enviado un email para restablecer la contraseña"}
+        titulo="Cambio de Contraseña"
+        mensaje={"La contraseña se ha generado exitosamente."}
         buttonPrimaryAction={handleConfirm}
         // buttonSecondaryAction={() => setOpenmodal(false)}
         loading={false}
@@ -60,4 +60,4 @@ function ResetPassword() {
   );
 }
 
-export default ResetPassword;
+export default ResetPasswordCode;

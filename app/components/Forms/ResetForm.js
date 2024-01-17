@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -12,7 +12,8 @@ import Typography from '@mui/material/Typography';
 import brand from 'dan-api/dummy/brand';
 import logo from 'dan-images/logo-sixco.svg';
 import { TextFieldRedux } from './ReduxFormMUI';
-import useStyles from './user-jss';
+import useStyles from './reset-jss';
+import ModalConfirm from '../Modals/ModalConfirm';
 
 // validation functions
 const required = value => (value === null ? 'Required' : undefined);
@@ -26,6 +27,7 @@ const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disabl
   return <NavLink to={props.to} {...props} innerRef={ref} />; // eslint-disable-line
 });
 
+
 function ResetForm(props) {
   const { classes, cx } = useStyles();
   const {
@@ -35,10 +37,15 @@ function ResetForm(props) {
     deco,
   } = props;
   return (
-    <Paper className={cx(classes.paperWrap, deco && classes.petal)}>
+    <Paper className={cx(classes.sideWrap, deco && classes.petal)}>
       <div >
         <NavLink to="/" className={classes.brand}>
-          <img src={logo} alt={brand.name}  style={{ width: 200, height: 80 }}/>
+          <img src={logo} alt={brand.name}
+            style={{
+              filter: 'drop-shadow(2px 5px 5px rgba(0, 0, 0, 0.2))',
+              width: 200, height: 80
+            }}
+          />
         </NavLink>
       </div>
       <Typography variant="h4" className={classes.title} gutterBottom>
@@ -90,6 +97,8 @@ function ResetForm(props) {
           </div>
         </form>
       </section>
+
+
     </Paper>
   );
 }

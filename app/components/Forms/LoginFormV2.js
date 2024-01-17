@@ -218,7 +218,8 @@ LoginFormV2.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   deco: PropTypes.bool.isRequired,
-  themeType: PropTypes.string.isRequired
+  loading: PropTypes.bool.isRequired,
+  themeType: PropTypes.string
 };
 
 const LoginFormReduxed = reduxForm({

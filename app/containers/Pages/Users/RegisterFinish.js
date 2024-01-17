@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import brand from 'dan-api/dummy/brand';
-import { ResetForm } from 'dan-components';
+import { RegisterFormFinish } from 'dan-components';
 import useStyles from '../../../components/Forms/reset-jss';
 // import intro from 'dan-images/footer-deco.svg';
 import { Hidden } from '@mui/material';
@@ -13,17 +13,6 @@ function ResetPassword() {
   const [openmodal, setOpenmodal] = useState(false);
   const history = useHistory();
 
-  const submitForm = useCallback((values) => {
-    setValueForm(values);
-    setOpenmodal(true);
-  }, [valueForm]);
-
-  const handleConfirm = () => {
-    console.log("Confirmado");
-    setOpenmodal(false);
-    history.push('/auth/reset-password-code');
-  };
-
   const title = brand.name + ' - Reset Password';
   const description = brand.desc;
   const { classes } = useStyles();
@@ -33,29 +22,16 @@ function ResetPassword() {
         <div className={classes.container}>
           <div className={classes.userFormWrap}>
             <img src={intro} alt={'background'} width={'100%'} height={'100%'} style={{ objectFit: 'cover', position: 'absolute', left: 0, top: 0, zIndex: -1 }} />
-            <ResetForm onSubmit={(values) => submitForm(values)} />
+            <RegisterFormFinish />
           </div>
         </div>
       </Hidden>
       <Hidden mdUp>
         <div className={classes.fullFormWrap}>
-          <ResetForm onSubmit={(values) => submitForm(values)} />
+          <RegisterFormFinish />
         </div>
       </Hidden>
 
-      <ModalConfirm
-        openmodal={openmodal}
-        setOpenmodal={setOpenmodal}
-        titulo="Email Enviado"
-        mensaje={"Se ha enviado un email para restablecer la contraseña"}
-        buttonPrimaryAction={handleConfirm}
-        // buttonSecondaryAction={() => setOpenmodal(false)}
-        loading={false}
-        buttonSecondaryText="Cancelar"
-        buttonPrimaryText="Aceptar"
-        buttonSecondaryShow={false}
-        buttonPrimaryShow={true}
-      />
     </div>
   );
 }

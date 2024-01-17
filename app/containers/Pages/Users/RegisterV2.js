@@ -9,6 +9,7 @@ import intro from 'dan-images/intro-sixco-large.mp4';
 import introroute from 'dan-images/footer-deco.svg';
 import { Hidden } from '@mui/material';
 import logo from 'dan-images/logo-sixco-only.svg';
+import { useHistory } from 'react-router-dom';
 
 function RegisterV2() {
   const [valueForm, setValueForm] = useState(null);
@@ -18,6 +19,7 @@ function RegisterV2() {
     message: "",
   });
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
   const submitForm = values => {
     setTimeout(() => {
@@ -25,6 +27,7 @@ function RegisterV2() {
       console.log(`You submitted:`, values);
       // window.location.href = '/app';
     }, 500); // simulate server latency
+    history.push('/auth/registro-exitoso');
   };
 
   const title = brand.name + ' - App';

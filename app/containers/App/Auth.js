@@ -2,12 +2,11 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Outer from '../Templates/Outer';
 import {
-  Login, LoginV2, LoginV3,
-  Register, RegisterV2, RegisterV3,
-  ResetPassword, LockScreen, ComingSoon,
-  Maintenance,
-  NotFound,
+  LoginV2, RegisterV2,
+  ResetPassword,
+  RegisterFinish
 } from '../pageListAsync';
+import ResetPasswordCode from '../Pages/Users/ResetPasswordCode';
 
 function Auth() {
   return (
@@ -23,6 +22,11 @@ function Auth() {
             path="/auth/registrese" 
             component={RegisterV2} 
           />
+        <Route 
+            exact
+            path="/auth/registro-exitoso" 
+            component={RegisterFinish} 
+          />
         {/* <Route 
             exact
             path="/auth/gracias-por-registrarte" 
@@ -31,6 +35,10 @@ function Auth() {
         <Route 
             path="/auth/reset-password" 
             component={ResetPassword} 
+          />
+        <Route 
+            path="/auth/reset-password-code" 
+            component={ResetPasswordCode} 
           />
         {/* <Route component={NotFound} /> */}
       </Switch>
