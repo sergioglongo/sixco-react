@@ -36,7 +36,6 @@ function NuevoChofer(props) {
   const history = useHistory();
   const { classes } = useStyles();
   const { recordid } = props.match.params;
-
   const [formData, setFormData] = useState(initData);
   
   useEffect(() => {
@@ -48,9 +47,7 @@ function NuevoChofer(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
     setTimeout(() => {
-      console.log("Chofer", nuevoChofer.values)
       history.goBack();
     }, 3000);
   }

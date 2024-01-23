@@ -57,7 +57,6 @@ function FormularioNuevoChofer(props) {
     } = props;
     const history = useHistory();
     useEffect(() => {
-        console.log("formData", formData)
         if (formData)
             init(formData)
         else
@@ -166,7 +165,7 @@ FormularioNuevoChofer.propTypes = {
     submitting: PropTypes.bool.isRequired,
     init: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired,
-    clientData: PropTypes.object.isRequired,
+    clientData: PropTypes.object,
     edit: PropTypes.bool,
 };
 

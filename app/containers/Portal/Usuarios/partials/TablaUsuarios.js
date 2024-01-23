@@ -60,7 +60,7 @@ function TablaUsuarios(props) {
       <Table className={classNames(classes.table, classes.hover)}>
         <TableHead>
           <TableRow>
-            <TableCell padding="default">Nro Usuario</TableCell>
+            <TableCell >Nro Usuario</TableCell>
             <TableCell>Apellido</TableCell>
             <TableCell>Nombre</TableCell>
             <TableCell >Estado</TableCell>
@@ -70,7 +70,7 @@ function TablaUsuarios(props) {
         <TableBody>
           {lista.map(item => ([
             <TableRow key={item.id}>
-              <TableCell padding="default">{item.nro}</TableCell>
+              <TableCell >{item.nro}</TableCell>
               <TableCell>{item.apellido}</TableCell>
               <TableCell>{item.nombre}</TableCell>
               <TableCell >{item.estado}</TableCell>
