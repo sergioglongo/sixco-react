@@ -40,7 +40,8 @@ function EditUserProfile(props) {
       setUserData(formData);
       setLoginData(formData);
       setLoginUserData(formData);
-      history.goBack();
+      // history.goBack();
+      history.push('/app');
     }, 2000);
   }
 

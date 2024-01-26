@@ -1,16 +1,17 @@
 import axios from 'axios';
 
-const baseURL = (process.env.NODE_ENV === 'development' ? 'http://local.grifocrm.ar/modules/Mobile/api.php' : 'https://api.grifocreativo.com/api.php') + '';
+const baseURL = (process.env.NODE_ENV === 'development' ? 'https://gestionsixco.net.ar/' : 'https://gestionsixco.net.ar/') + '';
 
 const axiosClient = axios.create({
   baseURL,
-  headers: {
-    Authorization: 'Basic Yjk1YWQ5ODljY2Q0NDgyN2I3ZjdlNmEzMTExMjM0NGQ6NmY4YzQ3MDM1MTkxNDc5YThhY2U2NjQ4ZmZmMjRjYjU=',
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'https://demooclientes.grifocreativo.com'
-  }
+  auth: {
+    username: 'b95ad989ccd44827b7f7e6a31112344d',
+    password: '6f8c47035191479a8ace6648fff24cb5'
+  },
+  headers: { 
+    'Content-Type': 'application/json', 
+  },
 });
-
 axiosClient.interceptors.request.use(config =>
   config
 );

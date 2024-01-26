@@ -39,7 +39,7 @@ const Breadcrumbs = (props) => {
                         </Fragment>
                       );
                     }
-                    if (part === 'Cambiar-Contrasenia') {
+                    if (part === 'Cambiar-Contraseña') {
                       part = 'Cambiar-Contraseña';
                     }
                   })

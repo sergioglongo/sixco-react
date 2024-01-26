@@ -17,14 +17,14 @@ import axiosClient from './AxiosClient';
 //             .catch(err => console.log(err))
 // }
 
-export async function login(email, password) {
+export async function login(username, password) {
   const params = JSON.stringify({
     _operation: 'login',
-    username: email,
+    username,
     password
   });
   return axiosClient
-    .post('', params)
+    .post('sixcocrm/modules/Mobile/api.php', params)
     .then(response => {
       if (typeof response.data !== 'undefined' && response.data.success == true) {
         return response.data.result.login;

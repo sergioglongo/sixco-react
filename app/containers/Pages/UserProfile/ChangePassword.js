@@ -99,9 +99,9 @@ function ChangePassword(props) {
     // });
   };
 
-    useEffect(() => {
-      console.log("error en submit", datanotif)
-    }, [datanotif]);
+    // useEffect(() => {
+    //   console.log("error en submit", datanotif)
+    // }, [datanotif]);
 
   return (
     <div>

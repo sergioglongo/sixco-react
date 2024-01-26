@@ -21,7 +21,7 @@ import Icon from '@mui/material/Icon';
 import brand from 'dan-api/dummy/brand';
 import logo from 'dan-images/logo-sixco.svg';
 import useStyles from './user-jss';
-import { TextFieldRedux, CheckboxRedux } from './ReduxFormMUI';
+import { TextFieldRedux, CheckboxRedux, TextFieldErrorRedux } from './ReduxFormMUI';
 import { CircularProgress, Hidden } from '@mui/material';
 
 // validation functions
@@ -126,12 +126,12 @@ function LoginFormV2(props) {
           <div>
             <FormControl className={classes.formControl}>
               <Field
-                name="documento"
-                component={TextFieldRedux}
-                placeholder="CUIT"
-                label="CUIT"
+                name="email"
+                component={TextFieldErrorRedux}
+                placeholder="Email"
+                label="Email"
                 required
-                validate={[required, numerico]}
+                validate={[required, email]}
                 className={classes.field}
               />
             </FormControl>

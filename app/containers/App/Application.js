@@ -57,7 +57,7 @@ function Application(props) {
         {/* PERFIL */}
         <Route path="/app/pages/perfil" component={Profile} />
         <Route path="/app/pages/editar-perfil" component={EditProfile} />
-        <Route path="/app/pages/cambiar-contrasenia" component={ChangePassword} />
+        <Route path="/app/pages/cambiar-contraseña" component={ChangePassword} />
         {/* Portal */}
         <Route exact path="/app/usuarios" component={Usuarios} />
         <Route exact path="/app/usuarios/:recordid/detalle" component={DetalleUsuario} />

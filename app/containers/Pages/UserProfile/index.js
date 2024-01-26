@@ -32,7 +32,7 @@ function UserProfile(props) {
       <ProfileCard
         coverImg={bgCover}
         avatar={dummy.user.avatar}
-        name={clientData.nombre}
+        name={clientData.contact_firstname}
         clientData={clientData}
         desc=""
       />

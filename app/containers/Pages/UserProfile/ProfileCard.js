@@ -19,7 +19,7 @@ const optionsOpt = [
     link: '/app/pages/editar-perfil'
   }, {
     title: 'Cambiar contraseña',
-    link: '/app/pages/cambiar-contrasenia'
+    link: '/app/pages/cambiar-contraseña'
   },
 ];
 
@@ -91,14 +91,14 @@ function ProfileCard(props) {
         <div className={classes.content}>
           <Avatar alt={name} src={avatar} className={classes.avatar} />
           <Typography variant="h4" className={classes.name} gutterBottom>
-            {clientData.tipo_documento == 'CUIT' ? clientData.nombre : clientData.nombre + ' ' + clientData.apellido}
+            {clientData.account_tipo_doc == 'CUIT' ? clientData.contact_firstname : clientData.contact_firstname + ' ' + clientData.contact_lastname}
             <VerifiedUser className={classes.verified} />
           </Typography>
           {clientData.siccode ? (
             <Typography className={classes.subheading} gutterBottom>
-              {clientData.tipo_documento ? clientData.tipo_documento : 'DOC'}
+              {clientData.account_tipo_doc ? clientData.account_tipo_doc : 'DOC'}
               :
-              {clientData.nro}
+              {clientData.account_nro_doc}
             </Typography>
           ) : (<></>)}
           {clientData.email ? (
@@ -108,37 +108,18 @@ function ProfileCard(props) {
               {clientData.email}
             </Typography>
           ) : (<></>)}
-          {clientData.telefono ? (
+          {clientData.contact_mobile ? (
             <Typography className={classes.subheading} gutterBottom>
               TELÉFONO:
               {' '}
-              {clientData.telefono}
+              {clientData.contact_mobile}
             </Typography>
           ) : (<></>)}
-          {clientData.domicilio ? (
+          {clientData.account_cuenta ? (
             <Typography className={classes.subheading} gutterBottom>
-              DIRECCIÓN:
+              CUENTA:
               {' '}
-              {clientData.domicilio}
-              <br />
-              {clientData.codigopostal ? (
-                <>
-                  CP:
-                  {clientData.codigopostal}
-                  <br />
-                </>
-              ) : <></>}
-              {clientData.bill_city ? (
-                <>
-                  {clientData.bill_city}
-                  {' '}
-                  -
-                  {' '}
-                  {clientData.bill_state}
-                  <br />
-                </>
-              ) : <></>}
-              {clientData.bill_country ? (<>{clientData.bill_country}</>) : <></>}
+              {clientData.account_cuenta}
             </Typography>
           ) : (<></>)}
           {/*

@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { LoginFormV2 } from 'dan-components';
+// import { login } from '../../../api/apiclient/ApiClient'
 import useStyles from 'dan-components/Forms/user-jss';
 import { Alert, Hidden } from '@mui/material';
 import intro from 'dan-images/intro-sixco-large.mp4';
@@ -17,6 +18,8 @@ import {
   setClientDataAction,
 } from 'dan-redux/actions/Users';
 import logo from 'dan-images/logo-sixco-only.svg';
+import axios from 'axios';
+import { login } from '../../../api/apiclient/ApiClient';
 
 function LoginV2(props) {
   const [valueForm, setValueForm] = useState(null);
@@ -28,23 +31,31 @@ function LoginV2(props) {
     values.preventDefault();
     setLoading(true);
     setValueForm(values);
-    // let doc = values.get('documento');
-    // let pass = values.target.get('password');
-    // if (typeof doc != '' && pass != '') {
-    const clientdata = {
-      nro: "ACC3369",
-      nombre: 'Nombre Usuario',
-      apellido: 'Apellido Usuario',
-      codigopostal: '4105',
-      telefono: "3816093581",
-      domicilio: "Barrio Alto Peru",
-      email: "email@email.com",
-      estado: 3
-    }
-    // Alert('success', 'Credenciales correctas');
-    setClientData(clientdata);
-    setLoginData(clientdata);
-    changeUserAuthenticated(true);
+    console.log("Valores del formulario: ", values.target.password.value);
+    let email = values.target.email.value;
+    let pass = values.target.password.value;
+    login(email, pass).then(response => {
+      console.log("Response: ",response, response.success);
+      if (typeof response != 'undefined' && response.userid && response.sessionid) {
+        const clientdata = {
+          userid: response.userid,
+          contact_firstname: response.contact_firstname,
+          contact_lastname: response.contact_lastname,
+          contact_mobile: response.contact_mobile,
+          account_cuenta: response.account_cuenta,
+          account_nro_doc: response.account_nro_doc,
+          email: email,
+          estado: 3
+        }
+        setClientData(clientdata);
+        setLoginData(clientdata);
+        changeUserAuthenticated(true);
+      }
+    }).catch(error => {
+      console.log("Error",error);
+    });
+    setLoading(false);
+    // // Alert('success', 'Credenciales correctas');
     // }
   };
 
@@ -64,7 +75,7 @@ function LoginV2(props) {
             </video>
             {/* <img src={intro} alt={brand.name} width={'100%'} height={'100%'} style={{ objectFit: 'cover' }} /> */}
             <div style={{ position: 'absolute', width: '100%', top: '85%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: '#fff' }}>
-            {/* <div style={{ position: 'absolute', width: '100%', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: '#fff' }}> */}
+              {/* <div style={{ position: 'absolute', width: '100%', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: '#fff' }}> */}
               <div style={{ textAlign: 'start', display: 'inline-block' }}>
                 <div style={{ display: 'flex', height: '60px', flexDirection: 'row', alignItems: 'center', gap: '15px' }}>
                   <div style={{ height: '60px', display: 'flex', alignItems: 'center' }}>

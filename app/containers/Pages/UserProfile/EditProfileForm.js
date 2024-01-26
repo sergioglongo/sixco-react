@@ -90,13 +90,13 @@ function EditProfileForm(props) {
                 <div>
                     <FormControl className={classes.field}>
                         <Field
-                            name="nombre"
+                            name="contact_firstname"
                             component={TextFieldRedux}
                             placeholder="Nombre"
                             label="Nombre"
                             required
                             validate={required}
-                            onChange={(event) => handleInputChange('nombre', event.target.value)}
+                            onChange={(event) => handleInputChange('contact_firstname', event.target.value)}
                             value={formData?.nombre || ''}
                         />
                     </FormControl>
@@ -104,25 +104,25 @@ function EditProfileForm(props) {
                 <div>
                     <FormControl className={classes.field}>
                         <Field
-                            name="apellido"
+                            name="contact_lastname"
                             component={TextFieldRedux}
                             placeholder="Apellido"
                             label="Apellido"
                             required
                             validate={required}
-                            onChange={(event) => handleInputChange('apellido', event.target.value)}
+                            onChange={(event) => handleInputChange('contact_lastname', event.target.value)}
                             value={formData?.apellido || ''}                        />
                     </FormControl>
                 </div>
                 <div>
                     <FormControl className={classes.field}>
                         <Field
-                            name="telefono"
+                            name="contact_mobile"
                             component={TextFieldRedux}
                             placeholder="Teléfono Principal"
                             label="Teléfono Principal"
                             validate={[numerico]}
-                            onChange={(event) => handleInputChange('telefono', event.target.value)}
+                            onChange={(event) => handleInputChange('contact_mobile', event.target.value)}
                             value={formData?.telefono || ''}
                             />
                     </FormControl>
@@ -130,27 +130,14 @@ function EditProfileForm(props) {
                 <div>
                     <FormControl className={classes.field}>
                         <Field
-                            name="domicilio"
+                            name="account_nro_doc"
                             component={TextFieldRedux}
-                            validate={[required, string, maxLength30]}
-                            label="Domicilio"
-                            onChange={(event) => handleInputChange('domicilio', event.target.value)}
+                            // validate={[required, string, maxLength30]}
+                            label="Identificación"
+                            // onChange={(event) => handleInputChange('account_nro_doc', event.target.value)}
                             value={formData?.domicilio || ''}
+                            disabled
                             />
-                    </FormControl>
-                </div>
-                <div>
-                    <FormControl className={classes.field}>
-                        <Field
-                            name="codigopostal"
-                            component={TextFieldRedux}
-                            placeholder="Código Postal"
-                            label="Código Postal"
-                            required
-                            validate={[required]}
-                            onChange={(event) => handleInputChange('codigopostal', event.target.value)}
-                            value={formData?.codigopostal || ''}
-                        />
                     </FormControl>
                 </div>
                 <div>
@@ -160,10 +147,24 @@ function EditProfileForm(props) {
                             component={TextFieldRedux}
                             placeholder="Email"
                             label="Email"
-                            required
-                            validate={[required, email]}
-                            onChange={(event) => handleInputChange('email', event.target.value)}
+                            // validate={[required, email]}
+                            // onChange={(event) => handleInputChange('email', event.target.value)}
                             value={formData?.email || ''}
+                            disabled
+                        />
+                    </FormControl>
+                </div>
+                <div>
+                    <FormControl className={classes.field}>
+                        <Field
+                            name="account_cuenta"
+                            component={TextFieldRedux}
+                            placeholder="Cuenta"
+                            label="Cuenta"
+                            // validate={[required, email]}
+                            // onChange={(event) => handleInputChange('email', event.target.value)}
+                            value={formData?.email || ''}
+                            disabled
                         />
                     </FormControl>
                 </div>
