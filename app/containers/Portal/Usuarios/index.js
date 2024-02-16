@@ -16,6 +16,8 @@ import Typography from '@mui/material/Typography';
 import Icon from '@mui/material/Icon';
 import SixcoIcon from '../../../api/icons/sixco-icons';
 import TablaUsuarios from './partials/TablaUsuarios';
+import { listContacts } from '../../../api/apiclient/ApiClient';
+
 
 const listaPruebas = [
   {
@@ -41,26 +43,26 @@ function Usuarios(props) {
   const { classes, cx } = useStyles();
 
   const [datanotif, setDatanotif] = useState({ open: false, variant: 'error', message: '' });
-  const [listusuarios, setListconsultas] = useState(listaPruebas);
+  const [listusuarios, setListconsultas] = useState([]);
   const title = brand.name + ' - Usuarios';
   const description = brand.desc;
 
   useEffect(() => {
-
-    // getListadoConsultas(loginData.session,loginData.userid,"").then(response => {
-    //   if(typeof response != 'undefined' && response.records){
-    //     // console.log(response.records);
-    //     setListconsultas(response.records)
-    //   }else if(typeof response != 'undefined' && response.success == false && typeof response.error != 'undefined'){
-    //     // setOpenmodal(true);
-    //     setDatanotif({
-    //         ...datanotif,
-    //         open:true,
-    //         message:response.error.message
-    //       });
-    //   }
-    // });
-
+    const data = {
+      userid: loginData.userid,
+      sessionid: loginData.sessionid,
+    }
+    listContacts(data).then(response => {
+      if (typeof response != 'undefined' && response.records) {
+        console.log(response.records);
+        setListconsultas(response.records)
+      } else {
+        if (response.success == false && typeof response.error != 'undefined') {
+          // setOpenmodal(true);
+          console.error("message error", response.error.message);
+        }
+      }
+    })
   }, []);
 
   return (

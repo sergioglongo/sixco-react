@@ -36,7 +36,7 @@ import {
   Photos, Pricing, CheckoutPage,
   Error, Settings, HelpSupport,
   MapMarker, MapDirection, SearchMap,
-  TrafficIndicator, StreetViewMap, NotFound, NuevoChofer, EditarChofer,
+  TrafficIndicator, StreetViewMap, NotFound, NuevoChofer, EditarChofer, CrearEditarChofer,
 } from '../pageListAsync';
 import { connect } from 'react-redux';
 
@@ -63,8 +63,8 @@ function Application(props) {
         <Route exact path="/app/usuarios/:recordid/detalle" component={DetalleUsuario} />
         <Route exact path="/app/choferes" component={Choferes} />
         <Route exact path="/app/choferes/:recordid/detalle" component={DetalleChofer} />
-        <Route exact path="/app/choferes/nuevo-chofer" component={NuevoChofer} />
-        <Route exact path="/app/choferes/:recordid/editar" component={EditarChofer} />
+        <Route exact path="/app/choferes/nuevo-chofer" component={CrearEditarChofer} />
+        <Route exact path="/app/choferes/:recordid/editar" component={CrearEditarChofer} />
 
         <Route path="/app/dashboard/sales-marketing" component={CrmDashboard} />
         <Route path="/app/dashboard/cryptocurrency" component={CryptoDashboard} />

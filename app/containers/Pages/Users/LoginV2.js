@@ -44,6 +44,7 @@ function LoginV2(props) {
           contact_mobile: response.contact_mobile,
           account_cuenta: response.account_cuenta,
           account_nro_doc: response.account_nro_doc,
+          sessionid: response.sessionid,
           email: email,
           estado: 3
         }

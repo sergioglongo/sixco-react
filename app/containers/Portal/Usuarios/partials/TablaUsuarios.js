@@ -70,10 +70,10 @@ function TablaUsuarios(props) {
         <TableBody>
           {lista.map(item => ([
             <TableRow key={item.id}>
-              <TableCell >{item.nro}</TableCell>
-              <TableCell>{item.apellido}</TableCell>
-              <TableCell>{item.nombre}</TableCell>
-              <TableCell >{item.estado}</TableCell>
+              <TableCell >{item.contactid}</TableCell>
+              <TableCell>{item.lastname}</TableCell>
+              <TableCell>{item.firstname}</TableCell>
+              <TableCell >{item.estado_portal}</TableCell>
               <TableCell align="right">
                 {/* <Tooltip title="Comentarios">
                     <IconButton className={classes.button} aria-label="Comentarios">

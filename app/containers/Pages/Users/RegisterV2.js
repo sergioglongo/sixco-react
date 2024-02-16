@@ -10,6 +10,7 @@ import introroute from 'dan-images/footer-deco.svg';
 import { Hidden } from '@mui/material';
 import logo from 'dan-images/logo-sixco-only.svg';
 import { useHistory } from 'react-router-dom';
+import { register } from '../../../api/apiclient/ApiClient';
 
 function RegisterV2() {
   const [valueForm, setValueForm] = useState(null);
@@ -22,12 +23,20 @@ function RegisterV2() {
   const history = useHistory();
 
   const submitForm = values => {
-    setTimeout(() => {
-      setValueForm(values);
-      console.log(`You submitted:`, values);
-      // window.location.href = '/app';
-    }, 500); // simulate server latency
-    history.push('/auth/registro-exitoso');
+    setValueForm(values);
+    console.log(`Datos a guardar:`, values);
+    register(values).then((response) => {
+      if (typeof response != 'undefined' && response.record) {
+        history.push('/auth/registro-exitoso');
+      } else {
+        if (response.success == false && typeof response.error != 'undefined') {
+          // setOpenmodal(true);
+          console.error("message error", response.error.message);
+        }
+      }
+    }).catch((err) => {
+      console.error(`Error en register:`, err);
+    });
   };
 
   const title = brand.name + ' - App';

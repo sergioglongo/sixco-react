@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import bgCover from 'dan-images/petal_bg.svg';
 import useStyles from 'dan-components/SocialMedia/jss/cover-jss';
 import ProfileCard from './ProfileCard';
+import { getProfileDetail } from '../../../api/apiclient/ApiClient';
 
 function UserProfile(props) {
   const title = brand.name + ' - Profile';
@@ -14,6 +15,18 @@ function UserProfile(props) {
   const { clientData } = props;
   const { classes } = useStyles();
   const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    const data = {
+      userid: clientData.userid,
+      sessionid: clientData.sessionid,
+    }
+    getProfileDetail(data).then((res) => {
+      console.log("Profile Detail", res)
+    }).catch((err) => {
+      console.error("Error profile detail", err)
+    });
+  },[])
 
   const handleChange = (event, val) => {
     setValue(val);

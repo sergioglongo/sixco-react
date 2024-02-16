@@ -56,6 +56,10 @@ export const Choferes = loadable(() =>
   import('./Portal/Choferes'), {
   fallback: <Loading />,
 });
+export const CrearEditarChofer = loadable(() =>
+  import ('./Portal/Choferes/CrearEditarChofer'), {
+    fallback: <Loading />,
+  });
 export const NuevoChofer = loadable(() =>
   import ('./Portal/Choferes/NuevoEditarChofer'), {
     fallback: <Loading />,
