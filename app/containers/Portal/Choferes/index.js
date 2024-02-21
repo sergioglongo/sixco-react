@@ -15,6 +15,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Icon from '@mui/material/Icon';
 import TablaChoferes from './partials/TablaChoferes';
+import { listChoferes } from '../../../api/apiclient/ApiClient';
 
 const listaPruebas = [
   {
@@ -40,25 +41,25 @@ function Choferes(props) {
   const { classes, cx } = useStyles();
 
   const [datanotif, setDatanotif] = useState({ open: false, variant: 'error', message: '' });
-  const [lista, setListconsultas] = useState(listaPruebas);
+  const [listaChoferes, setListconsultas] = useState([]);
   const title = brand.name + ' - Choferes';
   const description = brand.desc;
 
   useEffect(() => {
-
-    // getListadoConsultas(loginData.session,loginData.userid,"").then(response => {
-    //   if(typeof response != 'undefined' && response.records){
-    //     // console.log(response.records);
-    //     setListconsultas(response.records)
-    //   }else if(typeof response != 'undefined' && response.success == false && typeof response.error != 'undefined'){
-    //     // setOpenmodal(true);
-    //     setDatanotif({
-    //         ...datanotif,
-    //         open:true,
-    //         message:response.error.message
-    //       });
-    //   }
-    // });
+    const data = {
+      session: loginData.session,
+    }
+    listChoferes(data).then(response => {
+      if (typeof response != 'undefined' && response.records) {
+        console.log(response.records);
+        setListconsultas(response.records)
+      } else {
+        if (response.success == false && typeof response.error != 'undefined') {
+          // setOpenmodal(true);
+          console.error("message error", response.error.message);
+        }
+      }
+    })
 
   }, []);
 
@@ -82,7 +83,7 @@ function Choferes(props) {
               </Button>]}
             >
               <div>
-                {lista.length == 0 ? (
+                {listaChoferes.length == 0 ? (
                   <Typography variant="h6" className={Type.textCenter}>
                     Sin choferes para mostrar.<br /><br />
                     <div className={classes.btnArea}>
@@ -92,7 +93,7 @@ function Choferes(props) {
                     </div>
                   </Typography>
                 ) : (
-                  <TablaChoferes lista={lista} />
+                  <TablaChoferes lista={listaChoferes} />
                 )}
               </div>
             </PapperBlock>

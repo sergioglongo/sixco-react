@@ -107,10 +107,10 @@ function SidebarContent(props) {
             />
             <div>
               <h4>
-                {clientData.contact_firstname}
+                {clientData.firstname}
               </h4>
               <h4>
-                {clientData.contact_lastname}
+                {clientData.lastname}
               </h4>
               <Button size="small"
                 className={classes.textColor}

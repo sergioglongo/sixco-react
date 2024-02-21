@@ -13,7 +13,7 @@ const useStyles = makeStyles()((theme, _params, classes) => ({
     position: 'relative',
     width: '100%',
     overflow: 'hidden',
-    height: 480,
+    height:'auto',
     backgroundColor: colorfull[1],
     display: 'flex',
     justifyContent: 'center',

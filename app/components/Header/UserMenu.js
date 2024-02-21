@@ -6,7 +6,6 @@ import Button from '@mui/material/Button';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ExitToApp from '@mui/icons-material/ExitToApp';
-import Badge from '@mui/material/Badge';
 import Divider from '@mui/material/Divider';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -16,6 +15,8 @@ import link from 'dan-api/ui/link';
 import useStyles from './header-jss';
 import { setClientDataAction, setLogoutDataAction } from 'dan-redux/actions/Users';
 import { AccountCircle } from '@mui/icons-material';
+import { logout } from '../../api/apiclient/ApiClient';
+import { useHistory } from 'react-router-dom';
 
 function UserMenu(props) {
   const { classes, cx } = useStyles();
@@ -24,6 +25,7 @@ function UserMenu(props) {
     openMenu: null
   });
   const { setClientData, setLogoutData } = props;
+  const history = useHistory();
 
   const handleMenu = menu => (event) => {
     const { openMenu } = menuState;
@@ -40,6 +42,7 @@ function UserMenu(props) {
   const handleLogOut = () => {
     setClientData({});
     setLogoutData();
+    history.push('/auth/login');
   };
 
   const { dark } = props;

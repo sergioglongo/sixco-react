@@ -223,7 +223,6 @@ function CrearEditarChofer(props) {
 
 CrearEditarChofer.propTypes = {
   loginData: PropTypes.object.isRequired,
-  setClientData: PropTypes.func.isRequired,
 };
 
 // const reducer = 'socmed';

@@ -7,26 +7,39 @@ import { connect } from 'react-redux';
 import bgCover from 'dan-images/petal_bg.svg';
 import useStyles from 'dan-components/SocialMedia/jss/cover-jss';
 import ProfileCard from './ProfileCard';
-import { getProfileDetail } from '../../../api/apiclient/ApiClient';
+import { getProfileDetail, logout } from '../../../api/apiclient/ApiClient';
 
 function UserProfile(props) {
   const title = brand.name + ' - Profile';
   const description = brand.desc;
-  const { clientData } = props;
+  const { userData, loginData } = props;
   const { classes } = useStyles();
-  const [value, setValue] = useState(0);
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     const data = {
-      userid: clientData.userid,
-      sessionid: clientData.sessionid,
+      session: loginData.session,
     }
-    getProfileDetail(data).then((res) => {
-      console.log("Profile Detail", res)
-    }).catch((err) => {
-      console.error("Error profile detail", err)
-    });
-  },[])
+    if(userData == undefined){
+      getProfileDetail(data).then((response) => {
+        if (response.success == false && typeof response.error != 'undefined' && error.message == 'Login required') {
+          logout();
+        } else {
+          setTimeout(() => {
+            setProfile(response);
+            
+          }, 4000);
+        }
+      }).catch((err) => {
+        console.error("Error profile detail", err)
+      });
+    } else {
+      setTimeout(() => {
+        setProfile(userData);
+      }, 4000);
+
+    }
+  }, [])
 
   const handleChange = (event, val) => {
     setValue(val);
@@ -45,8 +58,8 @@ function UserProfile(props) {
       <ProfileCard
         coverImg={bgCover}
         avatar={dummy.user.avatar}
-        name={clientData.contact_firstname}
-        clientData={clientData}
+        name={userData.firstname}
+        profile={profile}
         desc=""
       />
     </div>
@@ -55,12 +68,14 @@ function UserProfile(props) {
 
 UserProfile.propTypes = {
   // dataProps: PropTypes.array.isRequired,
-  clientData: PropTypes.object.isRequired,
+  userData: PropTypes.object.isRequired,
+  loginData: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   force: state, // force state from reducer
-  clientData: state.user.clientData
+  userData: state.user.clientData,
+  loginData: state.login.loginData
 });
 
 const UserProfileMapped = connect(

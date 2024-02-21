@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
@@ -12,6 +12,8 @@ import Info from '@mui/icons-material/Info';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import useStyles from './profile-card-jss';
 // import { setClientDataAction } from '../../redux/actions/Register';
+import Loading from '../../../components/Loading';
+import { CircularProgress } from '@mui/material';
 
 const optionsOpt = [
   {
@@ -33,8 +35,26 @@ function ProfileCard(props) {
     name,
     desc,
     coverImg,
-    clientData,
+    profile,
   } = props;
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((oldProgress) => {
+        if (oldProgress === 100) {
+          clearInterval(timer);
+        }
+        const diff = Math.random() * 40;
+        return Math.min(oldProgress + diff, 100);
+      });
+    }, 500);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   const history = useHistory();
   const handleClickOpts = event => {
     setAnchorElOpt(event.currentTarget);
@@ -87,45 +107,84 @@ function ProfileCard(props) {
           ))}
         </Menu>
       </div>
-      {clientData &&
+      {profile ?
         <div className={classes.content}>
           <Avatar alt={name} src={avatar} className={classes.avatar} />
           <Typography variant="h4" className={classes.name} gutterBottom>
-            {clientData.account_tipo_doc == 'CUIT' ? clientData.contact_firstname : clientData.contact_firstname + ' ' + clientData.contact_lastname}
+            {profile.firstname + ' ' + profile.lastname}
             <VerifiedUser className={classes.verified} />
           </Typography>
-          {clientData.siccode ? (
+          {profile.tipo_contacto ? (
             <Typography className={classes.subheading} gutterBottom>
-              {clientData.account_tipo_doc ? clientData.account_tipo_doc : 'DOC'}
+              TIPO:
+              {' '}
+              {profile.tipo_contacto}
+            </Typography>
+          ) : (<></>)}
+          {profile.siccode ? (
+            <Typography className={classes.subheading} gutterBottom>
+              {profile.tipo_doc ? profile.tipo_doc : 'DOC'}
               :
-              {clientData.account_nro_doc}
+              {" " + profile.siccode}
             </Typography>
           ) : (<></>)}
-          {clientData.email ? (
-            <Typography className={classes.subheading} gutterBottom>
-              EMAIL:
-              {' '}
-              {clientData.email}
-            </Typography>
-          ) : (<></>)}
-          {clientData.contact_mobile ? (
-            <Typography className={classes.subheading} gutterBottom>
-              TELÉFONO:
-              {' '}
-              {clientData.contact_mobile}
-            </Typography>
-          ) : (<></>)}
-          {clientData.account_cuenta ? (
+          {profile.accountname ? (
             <Typography className={classes.subheading} gutterBottom>
               CUENTA:
               {' '}
-              {clientData.account_cuenta}
+              {profile.accountname}
+            </Typography>
+          ) : (<></>)}
+          {profile.email ? (
+            <Typography className={classes.subheading} gutterBottom>
+              EMAIL:
+              {' '}
+              {profile.email}
+            </Typography>
+          ) : (<></>)}
+          {profile.mobile ? (
+            <Typography className={classes.subheading} gutterBottom>
+              TELÉFONO:
+              {' '}
+              {profile.mobile}
+            </Typography>
+          ) : (<></>)}
+          {profile.mailingstreet ? (
+            <Typography className={classes.subheading} gutterBottom>
+              DOMICILIO:
+              {' '}
+              {profile.mailingstreet}
+            </Typography>
+          ) : (<></>)}
+          {profile.othercityname ? (
+            <Typography className={classes.subheading} gutterBottom>
+              LOCALIDAD:
+              {' '}
+              {profile.othercityname}
+            </Typography>
+          ) : (<></>)}
+          {profile.otherstate ? (
+            <Typography className={classes.subheading} gutterBottom>
+              PROVINCIA/ESTADO:
+              {' '}
+              {profile.otherstate}
+            </Typography>
+          ) : (<></>)}
+          {profile.othercountry ? (
+            <Typography className={classes.subheading} gutterBottom>
+              PAIS:
+              {' '}
+              {profile.othercountry}
             </Typography>
           ) : (<></>)}
           {/*
         <Button className={classes.button} size="large" variant="contained" color="secondary">
           Add to Connection
         </Button> */}
+        </div>
+        :
+        <div className={classes.content}>
+          <CircularProgress className={classes.circularProgress} size={90} thickness={1} color="secondary" />
         </div>
       }
     </div>
@@ -137,7 +196,7 @@ ProfileCard.propTypes = {
   name: PropTypes.string.isRequired,
   desc: PropTypes.string.isRequired,
   coverImg: PropTypes.string.isRequired,
-  clientData: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired || null,
 };
 
 export default (ProfileCard);

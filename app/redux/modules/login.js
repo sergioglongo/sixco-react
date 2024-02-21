@@ -1,5 +1,6 @@
 import produce from 'immer';
 import { INIT } from '../constants/reduxFormConstants';
+import { logout } from '../../api/apiclient/ApiClient';
 
 const initialState = {
   AccessToken: {},
@@ -31,6 +32,7 @@ export default function reducer(state = initialState, action = {}) {
       return produce(state, draftState => {
         draftState.loginData = {};
         draftState.isAuthenticated = false;
+        logout();
       });
     default:
       return state;

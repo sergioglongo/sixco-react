@@ -31,7 +31,7 @@ function TablaUsuarios(props) {
   };
 
   const DetalleConsulta = (data) => {
-    history.push('/app/usuarios/' + data.nro + '/detalle');
+    history.push('/app/usuarios/' + data.contactid + '/detalle');
   };
 
   if (typeof lista[0] === 'undefined') {
@@ -60,44 +60,26 @@ function TablaUsuarios(props) {
       <Table className={classNames(classes.table, classes.hover)}>
         <TableHead>
           <TableRow>
-            <TableCell >Nro Usuario</TableCell>
             <TableCell>Apellido</TableCell>
             <TableCell>Nombre</TableCell>
             <TableCell >Estado</TableCell>
+            <TableCell >Tipo</TableCell>
             <TableCell align="right">Acción</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {lista.map(item => ([
-            <TableRow key={item.id}>
-              <TableCell >{item.contactid}</TableCell>
+            <TableRow key={item.contactid}>
               <TableCell>{item.lastname}</TableCell>
               <TableCell>{item.firstname}</TableCell>
               <TableCell >{item.estado_portal}</TableCell>
+              <TableCell >{item.tipo_contacto}</TableCell>
               <TableCell align="right">
-                {/* <Tooltip title="Comentarios">
-                    <IconButton className={classes.button} aria-label="Comentarios">
-                      <Icon className={classes.rightIcon}>comment</Icon>
-                    </IconButton>
-                  </Tooltip> */}
                 <Tooltip title="Ver detalle">
                   <IconButton className={classes.button} color="primary" aria-label="Ver" onClick={() => DetalleConsulta(item)}>
                     <Icon className={classes.rightIcon}>remove_red_eye</Icon>
                   </IconButton>
                 </Tooltip>
-                {/* <Tooltip title="Eliminar consulta">
-                    <IconButton className={classes.button} aria-label="Borrar">
-                      <Icon className={classes.rightIcon}>delete</Icon>
-                    </IconButton>
-                  </Tooltip> */}
-
-                {/* <Button className={classes.button} variant="contained">
-                    <Icon className={classes.rightIcon}>edit</Icon>
-                  </Button>
-
-                  <Button className={classes.button} variant="contained">
-                    <Icon className={classes.rightIcon}>delete</Icon>
-                  </Button> */}
               </TableCell>
             </TableRow>
           ]))}

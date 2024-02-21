@@ -20,14 +20,14 @@ function TablaChoferes(props) {
   const history = useHistory();
   const { classes, cx } = useStyles();
   const [openmodal, setOpenmodal] = useState(false);
-  const [datos, setDatos] = useState({});
+  const [choferElegido, setChoferElegido] = useState({});
 
   const DetalleChofer = (data) => {
-    history.push('/app/choferes/' + data.nro + '/detalle');
+    history.push('/app/choferes/' + data.accountid + '/detalle');
   };
 
   const EditarChofer = (data) => {
-    history.push('/app/choferes/' + data.nro + '/editar');
+    history.push('/app/choferes/' + data.accountid + '/editar');
   };
 
   if (typeof lista[0] === 'undefined') {
@@ -37,14 +37,11 @@ function TablaChoferes(props) {
   const handleEliminar = (e, chofer) => {
     e.preventDefault();
     setOpenmodal(true);
+    setChoferElegido(chofer);
   };
 
   const handleConfirm = () => {
-    console.log("Confirmado", datos);
-    const record = datos.id;
-    const values = {
-      estado: 'eliminado'
-    };
+
     setOpenmodal(false);
   };
 
@@ -71,11 +68,11 @@ function TablaChoferes(props) {
         </TableHead>
         <TableBody>
           {lista.map(item => ([
-            <TableRow key={item.nro}>
-              <TableCell >{item.nro}</TableCell>
-              <TableCell>{item.apellido}</TableCell>
-              <TableCell>{item.nombre}</TableCell>
-              <TableCell >{item.estado}</TableCell>
+            <TableRow key={item.accountid}>
+              <TableCell >{item.accountid}</TableCell>
+              <TableCell>{item.accountname}</TableCell>
+              <TableCell>{item.subtipo_cuenta}</TableCell>
+              <TableCell >{item.estado_cuenta}</TableCell>
               <TableCell align="right">
                 <Tooltip title="Ver detalle">
                   <IconButton className={classes.button} color="primary" aria-label="Ver" onClick={() => DetalleChofer(item)}>
@@ -102,15 +99,7 @@ function TablaChoferes(props) {
         openmodal={openmodal}
         setOpenmodal={setOpenmodal}
         titulo="Confirmar Operación"
-        mensaje={(
-          <p>
-            ¿Está seguro que desea Eliminar el
-            <br />
-            {' '}
-            Chofer {datos.apellido} {datos.nombre}
-            ?
-          </p>
-        )}
+        mensaje={`¿Está seguro que desea Eliminar el Chofer ${choferElegido.accountname}?`}
         buttonPrimaryAction={handleConfirm}
         buttonSecondaryAction={() => setOpenmodal(false)}
         loading={false}

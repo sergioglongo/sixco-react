@@ -10,11 +10,12 @@ import {
   setClientDataAction,
 } from 'dan-redux/actions/Users';
 // import { changePassword } from '../../../utils/ApiClient';
-// import StyledNotif from '../../UiElements/Notifications';
+import StyledNotif from '../../UiElements/Notifications';
 // import styles from 'dan-components/SocialMedia/jss/cover-jss';
 // import ChangePasswordForms from './ChangePasswordForms.js';
 import useStyles from './userprofile-jss';
 import ChangePasswordForm from './ChangePasswordForm';
+// import StyledNotif from '../../UiElements/demos/Notification/StyledNotif';
 
 function TabContainer(props) {
   const { children } = props;
@@ -43,17 +44,12 @@ function ChangePassword(props) {
 
   const [valueForm, setValueForm] = useState();
   // console.log(clientData)
-  const showResult = (values) => {
-    const chpass = {
-      assigned_user_id: '19x1',
-      record: clientData.id,
-      passwordConfirm: values.passwordConfirm,
-      password: values.password,
-    };
-    const password = values.password;
-    const passwordConfirm = values.passwordConfirm;
+  const showResult = (e) => {
+    e.preventDefault();
+    const password = e.target.password.value;
+    const passwordConfirm = e.target.passwordConfirm.value;
 
-    console.log(password, passwordConfirm)
+    console.log("submit e, pass passcon",e, password, passwordConfirm)
     if (password != passwordConfirm) {
       setDatanotif({
         ...datanotif,
@@ -119,12 +115,13 @@ function ChangePassword(props) {
         <Grid container spacing={3}>
           <Grid item md={12} xs={12}>
             <ChangePasswordForm
-              onSubmit={(values) => showResult(values)}
+              handleSubmit={showResult}
             //   clientData={clientData}
             />
           </Grid>
         </Grid>
       </div>
+      <StyledNotif datanotif={datanotif} setDatanotif={setDatanotif} />
     </div>
   );
 }

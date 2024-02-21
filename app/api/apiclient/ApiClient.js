@@ -36,11 +36,10 @@ export async function logout() {
     .catch(err => console.log(err));
 }
 
-export async function changePassword(session, record, password) {
+export async function changePassword(session, password) {
   const params = JSON.stringify({
     _operation: 'PortalCustomOperations',
     mode: 'changePassword',
-    id: record,
     password,
     _session: session,
   });
@@ -54,10 +53,6 @@ export async function changePassword(session, record, password) {
     })
     .catch(err => console.log(err));
 }
-
-/**
- * CHOFERES
- */
 
 export async function getPickListValues(modulename, field) {
   const params = JSON.stringify({
@@ -155,10 +150,25 @@ export async function listContacts(data) {
   const params = JSON.stringify({
     "_operation":"PortalCustomOperations",
     "mode":"ListContacts",
-    "id":data.userid,
-    "_session":data.sessionid
+    "_session":data.session
   });
-  console.log("data en listContacts", data, params);
+  return axiosClient
+    .post('sixcocrm/modules/Mobile/api.php', params)
+    .then(response => {
+      if (typeof response.data !== 'undefined' && response.data.success == true) {
+        return response.data.result;
+      }
+      return response.data;
+    })
+    .catch(err => console.log(err));
+}
+
+export async function listChoferes(data) {
+  const params = JSON.stringify({
+    "_operation":"PortalCustomOperations",
+    "mode":"ListChoferes",
+    "_session":data.session
+  });
   return axiosClient
     .post('sixcocrm/modules/Mobile/api.php', params)
     .then(response => {
@@ -174,8 +184,25 @@ export async function getProfileDetail(data) {
   const params = JSON.stringify({
     "_operation":"PortalCustomOperations",
     "mode":"DetailProfile",
-    "id":data.userid,
-    "_session":data.sessionid
+    "_session":data.session
+  });
+  return axiosClient
+    .post('sixcocrm/modules/Mobile/api.php', params)
+    .then(response => {
+      if (typeof response.data !== 'undefined' && response.data.success == true) {
+        return response.data.result.records;
+      }
+      return response.data;
+    })
+    .catch(err => console.log(err));
+}
+
+export async function getChoferDetail(data) {
+  const params = JSON.stringify({
+    "_operation":"PortalCustomOperations",
+    "mode":"DetailChofer",
+    "choferid":data.accountid,
+    "_session":data.session
   });
   return axiosClient
     .post('sixcocrm/modules/Mobile/api.php', params)

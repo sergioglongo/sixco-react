@@ -10,14 +10,10 @@ import { TextFieldRedux } from 'dan-components/Forms/ReduxFormMUI';
 import { initAction, clearAction } from 'dan-redux/actions/reduxFormActions';
 import FormControl from '@mui/material/FormControl';
 import useStyles from './userprofile-jss';
+import { TextFieldErrorRedux } from '../../../components/Forms/ReduxFormMUI';
 
 // validation functions
 const required = value => (value == null ? 'Requerido' : undefined);
-const email = value => (
-  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-    ? 'Email inválido'
-    : undefined
-);
 const passwordsMatch = (value, allValues) => {
   if (value !== allValues.password) {
     return 'Contraseñas no coinciden';
@@ -58,7 +54,6 @@ function ChangePasswordForm(props) {
               label="Contraseña"
               required
               validate={[required, passwordsMatch]}
-              className={classes.field}
             />
           </FormControl>
         </div>
@@ -66,18 +61,18 @@ function ChangePasswordForm(props) {
           <FormControl className={classes.field}>
             <Field
               name="passwordConfirm"
-              component={TextFieldRedux}
+              component={TextFieldErrorRedux}
               type="password"
               label="Repetir Contraseña"
               required
               validate={[required, passwordsMatch]}
-              className={classes.field}
             />
           </FormControl>
         </div>
-        <div>
+        <div style={{ marginTop: 12 }}>
           <Button
             type="button"
+            
             // disabled={pristine || submitting}
             onClick={() => history.goBack()}
           >

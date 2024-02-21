@@ -26,21 +26,15 @@ function EditUserProfile(props) {
 
   const { classes } = useStyles();
 
-  const [formData, setFormData] = useState();
+  const [formData, setFormData] = useState({});
   useEffect(() => {
     if (userData) {
         setFormData(userData);
     }
-  },[])
+  },[,userData])
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Chofer", formData)
-    
     setTimeout(() => {
-      setUserData(formData);
-      setLoginData(formData);
-      setLoginUserData(formData);
-      // history.goBack();
       history.push('/app');
     }, 2000);
   }
@@ -103,6 +97,7 @@ const mapStateToProps = state => ({
   force: state, // force state from reducer
   userData: state.user.clientData,
   loginData: state.login.loginData,
+  initialValues: state.initval.formValues
 });
 
 const constDispatchToProps = dispatch => ({

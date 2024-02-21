@@ -16,27 +16,11 @@ import Typography from '@mui/material/Typography';
 import Icon from '@mui/material/Icon';
 import SixcoIcon from '../../../api/icons/sixco-icons';
 import TablaUsuarios from './partials/TablaUsuarios';
-import { listContacts } from '../../../api/apiclient/ApiClient';
+import { listContacts, logout } from '../../../api/apiclient/ApiClient';
 
-
-const listaPruebas = [
-  {
-    nro: 1,
-    apellido: 'Lopez',
-    nombre: 'Julio',
-    estado: 'Habilitado',
-  },
-  {
-    nro: 2,
-    apellido: 'Perez',
-    nombre: 'Juan Carlos',
-    estado: 'Habilitado',
-  }
-]
 const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disable-line
   return <NavLink to={props.to} {...props} innerRef={ref} />; // eslint-disable-line
 });
-
 
 function Usuarios(props) {
   const { loginData } = props;
@@ -49,16 +33,16 @@ function Usuarios(props) {
 
   useEffect(() => {
     const data = {
-      userid: loginData.userid,
-      sessionid: loginData.sessionid,
+      session: loginData.session,
     }
     listContacts(data).then(response => {
       if (typeof response != 'undefined' && response.records) {
         console.log(response.records);
         setListconsultas(response.records)
       } else {
-        if (response.success == false && typeof response.error != 'undefined') {
+        if (response.success == false && typeof response.error != 'undefined' && error.message=='Login required') {
           // setOpenmodal(true);
+          logout();
           console.error("message error", response.error.message);
         }
       }

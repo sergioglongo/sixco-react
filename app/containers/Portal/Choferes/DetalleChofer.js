@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import brand from 'dan-api/dummy/brand';
@@ -6,61 +6,45 @@ import { NavLink } from 'react-router-dom';
 import {
     PapperBlock, GeneralCard
 } from 'dan-components';
-// import commentData from 'dan-api/apps/commentData';
-// import { Comments, ShowcaseCard } from 'dan-components';
-// import { getDetalleEntidad, getListadoComentarios } from '../../../utils/ApiClient';
+import PropTypes from 'prop-types';
 import StyledNotif from '../../UiElements/demos/Notification/StyledNotif';
 import { Button, Divider, Grid, Icon, Typography } from '@mui/material';
 // import Comentarios from './partials/Comentarios';
 import useStyles from './choferes-jss';
+import { getChoferDetail } from '../../../api/apiclient/ApiClient';
 
-const lista = [
-    {
-        nro: 1,
-        apellido: 'Lopez',
-        nombre: 'Julio',
-        estado: 'Habilitado',
-    },
-    {
-        nro: 2,
-        apellido: 'Perez',
-        nombre: 'Juan Carlos',
-        estado: 'Habilitado',
-    }
-]
 function DetalleChofer(props) {
     const [datanotif, setDatanotif] = useState({ open: false, variant: 'error', message: '' });
-    const [dato, setdato] = useState(null);
     const title = brand.name + ' - Chofer - Detalle';
     const description = brand.desc;
     const { recordid } = props.match.params;
+    const { loginData } = props;
     const { classes, cx } = useStyles();
+    const [chofer, setChofer] = useState(null);
+
     const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disable-line
         return <NavLink to={props.to} {...props} innerRef={ref} />; // eslint-disable-line
-      });
-    //   console.log(props);
+    });
 
     useEffect(() => {
-        // console.log(props.match.params.recordid);
-        const chofer = lista.find((chofer) => chofer.nro == recordid);
-        if (chofer) {
-            // console.log(chofer);
-            setdato(chofer);
+        const data = {
+            session: loginData.session,
+            accountid: recordid
         }
-        // console.log('chofer', chofer);
-        // getDetalleEntidad(loginData.session, recordid).then(response => {
-        //   if (typeof response !== 'undefined' && response.result.record) {
-        //     console.log(response.result.record);
-        //     setdato(response.result.record);
-        //   } else if (typeof response !== 'undefined' && response.success == false && typeof response.error !== 'undefined') {
-        //     // setOpenmodal(true);
-        //     setDatanotif({
-        //       ...datanotif,
-        //       open: true,
-        //       message: response.error.message
-        //     });
-        //   }
-        // });
+        getChoferDetail(data).then((response) => {
+            if (response.success == false && typeof response.error != 'undefined') {
+                if (error.message == 'Login required') {
+                    logout();
+                } else {
+                    console.error("message error", response.error.message);
+                }
+            } else {
+                setChofer(response[0]);
+                console.log("profile detail", response[0]);
+            }
+        }).catch((err) => {
+            console.error("Error profile detail", err)
+        });
     }, []);
 
     return (
@@ -89,24 +73,24 @@ function DetalleChofer(props) {
                     </Grid>
                 </Grid>
 
-                {dato && (
+                {chofer && (
                     <div style={{ marginTop: '20px' }}>
                         <GeneralCard>
                             <Typography variant="h5" component="h2">
-                                Chofer Nº
+                                Cuenta
                                 {' '}
-                                {dato.nro}
+                                {chofer.accountname}
                             </Typography>
                             <br />
                             <Typography className={classes.title} color="textSecondary">
-                                Nombre
+                                Identificación
                             </Typography>
-                            <Typography component="p">{dato.nombre}</Typography>
+                            <Typography component="p">{chofer.siccode}</Typography>
                             <br />
                             <Typography className={classes.title} color="textSecondary">
-                                Apellido
+                                Estado
                             </Typography>
-                            <Typography component="p">{dato.apellido}</Typography>
+                            <Typography component="p">{chofer.estado_cuenta}</Typography>
                             <br />
                         </GeneralCard>
                     </div>
@@ -117,7 +101,7 @@ function DetalleChofer(props) {
 }
 
 DetalleChofer.propTypes = {
-    // loginData: PropTypes.object.isRequired,
+    loginData: PropTypes.object.isRequired,
 };
 
 const mapUserStateToProps = state => ({

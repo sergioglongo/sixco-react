@@ -19,7 +19,7 @@ import {
 } from 'dan-redux/actions/Users';
 import logo from 'dan-images/logo-sixco-only.svg';
 import axios from 'axios';
-import { login } from '../../../api/apiclient/ApiClient';
+import { login, getProfileDetail } from '../../../api/apiclient/ApiClient';
 
 function LoginV2(props) {
   const [valueForm, setValueForm] = useState(null);
@@ -31,25 +31,22 @@ function LoginV2(props) {
     values.preventDefault();
     setLoading(true);
     setValueForm(values);
-    console.log("Valores del formulario: ", values.target.password.value);
     let email = values.target.email.value;
     let pass = values.target.password.value;
     login(email, pass).then(response => {
-      console.log("Response: ",response, response.success);
-      if (typeof response != 'undefined' && response.userid && response.sessionid) {
-        const clientdata = {
-          userid: response.userid,
-          contact_firstname: response.contact_firstname,
-          contact_lastname: response.contact_lastname,
-          contact_mobile: response.contact_mobile,
-          account_cuenta: response.account_cuenta,
-          account_nro_doc: response.account_nro_doc,
-          sessionid: response.sessionid,
-          email: email,
-          estado: 3
+      if (typeof response != 'undefined' && response.session) {
+        const loginResponse = response;
+        loginResponse.estado = 2;
+        const data = {
+          session: response.session,
         }
-        setClientData(clientdata);
-        setLoginData(clientdata);
+        getProfileDetail(data).then((res) => {
+          setClientData(res);
+        }).catch((err) => {
+          console.error("Error profile detail", err)
+        });
+        // setClientData(clientdata);
+        setLoginData(loginResponse);
         changeUserAuthenticated(true);
       }
     }).catch(error => {
