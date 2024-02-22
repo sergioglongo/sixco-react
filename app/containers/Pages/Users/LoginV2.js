@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import brand from 'dan-api/dummy/brand';
 import { PropTypes } from 'prop-types';
@@ -17,6 +17,9 @@ import {
   setLoginDataAction,
   setClientDataAction,
 } from 'dan-redux/actions/Users';
+import {
+  setClientDataAction as setClientDataRegister
+} from 'dan-redux/actions/Register';
 import logo from 'dan-images/logo-sixco-only.svg';
 import axios from 'axios';
 import { login, getProfileDetail } from '../../../api/apiclient/ApiClient';
@@ -25,7 +28,17 @@ function LoginV2(props) {
   const [valueForm, setValueForm] = useState(null);
   const [datanotif, setDatanotif] = useState({ open: false, variant: 'error', message: '' });
   const [loading, setLoading] = useState(false);
-  const { changeUserAuthenticated, setClientData, isAuthenticated, setLoginData } = props;
+  const { changeUserAuthenticated, setClientData, isAuthenticated, setLoginData, setLoginUserData, loginState } = props;
+
+  useEffect(() => {
+    console.log("isAuthenticated and login", isAuthenticated);
+    if (!isAuthenticated && loginState.loginData != {}) {
+      setLoginData({});
+          setLoginData({});
+          setLoginUserData();
+          setClientData({});
+    }
+  }, []);
 
   const submitForm = values => {
     values.preventDefault();
@@ -48,6 +61,9 @@ function LoginV2(props) {
         // setClientData(clientdata);
         setLoginData(loginResponse);
         changeUserAuthenticated(true);
+        settimeout(() => {
+          changeUserAuthenticated(false);
+        },11000)
       }
     }).catch(error => {
       console.log("Error",error);
@@ -106,20 +122,25 @@ function LoginV2(props) {
 
 LoginV2.propTypes = {
   // classes: PropTypes.object.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
   setLoginData: PropTypes.func.isRequired,
-  changeUserAuthenticated: PropTypes.func.isRequired,
   setClientData: PropTypes.func.isRequired,
+  setLoginDataUser: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  changeUserAuthenticated: PropTypes.func.isRequired,
+  loginState: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   isAuthenticated: state.login.isAuthenticated,
+  loginState: state.login
 });
 
 const mapDispatchToProps = dispatch => ({
   setLoginData: bindActionCreators(setLoginDataAction, dispatch),
-  changeUserAuthenticated: bindActionCreators(changeUserAuthenticatedAction, dispatch),
   setClientData: bindActionCreators(setClientDataAction, dispatch),
+  setLoginDataUser: bindActionCreators(setClientDataAction, dispatch),
+  setLoginUserData: bindActionCreators(setClientDataRegister, dispatch),
+  changeUserAuthenticated: bindActionCreators(changeUserAuthenticatedAction, dispatch),
 });
 
 const LoginV2Mapped = connect(

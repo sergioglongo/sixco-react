@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeContext } from './ThemeWrapper';
@@ -41,14 +41,14 @@ import {
 import { connect } from 'react-redux';
 
 function Application(props) {
-  const { history, loginData } = props;
+  const { history, login } = props;
   const changeMode = useContext(ThemeContext);
   return (
-    <Dashboard history={history} changeMode={changeMode}>
+    <Dashboard history={history} changeMode={changeMode} isAuthenticated={login.isAuthenticated}>
       <Switch>
         { /* Home */}
         <Route exact path="/app" render={() => (
-          loginData.estado != 3 ? (
+          login.loginData.estado != 3 ? (
             <PersonalDashboard />
           ) : (
             <Redirect to="/app/pages/editar-perfil" />
@@ -60,7 +60,7 @@ function Application(props) {
         <Route path="/app/pages/cambiar-contraseña" component={ChangePassword} />
         {/* Portal */}
         <Route exact path="/app/usuarios" component={Usuarios} />
-        <Route exact path="/app/usuarios/:recordid/detalle" component={DetalleUsuario} />
+        <Route exact path="/app/usuarios/detalle" component={DetalleUsuario} />
         <Route exact path="/app/choferes" component={Choferes} />
         <Route exact path="/app/choferes/:recordid/detalle" component={DetalleChofer} />
         <Route exact path="/app/choferes/nuevo-chofer" component={CrearEditarChofer} />
@@ -178,12 +178,12 @@ function Application(props) {
 
 Application.propTypes = {
   history: PropTypes.object.isRequired,
-  loginData: PropTypes.object.isRequired,
+  login: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   force: state, // force state from reducer
-  loginData: state.login.loginData,
+  login: state.login,
 });
 
 const ApplicationdMapped = connect(

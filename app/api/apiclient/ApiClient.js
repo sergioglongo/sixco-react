@@ -39,12 +39,12 @@ export async function logout() {
 export async function changePassword(session, password) {
   const params = JSON.stringify({
     _operation: 'PortalCustomOperations',
-    mode: 'changePassword',
+    mode: 'changePasswordProfile',
     password,
     _session: session,
   });
   return axiosClient
-    .post('', params)
+    .post('sixcocrm/modules/Mobile/api.php', params)
     .then(response => {
       if (typeof response.data !== 'undefined' && response.data.success == true) {
         return response.data;

@@ -25,19 +25,13 @@ function UserProfile(props) {
         if (response.success == false && typeof response.error != 'undefined' && error.message == 'Login required') {
           logout();
         } else {
-          setTimeout(() => {
             setProfile(response);
-            
-          }, 4000);
         }
       }).catch((err) => {
         console.error("Error profile detail", err)
       });
     } else {
-      setTimeout(() => {
         setProfile(userData);
-      }, 4000);
-
     }
   }, [])
 

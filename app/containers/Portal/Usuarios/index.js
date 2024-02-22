@@ -16,16 +16,19 @@ import Typography from '@mui/material/Typography';
 import Icon from '@mui/material/Icon';
 import SixcoIcon from '../../../api/icons/sixco-icons';
 import TablaUsuarios from './partials/TablaUsuarios';
-import { listContacts, logout } from '../../../api/apiclient/ApiClient';
+import { listContacts } from '../../../api/apiclient/ApiClient';
+import { bindActionCreators } from 'redux';
+import { changeUserAuthenticatedAction } from '../../../redux/actions/Users';
+import { CircularProgress } from '@mui/material';
 
 const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disable-line
   return <NavLink to={props.to} {...props} innerRef={ref} />; // eslint-disable-line
 });
 
 function Usuarios(props) {
-  const { loginData } = props;
+  const { loginData, setIsAuthorizated } = props;
   const { classes, cx } = useStyles();
-
+  const [loading, setLoading] = useState(false);
   const [datanotif, setDatanotif] = useState({ open: false, variant: 'error', message: '' });
   const [listusuarios, setListconsultas] = useState([]);
   const title = brand.name + ' - Usuarios';
@@ -35,18 +38,20 @@ function Usuarios(props) {
     const data = {
       session: loginData.session,
     }
-    listContacts(data).then(response => {
-      if (typeof response != 'undefined' && response.records) {
-        console.log(response.records);
-        setListconsultas(response.records)
-      } else {
-        if (response.success == false && typeof response.error != 'undefined' && error.message=='Login required') {
-          // setOpenmodal(true);
-          logout();
-          console.error("message error", response.error.message);
+    setLoading(true);
+    listContacts(data)
+      .then(response => {
+        if (typeof response != 'undefined' && response.records) {
+          console.log(response.records);
+            setListconsultas(response.records)
+        } else {
+          if (response.success == false && typeof response.error != 'undefined' && response.error.message == 'Login required') {
+            setIsAuthorizated(false);
+            console.error("message error", response.error.message);
+          }
         }
-      }
-    })
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   return (
@@ -66,18 +71,24 @@ function Usuarios(props) {
               desc="Usuarios registrados."
             >
               <div>
-                {listusuarios.length == 0 ? (
-                  <Typography variant="h6" className={Type.textCenter}>
-                    Sin usuarios para mostrar.<br /><br />
-                    <div className={classes.btnArea}>
-                      <Button variant="contained" component={LinkBtn} to="/app/choferes/nuevo-chofer" className={classes.button} color="primary">
-                        Nuevo usuario <Icon className={classes.rightIcon}>add</Icon>
-                      </Button>
-                    </div>
-                  </Typography>
-                ) : (
-                  <TablaUsuarios lista={listusuarios} />
-                )}
+                {loading
+                  ? 
+                  <div className={classes.content}>
+                    <CircularProgress className={classes.circularProgress} size={90} thickness={1} color="secondary" />
+                  </div>
+                  :
+                  listusuarios.length == 0 ? (
+                    <Typography variant="h6" className={Type.textCenter}>
+                      Sin usuarios para mostrar.<br /><br />
+                      <div className={classes.btnArea}>
+                        <Button variant="contained" component={LinkBtn} to="/app/choferes/nuevo-chofer" className={classes.button} color="primary">
+                          Nuevo usuario <Icon className={classes.rightIcon}>add</Icon>
+                        </Button>
+                      </div>
+                    </Typography>
+                  ) : (
+                    <TablaUsuarios lista={listusuarios} />
+                  )}
               </div>
             </PapperBlock>
           </Grid>
@@ -91,14 +102,21 @@ function Usuarios(props) {
 
 Usuarios.propTypes = {
   loginData: PropTypes.object.isRequired,
+  setIsAuthorizated: PropTypes.func.isRequired,
 };
 
 const mapUserStateToProps = state => ({
   loginData: state.login.loginData,
 });
 
+const constDispatchToProps = dispatch => ({
+  setIsAuthorizated: bindActionCreators(changeUserAuthenticatedAction, dispatch),
+});
+
+
 const UsuariosMapped = connect(
-  mapUserStateToProps
+  mapUserStateToProps,
+  constDispatchToProps
 )(Usuarios);
 
 export default UsuariosMapped;

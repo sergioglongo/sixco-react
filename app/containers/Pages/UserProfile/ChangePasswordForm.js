@@ -31,17 +31,12 @@ function ChangePasswordForm(props) {
     reset,
     submitting,
     init,
-    clear
+    clear,
+    formChangePassword
   } = props;
   
   const { classes } = useStyles();
   
-  useEffect(() => {
-    return () => {
-      clear();
-    }
-  }, []);
-
   return (
     <PapperBlock title="Cambiar Contraseña" whiteBg icon="ion-ios-contact" desc="">
       <form onSubmit={handleSubmit}>
@@ -72,13 +67,11 @@ function ChangePasswordForm(props) {
         <div style={{ marginTop: 12 }}>
           <Button
             type="button"
-            
-            // disabled={pristine || submitting}
             onClick={() => history.goBack()}
           >
             Cancelar
           </Button>
-          <Button variant="contained" color="primary" type="submit" disabled={pristine || submitting}>
+          <Button id='save' variant="contained" color="primary" type="submit" disabled={pristine || submitting || formChangePassword.syncErrors}>
             Guardar
           </Button>
         </div>
@@ -94,6 +87,7 @@ ChangePasswordForm.propTypes = {
   submitting: PropTypes.bool.isRequired,
   init: PropTypes.func.isRequired,
   clear: PropTypes.func.isRequired,
+  form: PropTypes.object.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -107,7 +101,8 @@ const ChangePasswordFormMapped = reduxForm({
 
 const ChangePasswordFormInit = connect(
   state => ({
-    initialValues: state.initval.formValues
+    initialvalues: state.initval.formValues,
+    formChangePassword: state.form.changePassword
   }),
   mapDispatchToProps,
 )(ChangePasswordFormMapped);

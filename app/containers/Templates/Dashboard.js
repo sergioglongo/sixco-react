@@ -10,14 +10,25 @@ import LeftSidebarBigLayout from './layouts/LeftSidebarBigLayout';
 import DropMenuLayout from './layouts/DropMenuLayout';
 import MegaMenuLayout from './layouts/MegaMenuLayout';
 import useStyles from './appStyles-jss';
+import {
+  setClientDataAction,
+  setLoginDataAction
+} from 'dan-redux/actions/Users';
+import {
+  setClientDataAction as setClientDataRegister
+} from 'dan-redux/actions/Register';
 
 function Dashboard(props) {
   const { classes, cx } = useStyles();
   // Initial header style
   const [openGuide, setOpenGuide] = useState(false);
   const [appHeight, setAppHeight] = useState(0);
+  const { isAuthenticated } = props;
 
   useEffect(() => {
+    // if(!props.isAuthenticated){
+      // history.push('/auth/login')
+    // }
     const { history, loadTransition } = props;
 
     // Adjust min height
@@ -43,6 +54,12 @@ function Dashboard(props) {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if(!isAuthenticated){
+      history.push('/auth/login');
+    }
+  })
 
   const handleOpenGuide = () => {
     setOpenGuide(true);
@@ -190,7 +207,6 @@ function Dashboard(props) {
 }
 
 Dashboard.propTypes = {
-
   children: PropTypes.node.isRequired,
   history: PropTypes.object.isRequired,
   initialOpen: PropTypes.func.isRequired,
@@ -203,7 +219,8 @@ Dashboard.propTypes = {
   gradient: PropTypes.bool.isRequired,
   deco: PropTypes.bool.isRequired,
   bgPosition: PropTypes.string.isRequired,
-  layout: PropTypes.string.isRequired
+  layout: PropTypes.string.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -214,6 +231,7 @@ const mapStateToProps = state => ({
   deco: state.ui.decoration,
   layout: state.ui.layout,
   bgPosition: state.ui.bgPosition,
+  
 });
 
 const mapDispatchToProps = dispatch => ({

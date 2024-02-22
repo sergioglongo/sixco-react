@@ -6,21 +6,15 @@ import { useHistory } from 'react-router-dom';
 import brand from 'dan-api/dummy/brand';
 import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
-import {
-  setClientDataAction,
-  setLoginDataAction
-} from 'dan-redux/actions/Users';
-import {
-  setClientDataAction as setClientDataRegister
-} from 'dan-redux/actions/Register';
 import EditProfileForm from './EditProfileForm.js';
 import useStyles from './userprofile-jss';
+import { changeUserAuthenticatedAction } from '../../../redux/actions/Users.js';
 
 function EditUserProfile(props) {
   const title = brand.name + ' - Perfil';
   const description = brand.desc;
   const {
-    userData, loginData, setUserData, setLoginData, setLoginUserData
+    userData, loginData, setIsAuthorizated
   } = props;
   const history = useHistory();
 
@@ -29,39 +23,41 @@ function EditUserProfile(props) {
   const [formData, setFormData] = useState({});
   useEffect(() => {
     if (userData) {
-        setFormData(userData);
+      setFormData(userData);
     }
-  },[,userData])
+  }, [, userData])
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setTimeout(() => {
-      history.push('/app');
+      // history.push('/app');
+      setIsAuthorizated(false);
     }, 2000);
   }
 
-//   useEffect(() => {
-//     getPickListValues('Accounts', 'listabarrio').then(response => {
-//       if (typeof response !== 'undefined' && response.records) {
-//         const listabarrios = [];
-//         response.records.map((v, i) => {
-//           listabarrios.push({
-//             value: v,
-//             label: v,
-//             obj: v,
-//           });
-//         });
-//         setListabarrio(listabarrios);
-//       } else if (typeof response !== 'undefined' && response.success == false && typeof response.error !== 'undefined') {
-//         setDatanotif({
-//           ...datanotif,
-//           open: true,
-//           message: response.error.message
-//         });
-//       }
-//       setLoading(false);
-//       // console.log(listabarrio)
-//     });
-//   }, []);
+  //   useEffect(() => {
+  //     getPickListValues('Accounts', 'listabarrio').then(response => {
+  //       if (typeof response !== 'undefined' && response.records) {
+  //         const listabarrios = [];
+  //         response.records.map((v, i) => {
+  //           listabarrios.push({
+  //             value: v,
+  //             label: v,
+  //             obj: v,
+  //           });
+  //         });
+  //         setListabarrio(listabarrios);
+  //       } else if (typeof response !== 'undefined' && response.success == false && typeof response.error !== 'undefined') {
+  //         setDatanotif({
+  //           ...datanotif,
+  //           open: true,
+  //           message: response.error.message
+  //         });
+  //       }
+  //       setLoading(false);
+  //       // console.log(listabarrio)
+  //     });
+  //   }, []);
 
   return (
     <div>
@@ -76,7 +72,12 @@ function EditUserProfile(props) {
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item md={12} xs={12}>
-            <EditProfileForm formData={formData} setFormData={setFormData} handleSubmit={handleSubmit}/>
+            <EditProfileForm
+              formData={formData}
+              setFormData={setFormData}
+              handleSubmit={handleSubmit}
+              handleLogout={() => setIsAuthorizated(false)}
+            />
           </Grid>
         </Grid>
       </div>
@@ -87,9 +88,7 @@ function EditUserProfile(props) {
 EditUserProfile.propTypes = {
   userData: PropTypes.object.isRequired,
   loginData: PropTypes.object.isRequired,
-  setUserData: PropTypes.func.isRequired,
-  setLoginData: PropTypes.func.isRequired,
-  setLoginUserData: PropTypes.func.isRequired,
+  setIsAuthorizated: PropTypes.func.isRequired,
 };
 
 // const reducer = 'socmed';
@@ -101,9 +100,7 @@ const mapStateToProps = state => ({
 });
 
 const constDispatchToProps = dispatch => ({
-  setUserData: bindActionCreators(setClientDataAction, dispatch),
-  setLoginUserData: bindActionCreators(setClientDataRegister, dispatch),
-  setLoginData: bindActionCreators(setLoginDataAction, dispatch),
+  setIsAuthorizated: bindActionCreators(changeUserAuthenticatedAction, dispatch),
 });
 
 

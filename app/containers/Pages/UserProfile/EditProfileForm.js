@@ -12,9 +12,9 @@ import Button from '@mui/material/Button';
 import { TextFieldRedux } from 'dan-components/Forms/ReduxFormMUI';
 import { initAction, clearAction } from 'dan-redux/actions/reduxFormActions';
 import useStyles from './userprofile-jss';
-import { InputLabel, MenuItem, Select } from '@mui/material';
+import { CircularProgress, InputLabel, MenuItem, Select } from '@mui/material';
 import { toNumber } from 'lodash';
-import { getCiudades } from '../../../api/apiclient/ApiClient';
+import { getCiudades, logout } from '../../../api/apiclient/ApiClient';
 import { CheckboxRedux, SelectRedux } from '../../../components/Forms/ReduxFormMUI';
 
 
@@ -60,6 +60,7 @@ function EditProfileForm(props) {
     } = useStyles();
     const {
         handleSubmit,
+        handleLogout,
         pristine,
         reset,
         submitting,
@@ -81,79 +82,95 @@ function EditProfileForm(props) {
     const [ciudadesExtranjeroList, setCiudadesExtranjeroList] = useState([]);
     const [extranjero, setExtranjero] = useState(false);
     const [loading, setLoading] = useState(false);
-  
+
     useEffect(() => {
         init(formData);
+        getCiudades()
+            .then(response => {
+                if (typeof response !== 'undefined' && response.records) {
+                    console.log("pedido de ciudades al backend", response)
+                    const ciudadesArgentina = [];
+                    const ciudadesExtranjero = [];
+                    const provinciasArgentina = [];
+                    const paises = [];
+                    response.records.map((v, i) => {
+                        //       {"othercity": "13930",     ejemplo de dato
+                        //       "denominacion": "Adelia Maria",
+                        //       "geo_provincia": "Cordoba",
+                        //       "geo_pais": "Argentina"}
+                        if (formData.othercityid && v.othercity == formData.othercityid) {
+                            console.log("entro por othercity", v)
+                            setProvincia(v.geo_provincia);
+                            setPais(v.geo_pais);
+                            setCiudad(v.othercity);
+                        }
+                        if (v.geo_pais === 'Argentina') {
+                            ciudadesArgentina.push({
+                                value: v.denominacion,
+                                label: v.denominacion,
+                                obj: v,
+                            });
+                            const provinciaArgentinaExistente = provinciasArgentina.find((provincia) => provincia.value == v.geo_provincia);
+                            if (!provinciaArgentinaExistente && v.geo_pais === 'Argentina') {
+                                provinciasArgentina.push({
+                                    value: v.geo_provincia,
+                                    label: v.geo_provincia,
+                                });
+                            }
+                        }
+                        else {
+                            const paisExistente = paises.find((pais) => pais.value == v.geo_pais)
+                            ciudadesExtranjero.push({
+                                value: v.denominacion,
+                                label: v.denominacion,
+                                obj: v,
+                            });
+                            if (!paisExistente) {
+                                paises.push({
+                                    value: v.geo_pais,
+                                    label: v.geo_pais,
+                                });
+                            }
+                        }
+                    }
+                    )
+                    setCiudadesArgentinaList(ciudadesArgentina);
+                    setCiudadesExtranjeroList(ciudadesExtranjero);
+                    setProvinciasList(provinciasArgentina);
+                    setProvinciasArgentinaList(provinciasArgentina);
+                    setPaisesList(paises)
+                } else {
+                    if (response !== 'undefined' && response.success == false && response.message == 'Login required') {
+                        handleLogout();
+                    }
+                }
+            });
+        setLoading(false);
+        setCodigoArea('+54');
         return () => {
             clear();
         }
     }, [init, formData]);
 
     useEffect(() => {
-        getCiudades().then(response => {
-            if (typeof response !== 'undefined' && response.records) {
-                const ciudadesArgentina = [];
-                const ciudadesExtranjero = [];
-                const provinciasArgentina = [];
-                const paises = [];
-                response.records.map((v, i) => {
-                    //       {"othercity": "13930",     ejemplo de dato
-                    //       "denominacion": "Adelia Maria",
-                    //       "geo_provincia": "Cordoba",
-                    //       "geo_pais": "Argentina"}
-                    if (v.geo_pais === 'Argentina') {
-                        ciudadesArgentina.push({
-                            value: v.denominacion,
-                            label: v.denominacion,
-                            obj: v,
-                        });
-                        const provinciaArgentinaExistente = provinciasArgentina.find((provincia) => provincia.value == v.geo_provincia);
-                        if (!provinciaArgentinaExistente && v.geo_pais === 'Argentina') {
-                            provinciasArgentina.push({
-                                value: v.geo_provincia,
-                                label: v.geo_provincia,
-                            });
-                        }
-                    }
-                    else {
-                        const paisExistente = paises.find((pais) => pais.value == v.geo_pais)
-                        ciudadesExtranjero.push({
-                            value: v.denominacion,
-                            label: v.denominacion,
-                            obj: v,
-                        });
-                        if (!paisExistente) {
-                            paises.push({
-                                value: v.geo_pais,
-                                label: v.geo_pais,
-                            });
-                        }
-                    }
-                }
-                )
-                setCiudadesArgentinaList(ciudadesArgentina);
-                setCiudadesExtranjeroList(ciudadesExtranjero);
-                setProvinciasList(provinciasArgentina);
-                setProvinciasArgentinaList(provinciasArgentina);
-                setPaisesList(paises)
-            }
-        });
-        setLoading(false);
-        setCodigoArea('+54');
+
     }, []);
 
     useEffect(() => {
-        setCiudad(null)
-        if (extranjero) {
-            setCiudadesList([])
-            setProvinciasList([])
-        }
-        else {
-            setCiudadesList([])
-            setPais('')
-            setProvinciasList(provinciasArgentinaList)
-        }
-    }, [extranjero])
+        console.log("Ubicacion", ciudad, pais, provincia)
+    }, [ciudad])
+    // useEffect(() => {
+    //     setCiudad(null)
+    //     if (extranjero) {
+    //         setCiudadesList([])
+    //         setProvinciasList([])
+    //     }
+    //     else {
+    //         setCiudadesList([])
+    //         setPais('')
+    //         setProvinciasList(provinciasArgentinaList)
+    //     }
+    // }, [extranjero])
 
     useEffect(() => {
         setCiudadesList([])
@@ -201,102 +218,103 @@ function EditProfileForm(props) {
     };
     return (
         <PapperBlock title="Editar perfil" whiteBg icon="ion-ios-contact" desc="">
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <FormControl className={classes.field}>
-                        <Field
-                            name="firstname"
-                            component={TextFieldRedux}
-                            placeholder="Nombre"
-                            label="Nombre"
-                            required
-                            validate={required}
-                            onChange={(event) => handleInputChange('contact_firstname', event.target.value)}
-                            value={formData?.firstname || ''}
-                        />
-                    </FormControl>
-                </div>
-                <div>
-                    <FormControl className={classes.field}>
-                        <Field
-                            name="lastname"
-                            component={TextFieldRedux}
-                            placeholder="Apellido"
-                            label="Apellido"
-                            required
-                            validate={required}
-                            onChange={(event) => handleInputChange('contact_lastname', event.target.value)}
-                            value={formData?.lastname || ''} />
-                    </FormControl>
-                </div>
-                <div>
-                    <FormControl className={classes.field}>
-                        <Field
-                            name="mailingstreet"
-                            component={TextFieldRedux}
-                            placeholder="Domicilio"
-                            label="Domicilio"
-                            validate={[string]}
-                            onChange={(event) => handleInputChange('contact_mobile', event.target.value)}
-                            value={formData?.mailingstreet || ''}
-                        />
-                    </FormControl>
-                </div>
-                <div style={{ width: '100%' }}>
-                    <FormControlLabel
-                        control={
+            {formData ?
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <FormControl className={classes.field}>
                             <Field
-                                name="extranjero"
-                                component={CheckboxRedux}
-                                initialValue={false}
+                                name="firstname"
+                                component={TextFieldRedux}
+                                placeholder="Nombre"
+                                label="Nombre"
+                                required
                                 validate={required}
-                                onChange={() => setExtranjero(!extranjero)}
+                                onChange={(event) => handleInputChange('contact_firstname', event.target.value)}
+                                value={formData?.firstname || ''}
                             />
-                        }
-                        label="Extranjero"
-                    />
-                </div>
-                {paisesList.length > 0 && extranjero &&
-                    <div style={{ width: '100%' }}>
-                        <FormControl variant="standard" className={classes.formControl}>
-                            <InputLabel htmlFor="age-native-simple">Pais</InputLabel>
-                            <Select
-                                variant="standard"
-                                native
-                                value={pais}
-                                onChange={(e) => setPais(e.target.value)}
-                                inputProps={{
-                                    id: 'age-native-simple',
-                                }}>
-                                <option key='vacio' value='vacio'></option>
-                                {paisesList.map((option, index) => {
-                                    return <option key={index} value={option.value}>{option.label}</option>
-                                })}
-                            </Select>
                         </FormControl>
                     </div>
-                }
-                {provinciasList.length > 0 &&
-                    <div style={{ width: '100%' }}>
-                        <FormControl variant="standard" className={classes.formControl}>
-                            <InputLabel htmlFor="age-native-simple">Provincia</InputLabel>
-                            <Select
-                                variant="standard"
-                                native
-                                value={provincia}
-                                onChange={(e) => setProvincia(e.target.value)}
-                                inputProps={{
-                                    id: 'age-native-simple',
-                                }}>
-                                <option key='vacio' value='vacio'></option>
-                                {provinciasList.map((option, index) => {
-                                    return <option key={index} value={option.value}>{option.label}</option>
-                                })}
-                            </Select>
+                    <div>
+                        <FormControl className={classes.field}>
+                            <Field
+                                name="lastname"
+                                component={TextFieldRedux}
+                                placeholder="Apellido"
+                                label="Apellido"
+                                required
+                                validate={required}
+                                onChange={(event) => handleInputChange('contact_lastname', event.target.value)}
+                                value={formData?.lastname || ''} />
                         </FormControl>
                     </div>
-                }
-                {ciudadesList.length > 0 &&
+                    <div>
+                        <FormControl className={classes.field}>
+                            <Field
+                                name="mailingstreet"
+                                component={TextFieldRedux}
+                                placeholder="Domicilio"
+                                label="Domicilio"
+                                validate={[string]}
+                                onChange={(event) => handleInputChange('contact_mobile', event.target.value)}
+                                value={formData?.mailingstreet || ''}
+                            />
+                        </FormControl>
+                    </div>
+                    <div style={{ width: '100%' }}>
+                        <FormControlLabel
+                            control={
+                                <Field
+                                    name="extranjero"
+                                    component={CheckboxRedux}
+                                    initialValue={false}
+                                    validate={required}
+                                    onChange={() => setExtranjero(!extranjero)}
+                                />
+                            }
+                            label="Extranjero"
+                        />
+                    </div>
+                    {paisesList.length > 0 && extranjero &&
+                        <div style={{ width: '100%' }}>
+                            <FormControl variant="standard" className={classes.formControl}>
+                                <InputLabel htmlFor="age-native-simple">Pais</InputLabel>
+                                <Select
+                                    variant="standard"
+                                    native
+                                    value={pais}
+                                    onChange={(e) => setPais(e.target.value)}
+                                    inputProps={{
+                                        id: 'age-native-simple',
+                                    }}>
+                                    <option key='vacio' value='vacio'></option>
+                                    {paisesList.map((option, index) => {
+                                        return <option key={index} value={option.value}>{option.label}</option>
+                                    })}
+                                </Select>
+                            </FormControl>
+                        </div>
+                    }
+                    {provinciasList.length > 0 &&
+                        <div style={{ width: '100%' }}>
+                            <FormControl variant="standard" className={classes.formControl}>
+                                <InputLabel htmlFor="age-native-simple">Provincia</InputLabel>
+                                <Select
+                                    variant="standard"
+                                    native
+                                    value={provincia}
+                                    onChange={(e) => setProvincia(e.target.value)}
+                                    inputProps={{
+                                        id: 'age-native-simple',
+                                    }}>
+                                    <option key='vacio' value='vacio'></option>
+                                    {provinciasList.map((option, index) => {
+                                        return <option key={index} value={option.value}>{option.label}</option>
+                                    })}
+                                </Select>
+                            </FormControl>
+                        </div>
+                    }
+                    {/* {ciudadesList.length > 0 && */}
                     <div style={{ width: '100%' }}>
                         <FormControl variant="standard" className={classes.formControl}>
                             <InputLabel htmlFor="age-native-simple">Ciudad</InputLabel>
@@ -314,91 +332,95 @@ function EditProfileForm(props) {
                             </Field>
                         </FormControl>
                     </div>
-                }
-                <div>
-                    <FormControl className={classes.field}>
-                        <Field
-                            name="mobile"
-                            component={TextFieldRedux}
-                            placeholder="Teléfono Principal"
-                            label="Teléfono Principal"
-                            validate={[string]}
-                            onChange={(event) => handleInputChange('contact_mobile', event.target.value)}
-                            value={formData?.mobile || ''}
-                        />
-                    </FormControl>
-                </div>
-                <div>
-                    <FormControl className={classes.field}>
-                        <Field
-                            name="siccode"
-                            component={TextFieldRedux}
-                            // validate={[required, string, maxLength30]}
-                            label="CUIT / DNI"
-                            // onChange={(event) => handleInputChange('account_nro_doc', event.target.value)}
-                            value={formData?.siccode || ''}
-                            disabled
-                        />
-                    </FormControl>
-                </div>
-                <div>
-                    <FormControl className={classes.field}>
-                        <Field
-                            name="email"
-                            component={TextFieldRedux}
-                            placeholder="Email"
-                            label="Email"
-                            // validate={[required, email]}
-                            // onChange={(event) => handleInputChange('email', event.target.value)}
-                            value={formData?.email || ''}
-                            disabled
-                        />
-                    </FormControl>
-                </div>
-                <div>
-                    <FormControl className={classes.field}>
-                        <Field
-                            name="accountname"
-                            component={TextFieldRedux}
-                            placeholder="Cuenta"
-                            label="Cuenta"
-                            // validate={[required, email]}
-                            // onChange={(event) => handleInputChange('email', event.target.value)}
-                            value={formData?.accountname || ''}
-                            disabled
-                        />
-                    </FormControl>
-                </div>
-                {/* <div style={{ width: 200, marginBottom: 20 }}>
-                    <FormControl variant="standard" className={classes.field}>
-                        <InputLabel htmlFor="age-native-simple">Estado</InputLabel>
-                        <Select
-                            variant="standard"
-                            native
-                            name='tipo_contacto'
-                            value={formData?.tipo_contacto || 1}
-                            onChange={(event) => handleInputChange('estado', toNumber(event.target.value))}
-                            inputProps={{
-                                id: 'age-native-simple',
-                            }}>
-                            {estados.map((item) => (
-                                <option value={item.id} key={item.id}>{item.label}</option>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </div> */}
-                <div className={classes.buttonGroup}>
-                    <Button
-                        type="button"
-                        onClick={() => history.goBack()}
-                    >
-                        Cancelar
-                    </Button>
-                    <Button variant="contained" color="primary" type="submit" disabled={submitting}>
-                        Guardar
-                    </Button>
-                </div>
-            </form>
+                    {/* } */}
+                    <div>
+                        <FormControl className={classes.field}>
+                            <Field
+                                name="mobile"
+                                component={TextFieldRedux}
+                                placeholder="Teléfono Principal"
+                                label="Teléfono Principal"
+                                validate={[string]}
+                                onChange={(event) => handleInputChange('contact_mobile', event.target.value)}
+                                value={formData?.mobile || ''}
+                            />
+                        </FormControl>
+                    </div>
+                    <div>
+                        <FormControl className={classes.field}>
+                            <Field
+                                name="siccode"
+                                component={TextFieldRedux}
+                                // validate={[required, string, maxLength30]}
+                                label="CUIT / DNI"
+                                // onChange={(event) => handleInputChange('account_nro_doc', event.target.value)}
+                                value={formData?.siccode || ''}
+                                disabled
+                            />
+                        </FormControl>
+                    </div>
+                    <div>
+                        <FormControl className={classes.field}>
+                            <Field
+                                name="email"
+                                component={TextFieldRedux}
+                                placeholder="Email"
+                                label="Email"
+                                // validate={[required, email]}
+                                // onChange={(event) => handleInputChange('email', event.target.value)}
+                                value={formData?.email || ''}
+                                disabled
+                            />
+                        </FormControl>
+                    </div>
+                    <div>
+                        <FormControl className={classes.field}>
+                            <Field
+                                name="accountname"
+                                component={TextFieldRedux}
+                                placeholder="Cuenta"
+                                label="Cuenta"
+                                // validate={[required, email]}
+                                // onChange={(event) => handleInputChange('email', event.target.value)}
+                                value={formData?.accountname || ''}
+                                disabled
+                            />
+                        </FormControl>
+                    </div>
+                    {/* <div style={{ width: 200, marginBottom: 20 }}>
+            <FormControl variant="standard" className={classes.field}>
+                <InputLabel htmlFor="age-native-simple">Estado</InputLabel>
+                <Select
+                    variant="standard"
+                    native
+                    name='tipo_contacto'
+                    value={formData?.tipo_contacto || 1}
+                    onChange={(event) => handleInputChange('estado', toNumber(event.target.value))}
+                    inputProps={{
+                        id: 'age-native-simple',
+                    }}>
+                    {estados.map((item) => (
+                        <option value={item.id} key={item.id}>{item.label}</option>
+                    ))}
+                </Select>
+            </FormControl>
+        </div> */}
+                    <div className={classes.buttonGroup}>
+                        <Button
+                            type="button"
+                            onClick={() => history.goBack()}
+                        >
+                            Cancelar
+                        </Button>
+                        <Button variant="contained" color="primary" type="submit" disabled={submitting}>
+                            Guardar
+                        </Button>
+                    </div>
+                </form>
+                :
+                <CircularProgress className={classes.circularProgress} size={90} thickness={1} color="secondary" />
+            }
+
         </PapperBlock>
     );
 }
@@ -409,6 +431,7 @@ renderRadioGroup.propTypes = {
 
 EditProfileForm.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
+    handleLogout: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
     pristine: PropTypes.bool.isRequired,
     submitting: PropTypes.bool.isRequired,

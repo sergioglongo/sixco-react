@@ -10,6 +10,11 @@ const styles = makeStyles()((theme) => ({
     // margin: '10px',
     gap: 10,
   },
+  content: {
+    height: '100%',
+    width: '100%',
+    padding: `70px ${theme.spacing(3)} 30px`
+  },
   statusWrap: {
     position: 'relative',
     marginBottom: theme.spacing(3),
@@ -92,7 +97,12 @@ const styles = makeStyles()((theme) => ({
   },
   removeBtn: {
     opacity: 1
-  }
+  },
+  circularProgress: {
+    position: 'fixed',
+    top: 'calc(50% - 45px)',
+    left: 'calc(50% - 45px)',
+  },
 }));
 
 export default styles;

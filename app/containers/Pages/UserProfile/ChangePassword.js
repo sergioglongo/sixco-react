@@ -10,12 +10,14 @@ import {
   setClientDataAction,
 } from 'dan-redux/actions/Users';
 // import { changePassword } from '../../../utils/ApiClient';
-import StyledNotif from '../../UiElements/Notifications';
+// import StyledNotif from '../../UiElements/Notifications';
 // import styles from 'dan-components/SocialMedia/jss/cover-jss';
 // import ChangePasswordForms from './ChangePasswordForms.js';
 import useStyles from './userprofile-jss';
 import ChangePasswordForm from './ChangePasswordForm';
-// import StyledNotif from '../../UiElements/demos/Notification/StyledNotif';
+import StyledNotif from '../../UiElements/demos/Notification/StyledNotif';
+import { Alert, Snackbar } from '@mui/material';
+import { changePassword } from '../../../api/apiclient/ApiClient';
 
 function TabContainer(props) {
   const { children } = props;
@@ -36,68 +38,33 @@ function ChangePassword(props) {
   const { clientData, loginData, setClientData } = props;
   const [value, setValue] = useState(0);
   const [datanotif, setDatanotif] = useState({ open: false, variant: 'error', message: '' });
-  const [loading, setLoading] = useState(false);
   const [listabarrio, setListabarrio] = useState([]);
-  const { classes} = useStyles();
+  const { classes } = useStyles();
   const date = new Date();
   const history = useHistory();
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
 
   const [valueForm, setValueForm] = useState();
   // console.log(clientData)
   const showResult = (e) => {
     e.preventDefault();
     const password = e.target.password.value;
-    const passwordConfirm = e.target.passwordConfirm.value;
 
-    console.log("submit e, pass passcon",e, password, passwordConfirm)
-    if (password != passwordConfirm) {
-      setDatanotif({
-        ...datanotif,
-        open: true,
-        message: 'Las contraseñas son diferentes'
-      });
-    }
-
-    if (password && !/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(value)) {
-      setDatanotif({
-        ...datanotif,
-        open: true,
-        message: 'Las contraseñas debe tener mas de 6 caracteres, al menos una minúscula una mayúscula un numero y un caracter especial. Ejemplo: Piquiense!22'
-      });
-    }
-
-    // console.log(chpass)
-    // return
-    
-    // changePassword(loginData.session, record, password).then(response => {
-    //   // debugger
-    //   if (typeof response !== 'undefined' && response.success == true) {
-    //     setDatanotif({
-    //       variant: 'success',
-    //       open: true,
-    //       message: 'Cambiaste con éxito la contraseña!'
-    //     });
-    //     history.push('/app/pages/perfil');
-    //   } else if (typeof response !== 'undefined' && response.success == false && typeof response.error !== 'undefined') {
-    //     setDatanotif({
-    //       ...datanotif,
-    //       open: true,
-    //       message: response.error.message
-    //     });
-    //   } else {
-    //     setDatanotif({
-    //       ...datanotif,
-    //       open: true,
-    //       message: 'Error al procesar la solicitud'
-    //     });
-    //   }
-    //   setLoading(false);
-    // });
+    changePassword(loginData.session, password).then(response => {
+      if (typeof response !== 'undefined' && response.success == true) {
+        setOpenSuccess(true);
+        e.target.save.disabled = true
+        setTimeout(() => {
+          history.push('/app/pages/perfil');
+        }, 4000);
+      } else if (typeof response !== 'undefined' && response.success == false && typeof response.error !== 'undefined') {
+        setOpenError(true);
+      } else {
+        setOpenError(true);
+      }
+    });
   };
-
-    // useEffect(() => {
-    //   console.log("error en submit", datanotif)
-    // }, [datanotif]);
 
   return (
     <div>
@@ -121,7 +88,26 @@ function ChangePassword(props) {
           </Grid>
         </Grid>
       </div>
-      <StyledNotif datanotif={datanotif} setDatanotif={setDatanotif} />
+      <Snackbar
+        open={openSuccess}
+        autoHideDuration={6000}
+        onClose={() => setOpenSuccess(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert onClose={() => setOpenSuccess(false)} severity="success" sx={{ width: '100%' }}>
+          Contraseña cambiada satisfactoriamente
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openError}
+        autoHideDuration={6000}
+        onClose={() => setOpenError(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert onClose={() => setOpenError(false)} severity="success" sx={{ width: '100%' }}>
+          Hubo un problema al cambiar la contraseña, intente nuevamente
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

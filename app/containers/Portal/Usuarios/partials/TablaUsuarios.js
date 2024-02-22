@@ -30,8 +30,12 @@ function TablaUsuarios(props) {
     history.push('/app/usuarios/nuevo-usuario');
   };
 
-  const DetalleConsulta = (data) => {
-    history.push('/app/usuarios/' + data.contactid + '/detalle');
+  const DetalleConsulta = (userData) => {
+    console.log("datos de usuario elegido", userData);
+    history.push({
+      pathname: '/app/usuarios/detalle',
+      state: { userData: userData }
+    });
   };
 
   if (typeof lista[0] === 'undefined') {

@@ -16,6 +16,8 @@ import Typography from '@mui/material/Typography';
 import Icon from '@mui/material/Icon';
 import TablaChoferes from './partials/TablaChoferes';
 import { listChoferes } from '../../../api/apiclient/ApiClient';
+import { changeUserAuthenticatedAction } from '../../../redux/actions/Users';
+import { bindActionCreators } from 'redux';
 
 const listaPruebas = [
   {
@@ -37,7 +39,7 @@ const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disabl
 
 
 function Choferes(props) {
-  const { loginData } = props;
+  const { loginData, setIsAuthenticated } = props;
   const { classes, cx } = useStyles();
 
   const [datanotif, setDatanotif] = useState({ open: false, variant: 'error', message: '' });
@@ -55,7 +57,7 @@ function Choferes(props) {
         setListconsultas(response.records)
       } else {
         if (response.success == false && typeof response.error != 'undefined') {
-          // setOpenmodal(true);
+          setIsAuthenticated(false);
           console.error("message error", response.error.message);
         }
       }
@@ -108,14 +110,18 @@ function Choferes(props) {
 
 Choferes.propTypes = {
   loginData: PropTypes.object.isRequired,
+  setIsAuthenticated: PropTypes.func.isRequired,
 };
 
 const mapUserStateToProps = state => ({
   loginData: state.login.loginData,
 });
-
+const constDispatchToProps = dispatch => ({
+  setIsAuthenticated: bindActionCreators(changeUserAuthenticatedAction, dispatch),
+});
 const ChoferesMapped = connect(
-  mapUserStateToProps
+  mapUserStateToProps,
+  constDispatchToProps
 )(Choferes);
 
 export default ChoferesMapped;
