@@ -23,6 +23,7 @@ import {
 import logo from 'dan-images/logo-sixco-only.svg';
 import axios from 'axios';
 import { login, getProfileDetail } from '../../../api/apiclient/ApiClient';
+import { setTimeout } from 'core-js';
 
 function LoginV2(props) {
   const [valueForm, setValueForm] = useState(null);
@@ -34,9 +35,9 @@ function LoginV2(props) {
     console.log("isAuthenticated and login", isAuthenticated);
     if (!isAuthenticated && loginState.loginData != {}) {
       setLoginData({});
-          setLoginData({});
-          setLoginUserData();
-          setClientData({});
+      setLoginData({});
+      setLoginUserData();
+      setClientData({});
     }
   }, []);
 
@@ -61,25 +62,33 @@ function LoginV2(props) {
         // setClientData(clientdata);
         setLoginData(loginResponse);
         changeUserAuthenticated(true);
-        settimeout(() => {
+        setTimeout(() => {
           changeUserAuthenticated(false);
-        },11000)
+        }, 300000);
       }
     }).catch(error => {
-      console.log("Error",error);
+      console.log("Error", error);
     });
     setLoading(false);
     // // Alert('success', 'Credenciales correctas');
     // }
   };
 
-  const title = brand.name + ' - App';
+  const title = brand.name + ' - Ingreso';
   const description = brand.desc;
   const { classes } = useStyles();
   const mdDown = useMediaQuery(theme => theme.breakpoints.down('md'));
 
   return (
     <div className={classes.rootFull}>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="twitter:title" content={title} />
+        <meta property="twitter:description" content={description} />
+      </Helmet>
       <div className={classes.containerSide}>
         <Hidden mdDown>
           <div className={`${classes.opening} ${classes.openingVideo}`} >

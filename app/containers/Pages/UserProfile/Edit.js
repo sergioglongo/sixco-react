@@ -8,56 +8,54 @@ import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import EditProfileForm from './EditProfileForm.js';
 import useStyles from './userprofile-jss';
-import { changeUserAuthenticatedAction } from '../../../redux/actions/Users.js';
+import { changeUserAuthenticatedAction, setClientDataAction } from '../../../redux/actions/Users.js';
+import { getProfileDetail, saveProfile } from '../../../api/apiclient/ApiClient.js';
 
 function EditUserProfile(props) {
   const title = brand.name + ' - Perfil';
   const description = brand.desc;
   const {
-    userData, loginData, setIsAuthorizated
+    userData, loginData, setIsAuthorizated, setClientData
   } = props;
   const history = useHistory();
 
   const { classes } = useStyles();
 
-  const [formData, setFormData] = useState({});
-  useEffect(() => {
-    if (userData) {
-      setFormData(userData);
-    }
-  }, [, userData])
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setTimeout(() => {
-      // history.push('/app');
-      setIsAuthorizated(false);
-    }, 2000);
-  }
+    const data = {
+      firstname: e.target.firstname.value,
+      lastname: e.target.lastname.value,
+      mobile: e.target.mobile.value,
+      // otherphone: e.target.otherphone.value,
+      email: e.target.email.value,
+      birthday: e.target.birthday.value,
+      mailingstreet: e.target.mailingstreet.value,
+      othercityid: e.target.othercityid.value,
+      session: loginData.session,
+    }
 
-  //   useEffect(() => {
-  //     getPickListValues('Accounts', 'listabarrio').then(response => {
-  //       if (typeof response !== 'undefined' && response.records) {
-  //         const listabarrios = [];
-  //         response.records.map((v, i) => {
-  //           listabarrios.push({
-  //             value: v,
-  //             label: v,
-  //             obj: v,
-  //           });
-  //         });
-  //         setListabarrio(listabarrios);
-  //       } else if (typeof response !== 'undefined' && response.success == false && typeof response.error !== 'undefined') {
-  //         setDatanotif({
-  //           ...datanotif,
-  //           open: true,
-  //           message: response.error.message
-  //         });
-  //       }
-  //       setLoading(false);
-  //       // console.log(listabarrio)
-  //     });
-  //   }, []);
+    console.log("formdata", data)
+
+    saveProfile(data).then((response) => {
+      if (response.success == false && typeof response.error != 'undefined' && error.message == 'Login required') {
+        logout();
+      } else {
+        getProfileDetail({ session: loginData.session }).then((res) => {
+          setClientData(res);
+        }).catch((err) => {
+          console.error("Error profile detail", err)
+        });
+      }
+      history.push('/app/pages/perfil');
+    }).catch((err) => {
+      console.error("Error profile detail", err)
+    });
+    // setTimeout(() => {
+    //   setIsAuthorizated(false);
+    // }, 2000);
+  }
 
   return (
     <div>
@@ -73,8 +71,7 @@ function EditUserProfile(props) {
         <Grid container spacing={3}>
           <Grid item md={12} xs={12}>
             <EditProfileForm
-              formData={formData}
-              setFormData={setFormData}
+              userData={userData}
               handleSubmit={handleSubmit}
               handleLogout={() => setIsAuthorizated(false)}
             />
@@ -89,6 +86,7 @@ EditUserProfile.propTypes = {
   userData: PropTypes.object.isRequired,
   loginData: PropTypes.object.isRequired,
   setIsAuthorizated: PropTypes.func.isRequired,
+  setClientData: PropTypes.func.isRequired,
 };
 
 // const reducer = 'socmed';
@@ -101,6 +99,7 @@ const mapStateToProps = state => ({
 
 const constDispatchToProps = dispatch => ({
   setIsAuthorizated: bindActionCreators(changeUserAuthenticatedAction, dispatch),
+  setClientData: bindActionCreators(setClientDataAction, dispatch),
 });
 
 

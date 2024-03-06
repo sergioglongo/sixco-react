@@ -10,7 +10,7 @@ import ProfileCard from './ProfileCard';
 import { getProfileDetail, logout } from '../../../api/apiclient/ApiClient';
 
 function UserProfile(props) {
-  const title = brand.name + ' - Profile';
+  const title = brand.name + ' - Perfil';
   const description = brand.desc;
   const { userData, loginData } = props;
   const { classes } = useStyles();
@@ -33,7 +33,9 @@ function UserProfile(props) {
     } else {
         setProfile(userData);
     }
-  }, [])
+  }, [, userData])
+
+
 
   const handleChange = (event, val) => {
     setValue(val);

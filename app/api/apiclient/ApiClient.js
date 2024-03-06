@@ -107,7 +107,6 @@ export async function getCiudades(ciudad, field) {
     .catch(err => console.log(err));
 }
 
-
 export async function register(data) {
   const params = JSON.stringify({
     "_operation":"saveRecord",
@@ -185,6 +184,24 @@ export async function getProfileDetail(data) {
     "_operation":"PortalCustomOperations",
     "mode":"DetailProfile",
     "_session":data.session
+  });
+  return axiosClient
+    .post('sixcocrm/modules/Mobile/api.php', params)
+    .then(response => {
+      if (typeof response.data !== 'undefined' && response.data.success == true) {
+        return response.data.result.records;
+      }
+      return response.data;
+    })
+    .catch(err => console.log(err));
+}
+
+export async function saveProfile(data) {
+  const params = JSON.stringify({
+    "_operation":"PortalCustomOperations",
+    "mode":"SaveProfile",
+    "_session":data.session,
+    "values":data
   });
   return axiosClient
     .post('sixcocrm/modules/Mobile/api.php', params)

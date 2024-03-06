@@ -39,13 +39,21 @@ function RegisterV2() {
     });
   };
 
-  const title = brand.name + ' - App';
+  const title = brand.name + ' - Registro';
   const description = brand.desc;
   const { classes } = useStyles();
   const mdDown = useMediaQuery(theme => theme.breakpoints.down('md'));
 
   return (
     <div className={classes.rootFull}>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="twitter:title" content={title} />
+        <meta property="twitter:description" content={description} />
+      </Helmet>
       <div className={classes.containerSide}>
         <Hidden mdDown>
           <div className={`${classes.opening} ${classes.openingVideo}`} >

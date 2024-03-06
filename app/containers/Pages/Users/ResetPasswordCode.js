@@ -7,6 +7,7 @@ import { Hidden } from '@mui/material';
 import intro from 'dan-images/bg-red.jpg';
 import ModalConfirm from '../../../components/Modals/ModalConfirm';
 import { useHistory } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 function ResetPasswordCode() {
   const [valueForm, setValueForm] = useState(null);
@@ -29,6 +30,14 @@ function ResetPasswordCode() {
   const { classes } = useStyles();
   return (
     <div className={classes.rootFull}>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="twitter:title" content={title} />
+        <meta property="twitter:description" content={description} />
+      </Helmet>
       <Hidden mdDown>
         <div className={classes.container}>
           <div className={classes.userFormWrap}>

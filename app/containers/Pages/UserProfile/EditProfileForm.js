@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import { TextFieldRedux } from 'dan-components/Forms/ReduxFormMUI';
 import { initAction, clearAction } from 'dan-redux/actions/reduxFormActions';
 import useStyles from './userprofile-jss';
-import { CircularProgress, InputLabel, MenuItem, Select } from '@mui/material';
+import { Checkbox, CircularProgress, InputLabel, MenuItem, Select } from '@mui/material';
 import { toNumber } from 'lodash';
 import { getCiudades, logout } from '../../../api/apiclient/ApiClient';
 import { CheckboxRedux, SelectRedux } from '../../../components/Forms/ReduxFormMUI';
@@ -62,12 +62,13 @@ function EditProfileForm(props) {
         handleSubmit,
         handleLogout,
         pristine,
-        reset,
         submitting,
+        deco,
+        reset,
         init,
         clear,
-        formData,
-        setFormData
+        userData,
+        form
     } = props;
     const history = useHistory();
     const [provincia, setProvincia] = useState('');
@@ -82,13 +83,27 @@ function EditProfileForm(props) {
     const [ciudadesExtranjeroList, setCiudadesExtranjeroList] = useState([]);
     const [extranjero, setExtranjero] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [formData, setFormData] = useState({});
 
     useEffect(() => {
-        init(formData);
+        if (userData) {
+            setFormData(userData);
+            if (userData.othercountry == 'Argentina') {
+                setExtranjero(false);
+            } else {
+                setExtranjero(true);
+            }
+        }
+    }, [, userData])
+
+    useEffect(() => {
+        init(userData);
+    }, [init, userData]);
+
+    useEffect(() => {
         getCiudades()
             .then(response => {
                 if (typeof response !== 'undefined' && response.records) {
-                    console.log("pedido de ciudades al backend", response)
                     const ciudadesArgentina = [];
                     const ciudadesExtranjero = [];
                     const provinciasArgentina = [];
@@ -98,15 +113,14 @@ function EditProfileForm(props) {
                         //       "denominacion": "Adelia Maria",
                         //       "geo_provincia": "Cordoba",
                         //       "geo_pais": "Argentina"}
-                        if (formData.othercityid && v.othercity == formData.othercityid) {
-                            console.log("entro por othercity", v)
+                        if (userData.othercityid && v.othercity == userData.othercityid) {
                             setProvincia(v.geo_provincia);
                             setPais(v.geo_pais);
                             setCiudad(v.othercity);
                         }
                         if (v.geo_pais === 'Argentina') {
                             ciudadesArgentina.push({
-                                value: v.denominacion,
+                                value: v.othercity,
                                 label: v.denominacion,
                                 obj: v,
                             });
@@ -121,7 +135,7 @@ function EditProfileForm(props) {
                         else {
                             const paisExistente = paises.find((pais) => pais.value == v.geo_pais)
                             ciudadesExtranjero.push({
-                                value: v.denominacion,
+                                value: v.othercity,
                                 label: v.denominacion,
                                 obj: v,
                             });
@@ -150,43 +164,43 @@ function EditProfileForm(props) {
         return () => {
             clear();
         }
-    }, [init, formData]);
+    }, [userData])
 
     useEffect(() => {
-
-    }, []);
-
-    useEffect(() => {
-        console.log("Ubicacion", ciudad, pais, provincia)
-    }, [ciudad])
-    // useEffect(() => {
-    //     setCiudad(null)
-    //     if (extranjero) {
-    //         setCiudadesList([])
-    //         setProvinciasList([])
-    //     }
-    //     else {
-    //         setCiudadesList([])
-    //         setPais('')
-    //         setProvinciasList(provinciasArgentinaList)
-    //     }
-    // }, [extranjero])
+        setCiudad('')
+        setProvincia('')
+        if (extranjero) {
+            setCiudadesList([])
+            setProvinciasList([])
+        }
+        else {
+            setCiudadesList([])
+            setPais('Argentina')
+            setProvinciasList(provinciasArgentinaList)
+        }
+    }, [extranjero])
 
     useEffect(() => {
         setCiudadesList([])
-        const provincias = [];
-        ciudadesExtranjeroList.map((ciudad) => {
-            if (ciudad.obj.geo_pais == pais) {
-                const provinciaExistente = provincias.find((provincia) => provincia.value == ciudad.obj.geo_provincia);
-                if (!provinciaExistente) {
-                    provincias.push({
-                        value: ciudad.obj.geo_provincia,
-                        label: ciudad.obj.geo_provincia,
-                    });
+        setProvinciasList([])
+        if (pais == 'Argentina') {
+            setProvinciasList(provinciasArgentinaList)
+        }
+        else {
+            const provincias = [];
+            ciudadesExtranjeroList.map((ciudad) => {
+                if (ciudad.obj.geo_pais == pais) {
+                    const provinciaExistente = provincias.find((provincia) => provincia.value == ciudad.obj.geo_provincia);
+                    if (!provinciaExistente) {
+                        provincias.push({
+                            value: ciudad.obj.geo_provincia,
+                            label: ciudad.obj.geo_provincia,
+                        });
+                    }
                 }
-            }
-        });
-        setProvinciasList(provincias);
+            });
+            setProvinciasList(provincias);
+        }
     }, [pais])
 
     useEffect(() => {
@@ -198,21 +212,19 @@ function EditProfileForm(props) {
                         ciudadesProvincia.push(ciudad)
                     }
                 })
-                setCiudadesList(ciudadesProvincia)
             } else {
                 ciudadesArgentinaList.map((ciudad) => {
                     if (ciudad.obj.geo_provincia == provincia) {
                         ciudadesProvincia.push(ciudad)
                     }
                 })
-                setCiudadesList(ciudadesProvincia)
             }
+            setCiudadesList(ciudadesProvincia)
         } else {
-            setCiudad(null)
+            setCiudad('')
             setCiudadesList([])
         }
     }, [provincia])
-
     const handleInputChange = (fieldName, value) => {
         setFormData({ ...formData, [fieldName]: value });
     };
@@ -229,7 +241,7 @@ function EditProfileForm(props) {
                                 label="Nombre"
                                 required
                                 validate={required}
-                                onChange={(event) => handleInputChange('contact_firstname', event.target.value)}
+                                onChange={(event) => handleInputChange('firstname', event.target.value)}
                                 value={formData?.firstname || ''}
                             />
                         </FormControl>
@@ -243,8 +255,25 @@ function EditProfileForm(props) {
                                 label="Apellido"
                                 required
                                 validate={required}
-                                onChange={(event) => handleInputChange('contact_lastname', event.target.value)}
+                                onChange={(event) => handleInputChange('lastname', event.target.value)}
                                 value={formData?.lastname || ''} />
+                        </FormControl>
+                    </div>
+                    <div>
+                        <FormControl className={classes.field}>
+                            <Field
+                                name="birthday"
+                                component={TextFieldRedux}
+                                label="Fecha Nacimiento"
+                                type="date"
+                                variant="standard"
+                                required
+                                onChange={(event) => handleInputChange('birthday', event.target.value)}
+                                defaultValue={'27-02-2022'}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
                         </FormControl>
                     </div>
                     <div>
@@ -255,23 +284,28 @@ function EditProfileForm(props) {
                                 placeholder="Domicilio"
                                 label="Domicilio"
                                 validate={[string]}
-                                onChange={(event) => handleInputChange('contact_mobile', event.target.value)}
+                                onChange={(event) => handleInputChange('mailingstreet', event.target.value)}
                                 value={formData?.mailingstreet || ''}
                             />
                         </FormControl>
                     </div>
                     <div style={{ width: '100%' }}>
-                        <FormControlLabel
+                        {/* <FormControlLabel
                             control={
                                 <Field
                                     name="extranjero"
                                     component={CheckboxRedux}
-                                    initialValue={false}
+                                    // initialValue={extranjero}
+                                    value={!extranjero}
                                     validate={required}
                                     onChange={() => setExtranjero(!extranjero)}
-                                />
-                            }
-                            label="Extranjero"
+                                    />
+                                }
+                                label="Extranjero"
+                                /> */}
+                        <Checkbox
+                            checked={extranjero}
+                            onChange={() => setExtranjero(!extranjero)}
                         />
                     </div>
                     {paisesList.length > 0 && extranjero &&
@@ -288,6 +322,7 @@ function EditProfileForm(props) {
                                     }}>
                                     <option key='vacio' value='vacio'></option>
                                     {paisesList.map((option, index) => {
+
                                         return <option key={index} value={option.value}>{option.label}</option>
                                     })}
                                 </Select>
@@ -299,6 +334,7 @@ function EditProfileForm(props) {
                             <FormControl variant="standard" className={classes.formControl}>
                                 <InputLabel htmlFor="age-native-simple">Provincia</InputLabel>
                                 <Select
+                                    name="otherstate"
                                     variant="standard"
                                     native
                                     value={provincia}
@@ -308,31 +344,31 @@ function EditProfileForm(props) {
                                     }}>
                                     <option key='vacio' value='vacio'></option>
                                     {provinciasList.map((option, index) => {
-                                        return <option key={index} value={option.value}>{option.label}</option>
+                                        return <option key={index} value={option.label}>{option.label}</option>
                                     })}
                                 </Select>
                             </FormControl>
                         </div>
                     }
-                    {/* {ciudadesList.length > 0 && */}
-                    <div style={{ width: '100%' }}>
-                        <FormControl variant="standard" className={classes.formControl}>
-                            <InputLabel htmlFor="age-native-simple">Ciudad</InputLabel>
-                            <Field
-                                name="othercity"
-                                component={SelectRedux}
-                                value={ciudad}
-                                placeholder="Selection"
-                                required
-                                style={{ textAlign: 'left' }}
-                            >
-                                {ciudadesList.map((option, index) => {
-                                    return <MenuItem key={index} value={option.obj.othercity}>{option.label}</MenuItem>
-                                })}
-                            </Field>
-                        </FormControl>
-                    </div>
-                    {/* } */}
+                    {ciudadesList.length > 0 &&
+                        <div style={{ width: '100%' }}>
+                            <FormControl variant="standard" className={classes.formControl}>
+                                <InputLabel htmlFor="age-native-simple">Ciudad</InputLabel>
+                                <Field
+                                    name="othercityid"
+                                    component={SelectRedux}
+                                    value={formData?.othercityid || ''}
+                                    placeholder="Selection"
+                                    required
+                                    style={{ textAlign: 'left' }}
+                                >
+                                    {ciudadesList.map((option, index) => {
+                                        return <MenuItem key={index} value={option.obj.othercity}>{option.label}</MenuItem>
+                                    })}
+                                </Field>
+                            </FormControl>
+                        </div>
+                    }
                     <div>
                         <FormControl className={classes.field}>
                             <Field
@@ -341,7 +377,7 @@ function EditProfileForm(props) {
                                 placeholder="Teléfono Principal"
                                 label="Teléfono Principal"
                                 validate={[string]}
-                                onChange={(event) => handleInputChange('contact_mobile', event.target.value)}
+                                onChange={(event) => handleInputChange('mobile', event.target.value)}
                                 value={formData?.mobile || ''}
                             />
                         </FormControl>
@@ -387,24 +423,6 @@ function EditProfileForm(props) {
                             />
                         </FormControl>
                     </div>
-                    {/* <div style={{ width: 200, marginBottom: 20 }}>
-            <FormControl variant="standard" className={classes.field}>
-                <InputLabel htmlFor="age-native-simple">Estado</InputLabel>
-                <Select
-                    variant="standard"
-                    native
-                    name='tipo_contacto'
-                    value={formData?.tipo_contacto || 1}
-                    onChange={(event) => handleInputChange('estado', toNumber(event.target.value))}
-                    inputProps={{
-                        id: 'age-native-simple',
-                    }}>
-                    {estados.map((item) => (
-                        <option value={item.id} key={item.id}>{item.label}</option>
-                    ))}
-                </Select>
-            </FormControl>
-        </div> */}
                     <div className={classes.buttonGroup}>
                         <Button
                             type="button"
@@ -412,7 +430,12 @@ function EditProfileForm(props) {
                         >
                             Cancelar
                         </Button>
-                        <Button variant="contained" color="primary" type="submit" disabled={submitting}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                            disabled={loading || submitting || pristine || !ciudadesList.length > 0}
+                        >
                             Guardar
                         </Button>
                     </div>
@@ -437,8 +460,7 @@ EditProfileForm.propTypes = {
     submitting: PropTypes.bool.isRequired,
     init: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired,
-    formData: PropTypes.object,
-    setFormData: PropTypes.func.isRequired,
+    userData: PropTypes.object,
 };
 
 const mapDispatchToProps = dispatch => ({

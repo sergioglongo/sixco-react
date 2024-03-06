@@ -1,13 +1,13 @@
 {
-  "name": "dandelion_pro",
-  "version": "2.5.3",
+  "name": "sixco_app",
+  "version": "0.1.16",
   "description": "React website tempate with focus on perfomance and design",
   "private": true,
   "engines": {
     "npm": ">=6.12.0",
     "node": ">=12.13.0"
   },
-  "author": "Dandelion Pro Team",
+  "author": "Grifo Creativo",
   "license": "Envato Regular License",
   "scripts": {
     "analyze:clean": "rimraf stats.json",

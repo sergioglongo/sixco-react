@@ -16,6 +16,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import useStyles from './sidebar-jss';
 import SixcoIcon from '../../api/icons/sixco-icons';
+import { Typography } from '@mui/material';
 
 const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disable-line
   return <NavLink to={props.to} {...props} innerRef={ref} />; // eslint-disable-line
@@ -82,7 +83,7 @@ function MainMenu(props) {
               unmountOnExit
             >
               <List className={classes.dense} component="nav" dense>
-                { getMenus(item.child, 'key') }
+                {getMenus(item.child, 'key')}
               </List>
             </Collapse>
           )}
@@ -134,6 +135,11 @@ function MainMenu(props) {
           </ListItemIcon>
           <ListItemText classes={{ primary: classes.primary }} variant="inset" primary={'Salir'} />
         </ListItem>
+      </div>
+      <div style={{ textAlign: 'right' }}>
+        <Typography component="p" fontSize={'10px'}>
+          Versión: 0.1.16
+        </Typography>
       </div>
     </div>
   );
